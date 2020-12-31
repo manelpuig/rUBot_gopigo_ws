@@ -1,0 +1,8 @@
+prefix=/home/mpuig/rUBotCoop_LabProject/devel
+
+Name: gazebo_control
+Description: Description of gazebo_control
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
