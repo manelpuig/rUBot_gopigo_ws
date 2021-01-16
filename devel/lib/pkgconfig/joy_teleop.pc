@@ -1,4 +1,4 @@
-prefix=/home/mpuig/rUBotCoop_LabProject/devel
+prefix=/home/mpuig/gopigo_pc_ws/devel
 
 Name: joy_teleop
 Description: Description of joy_teleop

@@ -1,8 +1,8 @@
-# Install script for directory: /home/mpuig/rUBotCoop_LabProject/src/rubot_control
+# Install script for directory: /home/mpuig/gopigo_pc_ws/src/rubot_control
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/mpuig/rUBotCoop_LabProject/install")
+  set(CMAKE_INSTALL_PREFIX "/home/mpuig/gopigo_pc_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/mpuig/rUBotCoop_LabProject/build/rubot_control/catkin_generated/installspace/rubot_control.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/mpuig/gopigo_pc_ws/build/rubot_control/catkin_generated/installspace/rubot_control.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rubot_control/cmake" TYPE FILE FILES
-    "/home/mpuig/rUBotCoop_LabProject/build/rubot_control/catkin_generated/installspace/rubot_controlConfig.cmake"
-    "/home/mpuig/rUBotCoop_LabProject/build/rubot_control/catkin_generated/installspace/rubot_controlConfig-version.cmake"
+    "/home/mpuig/gopigo_pc_ws/build/rubot_control/catkin_generated/installspace/rubot_controlConfig.cmake"
+    "/home/mpuig/gopigo_pc_ws/build/rubot_control/catkin_generated/installspace/rubot_controlConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rubot_control" TYPE FILE FILES "/home/mpuig/rUBotCoop_LabProject/src/rubot_control/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/rubot_control" TYPE FILE FILES "/home/mpuig/gopigo_pc_ws/src/rubot_control/package.xml")
 endif()
 

@@ -1,4 +1,4 @@
-prefix=/home/mpuig/rUBotCoop_LabProject/install
+prefix=/home/mpuig/gopigo_pc_ws/install
 
 Name: virtual_slam
 Description: Description of virtual_slam

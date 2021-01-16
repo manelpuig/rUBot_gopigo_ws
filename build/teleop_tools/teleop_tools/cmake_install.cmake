@@ -1,8 +1,8 @@
-# Install script for directory: /home/mpuig/rUBotCoop_LabProject/src/teleop_tools/teleop_tools
+# Install script for directory: /home/mpuig/gopigo_pc_ws/src/teleop_tools/teleop_tools
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/mpuig/rUBotCoop_LabProject/install")
+  set(CMAKE_INSTALL_PREFIX "/home/mpuig/gopigo_pc_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,6 +38,6 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/teleop_tools" TYPE FILE FILES "/home/mpuig/rUBotCoop_LabProject/src/teleop_tools/teleop_tools/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/teleop_tools" TYPE FILE FILES "/home/mpuig/gopigo_pc_ws/src/teleop_tools/teleop_tools/package.xml")
 endif()
 

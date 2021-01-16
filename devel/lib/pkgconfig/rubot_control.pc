@@ -1,4 +1,4 @@
-prefix=/home/mpuig/rUBotCoop_LabProject/devel
+prefix=/home/mpuig/gopigo_pc_ws/devel
 
 Name: rubot_control
 Description: Description of rubot_control

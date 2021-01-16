@@ -1,4 +1,4 @@
-prefix=/home/mpuig/rUBotCoop_LabProject/devel
+prefix=/home/mpuig/gopigo_pc_ws/devel
 
 Name: key_teleop
 Description: Description of key_teleop

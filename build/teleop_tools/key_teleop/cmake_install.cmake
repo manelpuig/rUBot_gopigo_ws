@@ -1,8 +1,8 @@
-# Install script for directory: /home/mpuig/rUBotCoop_LabProject/src/teleop_tools/key_teleop
+# Install script for directory: /home/mpuig/gopigo_pc_ws/src/teleop_tools/key_teleop
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/mpuig/rUBotCoop_LabProject/install")
+  set(CMAKE_INSTALL_PREFIX "/home/mpuig/gopigo_pc_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,21 +38,21 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/mpuig/rUBotCoop_LabProject/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleop.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/mpuig/gopigo_pc_ws/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleop.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/key_teleop/cmake" TYPE FILE FILES
-    "/home/mpuig/rUBotCoop_LabProject/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleopConfig.cmake"
-    "/home/mpuig/rUBotCoop_LabProject/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleopConfig-version.cmake"
+    "/home/mpuig/gopigo_pc_ws/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleopConfig.cmake"
+    "/home/mpuig/gopigo_pc_ws/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleopConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/key_teleop" TYPE FILE FILES "/home/mpuig/rUBotCoop_LabProject/src/teleop_tools/key_teleop/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/key_teleop" TYPE FILE FILES "/home/mpuig/gopigo_pc_ws/src/teleop_tools/key_teleop/package.xml")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/key_teleop" TYPE PROGRAM FILES "/home/mpuig/rUBotCoop_LabProject/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleop.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/key_teleop" TYPE PROGRAM FILES "/home/mpuig/gopigo_pc_ws/build/teleop_tools/key_teleop/catkin_generated/installspace/key_teleop.py")
 endif()
 

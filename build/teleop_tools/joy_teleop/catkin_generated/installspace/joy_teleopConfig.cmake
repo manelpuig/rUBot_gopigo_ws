@@ -67,14 +67,14 @@ set(joy_teleop_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(joy_teleop_SOURCE_PREFIX /home/mpuig/rUBotCoop_LabProject/src/teleop_tools/joy_teleop)
-  set(joy_teleop_DEVEL_PREFIX /home/mpuig/rUBotCoop_LabProject/devel)
+  set(joy_teleop_SOURCE_PREFIX /home/mpuig/gopigo_pc_ws/src/teleop_tools/joy_teleop)
+  set(joy_teleop_DEVEL_PREFIX /home/mpuig/gopigo_pc_ws/devel)
   set(joy_teleop_INSTALL_PREFIX "")
   set(joy_teleop_PREFIX ${joy_teleop_DEVEL_PREFIX})
 else()
   set(joy_teleop_SOURCE_PREFIX "")
   set(joy_teleop_DEVEL_PREFIX "")
-  set(joy_teleop_INSTALL_PREFIX /home/mpuig/rUBotCoop_LabProject/install)
+  set(joy_teleop_INSTALL_PREFIX /home/mpuig/gopigo_pc_ws/install)
   set(joy_teleop_PREFIX ${joy_teleop_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/mpuig/rUBotCoop_LabProject/install/lib;/home/mpuig/rUBotCoop_LabProject/devel/lib;/home/mpuig/rUBotCoop_ws/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/mpuig/gopigo_pc_ws/install/lib;/home/mpuig/gopigo_pc_ws/devel/lib;/home/mpuig/rUBotCoop_LabProject/devel/lib;/home/mpuig/rUBotCoop_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

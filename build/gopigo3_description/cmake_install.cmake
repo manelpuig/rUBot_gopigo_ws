@@ -1,8 +1,8 @@
-# Install script for directory: /home/mpuig/rUBotCoop_LabProject/src/gopigo3_description
+# Install script for directory: /home/mpuig/gopigo_pc_ws/src/gopigo3_description
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/mpuig/rUBotCoop_LabProject/install")
+  set(CMAKE_INSTALL_PREFIX "/home/mpuig/gopigo_pc_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/mpuig/rUBotCoop_LabProject/build/gopigo3_description/catkin_generated/installspace/gopigo3_description.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/mpuig/gopigo_pc_ws/build/gopigo3_description/catkin_generated/installspace/gopigo3_description.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gopigo3_description/cmake" TYPE FILE FILES
-    "/home/mpuig/rUBotCoop_LabProject/build/gopigo3_description/catkin_generated/installspace/gopigo3_descriptionConfig.cmake"
-    "/home/mpuig/rUBotCoop_LabProject/build/gopigo3_description/catkin_generated/installspace/gopigo3_descriptionConfig-version.cmake"
+    "/home/mpuig/gopigo_pc_ws/build/gopigo3_description/catkin_generated/installspace/gopigo3_descriptionConfig.cmake"
+    "/home/mpuig/gopigo_pc_ws/build/gopigo3_description/catkin_generated/installspace/gopigo3_descriptionConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gopigo3_description" TYPE FILE FILES "/home/mpuig/rUBotCoop_LabProject/src/gopigo3_description/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gopigo3_description" TYPE FILE FILES "/home/mpuig/gopigo_pc_ws/src/gopigo3_description/package.xml")
 endif()
 

@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mpuig/rUBotCoop_LabProject/src
+CMAKE_SOURCE_DIR = /home/mpuig/gopigo_pc_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mpuig/rUBotCoop_LabProject/build
+CMAKE_BINARY_DIR = /home/mpuig/gopigo_pc_ws/build
 
 # Utility rule file for dynamic_reconfigure_generate_messages_nodejs.
 
@@ -63,10 +63,10 @@ virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/build: 
 .PHONY : virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/build
 
 virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/clean:
-	cd /home/mpuig/rUBotCoop_LabProject/build/virtual_slam && $(CMAKE_COMMAND) -P CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/cmake_clean.cmake
+	cd /home/mpuig/gopigo_pc_ws/build/virtual_slam && $(CMAKE_COMMAND) -P CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/cmake_clean.cmake
 .PHONY : virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/clean
 
 virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/depend:
-	cd /home/mpuig/rUBotCoop_LabProject/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mpuig/rUBotCoop_LabProject/src /home/mpuig/rUBotCoop_LabProject/src/virtual_slam /home/mpuig/rUBotCoop_LabProject/build /home/mpuig/rUBotCoop_LabProject/build/virtual_slam /home/mpuig/rUBotCoop_LabProject/build/virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/mpuig/gopigo_pc_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mpuig/gopigo_pc_ws/src /home/mpuig/gopigo_pc_ws/src/virtual_slam /home/mpuig/gopigo_pc_ws/build /home/mpuig/gopigo_pc_ws/build/virtual_slam /home/mpuig/gopigo_pc_ws/build/virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : virtual_slam/CMakeFiles/dynamic_reconfigure_generate_messages_nodejs.dir/depend
 

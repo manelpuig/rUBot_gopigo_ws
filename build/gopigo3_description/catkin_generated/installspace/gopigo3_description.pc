@@ -1,4 +1,4 @@
-prefix=/home/mpuig/rUBotCoop_LabProject/install
+prefix=/home/mpuig/gopigo_pc_ws/install
 
 Name: gopigo3_description
 Description: Description of gopigo3_description

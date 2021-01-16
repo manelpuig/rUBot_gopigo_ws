@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mpuig/rUBotCoop_LabProject/src
+CMAKE_SOURCE_DIR = /home/mpuig/gopigo_pc_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mpuig/rUBotCoop_LabProject/build
+CMAKE_BINARY_DIR = /home/mpuig/gopigo_pc_ws/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,9 +137,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mpuig/rUBotCoop_LabProject/build/CMakeFiles /home/mpuig/rUBotCoop_LabProject/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mpuig/gopigo_pc_ws/build/CMakeFiles /home/mpuig/gopigo_pc_ws/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mpuig/rUBotCoop_LabProject/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mpuig/gopigo_pc_ws/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

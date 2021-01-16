@@ -67,14 +67,14 @@ set(gopigo3_description_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(gopigo3_description_SOURCE_PREFIX /home/mpuig/rUBotCoop_LabProject/src/gopigo3_description)
-  set(gopigo3_description_DEVEL_PREFIX /home/mpuig/rUBotCoop_LabProject/devel)
+  set(gopigo3_description_SOURCE_PREFIX /home/mpuig/gopigo_pc_ws/src/gopigo3_description)
+  set(gopigo3_description_DEVEL_PREFIX /home/mpuig/gopigo_pc_ws/devel)
   set(gopigo3_description_INSTALL_PREFIX "")
   set(gopigo3_description_PREFIX ${gopigo3_description_DEVEL_PREFIX})
 else()
   set(gopigo3_description_SOURCE_PREFIX "")
   set(gopigo3_description_DEVEL_PREFIX "")
-  set(gopigo3_description_INSTALL_PREFIX /home/mpuig/rUBotCoop_LabProject/install)
+  set(gopigo3_description_INSTALL_PREFIX /home/mpuig/gopigo_pc_ws/install)
   set(gopigo3_description_PREFIX ${gopigo3_description_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/mpuig/rUBotCoop_LabProject/install/lib;/home/mpuig/rUBotCoop_LabProject/devel/lib;/home/mpuig/rUBotCoop_ws/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/mpuig/gopigo_pc_ws/install/lib;/home/mpuig/gopigo_pc_ws/devel/lib;/home/mpuig/rUBotCoop_LabProject/devel/lib;/home/mpuig/rUBotCoop_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

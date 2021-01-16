@@ -1,8 +1,8 @@
-prefix=/home/mpuig/rUBotCoop_LabProject/devel
+prefix=/home/mpuig/gopigo_pc_ws/devel
 
 Name: teleop_tools_msgs
 Description: Description of teleop_tools_msgs
 Version: 0.4.0
-Cflags: -I/home/mpuig/rUBotCoop_LabProject/devel/include
+Cflags: -I/home/mpuig/gopigo_pc_ws/devel/include
 Libs: -L${prefix}/lib 
 Requires: message_runtime actionlib_msgs
