@@ -36,22 +36,17 @@ class GoPiGo3:
         closestDistance, elementIndex = min(
             (val, idx) for (idx, val) in enumerate(scan.ranges) if scan.range_min < val < scan.range_max
         )
-
         angleClosestDistance = self.__wrapAngle(elementIndex / 2)
-
         rospy.loginfo("Closest distance of %5.2f m at %5.1f degrees.",
                       closestDistance, angleClosestDistance)
 
         if closestDistance < self._distanceLaser and -90 < angleClosestDistance < 90:
-
             self._msg.linear.x = self._backwardSpeed * self._speedFactor
             self._msg.angular.z = -self.__sign(
                 angleClosestDistance) * self._rotationSpeed * self._speedFactor
-
             rospy.logwarn("Within laser distance threshold. Rotating the robot (z=%4.1f)...", self._msg.angular.z)
 
         else:
-
             self._msg.linear.x = self._forwardSpeed * self._speedFactor
             self._msg.angular.z = 0
 
@@ -69,19 +64,13 @@ class GoPiGo3:
             return angle - 360
 
     def shutdown(self):
-
         self._msg.linear.x = 0
         self._msg.angular.z = 0
         self._cmdVel.publish(self._msg)
 
-
 if __name__ == '__main__':
     try:
-
         gpg = GoPiGo3()
-
         gpg.start()
-
         rospy.spin()
-
     except rospy.ROSInterruptException: pass

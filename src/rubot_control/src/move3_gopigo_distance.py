@@ -3,7 +3,7 @@ import rospy
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 import sys
-
+robot_x = 0
 def odom_callback(data):
     global robot_x
     robot_x=data.pose.pose.position.x
@@ -23,7 +23,6 @@ def move_rubot(lin_vel,ang_vel,distance):
         vel.angular.x = 0
         vel.angular.y = 0
         vel.angular.z = ang_vel
-
         rospy.loginfo("Linear Vel = %f: Angular Vel = %f",lin_vel,ang_vel)
 
 	if(robot_x >= distance):
@@ -33,17 +32,15 @@ def move_rubot(lin_vel,ang_vel,distance):
         vel.angular.z = 0
         pub.publish(vel)
         break
-
     pub.publish(vel)
     rate.sleep()
 
 if __name__ == '__main__':
     try:
-        robot_x = 0
         rospy.init_node('rubot_control', anonymous=False)
-        v= rospy.get_param('~v')
-        w= rospy.get_param('~w')
-        d= rospy.get_param('~d')
+        v= rospy.get_param("~v")
+        w= rospy.get_param("~w")
+        d= rospy.get_param("~d")
         move_rubot(v,w,d)
     except rospy.ROSInterruptException:
         pass

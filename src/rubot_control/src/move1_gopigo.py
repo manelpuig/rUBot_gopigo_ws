@@ -27,6 +27,6 @@ def move_rubot(lin_vel,ang_vel):
 
 if __name__ == '__main__':
     try:
-        move_rubot(1,0)
+        move_rubot(0.1,0)
     except rospy.ROSInterruptException:
         pass

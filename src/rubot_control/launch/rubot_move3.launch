@@ -27,13 +27,13 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
   <!-- Show in Rviz   -->
   <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find rubot_control)/rviz/rubot_nav.rviz"/>
-
-    <arg name="v" default="0.2"/>
-    <arg name="w" default="0"/>
-    <arg name="d" default="40"/>
-    <node pkg="rubot_control" type="move_gopigo_distance.py" name="rubot_control" output="screen" >
-        <param name="v" value="$(arg v)"/>
-        <param name="w" value="$(arg w)"/>
-        <param name="d" value="$(arg d)"/>
-    </node>
+  <!-- run gopigo   -->
+  <arg name="v" default="0.1"/>
+  <arg name="w" default="0"/>
+  <arg name="d" default="1"/>
+  <node pkg="rubot_control" type="move3_gopigo_distance.py" name="rubot_control" output="screen" >
+    <param name="v" value="$(arg v)"/>
+    <param name="w" value="$(arg w)"/>
+    <param name="d" value="$(arg d)"/>
+  </node>
 </launch>
