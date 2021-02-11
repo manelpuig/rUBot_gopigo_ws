@@ -25,15 +25,15 @@ def move_rubot(lin_vel,ang_vel,distance):
         vel.angular.z = ang_vel
         rospy.loginfo("Linear Vel = %f: Angular Vel = %f",lin_vel,ang_vel)
 
-	if(robot_x >= distance):
-		rospy.loginfo("Robot Reached destination")
-		rospy.logwarn("Stopping robot")
-        vel.linear.x = 0
-        vel.angular.z = 0
+        if(robot_x >= distance):
+            rospy.loginfo("Robot Reached destination")
+            rospy.logwarn("Stopping robot")
+            vel.linear.x = 0
+            vel.angular.z = 0
+            pub.publish(vel)
+            break
         pub.publish(vel)
-        break
-    pub.publish(vel)
-    rate.sleep()
+        rate.sleep()
 
 if __name__ == '__main__':
     try:

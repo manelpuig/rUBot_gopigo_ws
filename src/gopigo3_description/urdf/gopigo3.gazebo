@@ -183,7 +183,7 @@
 <!-- LIDAR base_scan JOINT base_link -->
   <joint name="scan_joint" type="fixed">
     <axis xyz="0 0 1" />
-    <origin xyz="0 0 0.15" rpy="0 0 -1.57"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="base_scan"/>
   </joint>

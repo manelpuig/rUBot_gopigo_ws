@@ -36,7 +36,8 @@ class GoPiGo3:
         closestDistance, elementIndex = min(
             (val, idx) for (idx, val) in enumerate(scan.ranges) if scan.range_min < val < scan.range_max
         )
-        angleClosestDistance = self.__wrapAngle(elementIndex / 2)
+        angleClosestDistance = self.__wrapAngle(elementIndex) # only 360 points in simulated lidar!!!
+#       angleClosestDistance = self.__wrapAngle(elementIndex / 2) # Real YDLidar with 720 points!!!
         rospy.loginfo("Closest distance of %5.2f m at %5.1f degrees.",
                       closestDistance, angleClosestDistance)
 
