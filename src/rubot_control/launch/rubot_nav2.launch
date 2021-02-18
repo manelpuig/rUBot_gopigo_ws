@@ -28,7 +28,7 @@
   <!-- Show in Rviz   -->
   <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find rubot_control)/rviz/rubot_nav.rviz"/>
   <!-- Navigation Program   -->
-    <arg name="distance_laser" default="0.5" />
+    <arg name="distance_laser" default="0.3" />
     <arg name="speed_factor" default="0.1" />
     <arg name="forward_speed" default="2" />
     <arg name="backward_speed" default="-2" />
