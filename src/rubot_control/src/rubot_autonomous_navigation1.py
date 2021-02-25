@@ -27,15 +27,15 @@ class MoveForward():
         rospy.on_shutdown(self.shutdown)
         
         self.cmd_vel = rospy.Publisher("/cmd_vel",Twist)
-        rospy.Subscriber("/gopigo/scan",LaserScan,self.laser_callback)
-        rospy.Subscriber("/gopigo/distance",Range,self.range_callback)
+        rospy.Subscriber("/scan",LaserScan,self.laser_callback)
+        #rospy.Subscriber("/gopigo/distance",Range,self.range_callback)
         
         r = rospy.Rate(5)
         while not rospy.is_shutdown():
             self.cmd_vel.publish(self.msg)
             r.sleep()
     
-    def range_callback(self, scan):
+    ''' def range_callback(self, scan):
         closest = scan.range
         rospy.loginfo("FRONT distance %s m", closest)
         if closest>self.distanceRange:
@@ -44,7 +44,7 @@ class MoveForward():
         elif closest<self.distanceRange:
             self.msg.linear.x = BACKWARD_SPEED  # BACKWARD_SPEED m/s
             self.msg.angular.z = -ROTATION_SPEED # ROTATION_SPEED rad/s
-            rospy.loginfo("Within DISTANCE threshold -> ROTATE the robot")
+            rospy.loginfo("Within DISTANCE threshold -> ROTATE the robot") '''
                  
     
     def laser_callback(self, scan):
