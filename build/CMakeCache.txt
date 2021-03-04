@@ -719,9 +719,6 @@ actionlib_msgs_DIR:PATH=/opt/ros/melodic/share/actionlib_msgs/cmake
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/melodic/share/catkin/cmake
 
-//The directory containing a CMake configuration file for control_msgs.
-control_msgs_DIR:PATH=/opt/ros/melodic/share/control_msgs/cmake
-
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/melodic/share/cpp_common/cmake
 
@@ -840,20 +837,8 @@ ignition-msgs1_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/ignition-msgs1
 //The directory containing a CMake configuration file for ignition-transport4.
 ignition-transport4_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/ignition-transport4
 
-//Value Computed by CMake
-joy_teleop_BINARY_DIR:STATIC=/home/mpuig/gopigo_pc_ws/build/teleop_tools/joy_teleop
-
-//Value Computed by CMake
-joy_teleop_SOURCE_DIR:STATIC=/home/mpuig/gopigo_pc_ws/src/teleop_tools/joy_teleop
-
 //The directory containing a CMake configuration file for jsoncpp.
 jsoncpp_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/jsoncpp
-
-//Value Computed by CMake
-key_teleop_BINARY_DIR:STATIC=/home/mpuig/gopigo_pc_ws/build/teleop_tools/key_teleop
-
-//Value Computed by CMake
-key_teleop_SOURCE_DIR:STATIC=/home/mpuig/gopigo_pc_ws/src/teleop_tools/key_teleop
 
 //Path to a library.
 lib:FILEPATH=/opt/ros/melodic/lib/libdynamic_reconfigure_config_init_mutex.so
@@ -866,12 +851,6 @@ message_generation_DIR:PATH=/opt/ros/melodic/share/message_generation/cmake
 
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/melodic/share/message_runtime/cmake
-
-//Value Computed by CMake
-mouse_teleop_BINARY_DIR:STATIC=/home/mpuig/gopigo_pc_ws/build/teleop_tools/mouse_teleop
-
-//Value Computed by CMake
-mouse_teleop_SOURCE_DIR:STATIC=/home/mpuig/gopigo_pc_ws/src/teleop_tools/mouse_teleop
 
 //The directory containing a CMake configuration file for nav_msgs.
 nav_msgs_DIR:PATH=/opt/ros/melodic/share/nav_msgs/cmake
@@ -923,18 +902,6 @@ std_msgs_DIR:PATH=/opt/ros/melodic/share/std_msgs/cmake
 
 //The directory containing a CMake configuration file for std_srvs.
 std_srvs_DIR:PATH=/opt/ros/melodic/share/std_srvs/cmake
-
-//Value Computed by CMake
-teleop_tools_BINARY_DIR:STATIC=/home/mpuig/gopigo_pc_ws/build/teleop_tools/teleop_tools
-
-//Value Computed by CMake
-teleop_tools_SOURCE_DIR:STATIC=/home/mpuig/gopigo_pc_ws/src/teleop_tools/teleop_tools
-
-//Value Computed by CMake
-teleop_tools_msgs_BINARY_DIR:STATIC=/home/mpuig/gopigo_pc_ws/build/teleop_tools/teleop_tools_msgs
-
-//Value Computed by CMake
-teleop_tools_msgs_SOURCE_DIR:STATIC=/home/mpuig/gopigo_pc_ws/src/teleop_tools/teleop_tools_msgs
 
 //The directory containing a CMake configuration file for tf2.
 tf2_DIR:PATH=/opt/ros/melodic/share/tf2/cmake
@@ -1287,7 +1254,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=13
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

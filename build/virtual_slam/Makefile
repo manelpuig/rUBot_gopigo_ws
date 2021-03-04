@@ -168,6 +168,66 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f CMakeFiles/Makefile2 virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/rule
+.PHONY : virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+trajectory_msgs_generate_messages_nodejs: virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : trajectory_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+trajectory_msgs_generate_messages_nodejs/fast:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/build.make virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_nodejs.dir/build
+.PHONY : trajectory_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_lisp.dir/rule:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f CMakeFiles/Makefile2 virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_lisp.dir/rule
+.PHONY : virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+trajectory_msgs_generate_messages_lisp: virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_lisp.dir/rule
+
+.PHONY : trajectory_msgs_generate_messages_lisp
+
+# fast build rule for target.
+trajectory_msgs_generate_messages_lisp/fast:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_lisp.dir/build.make virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_lisp.dir/build
+.PHONY : trajectory_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/rule:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f CMakeFiles/Makefile2 virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/rule
+.PHONY : virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+trajectory_msgs_generate_messages_cpp: virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/rule
+
+.PHONY : trajectory_msgs_generate_messages_cpp
+
+# fast build rule for target.
+trajectory_msgs_generate_messages_cpp/fast:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/build.make virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/build
+.PHONY : trajectory_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_py.dir/rule:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f CMakeFiles/Makefile2 virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_py.dir/rule
+.PHONY : virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+trajectory_msgs_generate_messages_py: virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_py.dir/rule
+
+.PHONY : trajectory_msgs_generate_messages_py
+
+# fast build rule for target.
+trajectory_msgs_generate_messages_py/fast:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_py.dir/build.make virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_py.dir/build
+.PHONY : trajectory_msgs_generate_messages_py/fast
+
+# Convenience name for target.
 virtual_slam/CMakeFiles/gazebo_msgs_generate_messages_py.dir/rule:
 	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f CMakeFiles/Makefile2 virtual_slam/CMakeFiles/gazebo_msgs_generate_messages_py.dir/rule
 .PHONY : virtual_slam/CMakeFiles/gazebo_msgs_generate_messages_py.dir/rule
@@ -543,6 +603,21 @@ std_srvs_generate_messages_lisp/fast:
 .PHONY : std_srvs_generate_messages_lisp/fast
 
 # Convenience name for target.
+virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_eus.dir/rule:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f CMakeFiles/Makefile2 virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_eus.dir/rule
+.PHONY : virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+trajectory_msgs_generate_messages_eus: virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_eus.dir/rule
+
+.PHONY : trajectory_msgs_generate_messages_eus
+
+# fast build rule for target.
+trajectory_msgs_generate_messages_eus/fast:
+	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_eus.dir/build.make virtual_slam/CMakeFiles/trajectory_msgs_generate_messages_eus.dir/build
+.PHONY : trajectory_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
 virtual_slam/CMakeFiles/roscpp_generate_messages_py.dir/rule:
 	cd /home/mpuig/gopigo_pc_ws/build && $(MAKE) -f CMakeFiles/Makefile2 virtual_slam/CMakeFiles/roscpp_generate_messages_py.dir/rule
 .PHONY : virtual_slam/CMakeFiles/roscpp_generate_messages_py.dir/rule
@@ -806,6 +881,10 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... trajectory_msgs_generate_messages_nodejs"
+	@echo "... trajectory_msgs_generate_messages_lisp"
+	@echo "... trajectory_msgs_generate_messages_cpp"
+	@echo "... trajectory_msgs_generate_messages_py"
 	@echo "... gazebo_msgs_generate_messages_py"
 	@echo "... gazebo_msgs_generate_messages_eus"
 	@echo "... gazebo_msgs_generate_messages_cpp"
@@ -832,6 +911,7 @@ help:
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... roscpp_generate_messages_nodejs"
 	@echo "... std_srvs_generate_messages_lisp"
+	@echo "... trajectory_msgs_generate_messages_eus"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... actionlib_generate_messages_eus"
 	@echo "... gazebo_ros_gencfg"

@@ -7,8 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export LD_LIBRARY_PATH='/home/mpuig/rUBotCoop_LabProject/devel/lib:/home/mpuig/rUBotCoop_ws/devel/lib:/opt/ros/melodic/lib'
-export PKG_CONFIG_PATH='/home/mpuig/rUBotCoop_LabProject/devel/lib/pkgconfig:/home/mpuig/rUBotCoop_ws/devel/lib/pkgconfig:/opt/ros/melodic/lib/pkgconfig'
+export CMAKE_PREFIX_PATH="/home/mpuig/gopigo_pc_ws/devel:$CMAKE_PREFIX_PATH"
 export PWD='/home/mpuig/gopigo_pc_ws/build'
-export PYTHONPATH='/home/mpuig/rUBotCoop_LabProject/devel/lib/python2.7/dist-packages:/home/mpuig/rUBotCoop_ws/devel/lib/python2.7/dist-packages:/opt/ros/melodic/lib/python2.7/dist-packages'
-export ROS_PACKAGE_PATH='/home/mpuig/gopigo_pc_ws/src:/home/mpuig/rUBotCoop_LabProject/src:/home/mpuig/rUBotCoop_ws/src:/opt/ros/melodic/share'
+export ROSLISP_PACKAGE_DIRECTORIES="/home/mpuig/gopigo_pc_ws/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/mpuig/gopigo_pc_ws/src:$ROS_PACKAGE_PATH"

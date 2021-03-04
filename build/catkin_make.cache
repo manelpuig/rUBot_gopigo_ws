@@ -1,2 +1,2 @@
-gazebo_control:gopigo3_description:rubot_control:teleop_tools/joy_teleop:teleop_tools/key_teleop:teleop_tools/mouse_teleop:teleop_tools/teleop_tools:teleop_tools/teleop_tools_msgs:virtual_slam
+gazebo_control:gopigo3_description:rubot_control:virtual_slam
 -DCATKIN_DEVEL_PREFIX=/home/mpuig/gopigo_pc_ws/devel -DCMAKE_INSTALL_PREFIX=/home/mpuig/gopigo_pc_ws/install -G Unix Makefiles
