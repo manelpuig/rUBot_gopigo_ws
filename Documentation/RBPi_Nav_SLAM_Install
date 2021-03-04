@@ -1,0 +1,53 @@
+Rubot 08
+
+Wifi created by Raspberry
+RoboticsUB_08DD
+Password to connect to Raspberry Wifi
+CorrePiCorre
+
+Ip obtained from Wifi 192.168.4.4
+
+Raspberry IP (From Nmap)
+192.168.4.1
+
+ssh to Raspberry Pi
+user: pi
+ssh pi@192.168.4.1
+Password: raspberry
+
+Ethernet IP address?
+Dhcp configured 172.20.1.54
+Raspbian verison (cat /etc/os-release)
+Buster (10)
+
+sudo apt update
+sudo apt upgrade
+
+sudo rosdep init (not needes already done)
+rosdep update
+
+http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Melodic%20on%20the%20Raspberry%20Pi
+http://wiki.ros.org/melodic/Installation/Source
+
+To update previous src
+mv -i melodic-desktop-full.rosinstall melodic-desktop-full.rosinstall.old
+rosinstall_generator robot --rosdistro melodic --deps --wet-only --tar > melodic-robot-wet.rosinstall
+
+diff -u melodic-desktop-full.rosinstall melodic-desktop-full.rosinstall.old
+
+sudo pip install vcstool (If vcs not installed)
+
+vcs import src < melodic-desktop-full.rosinstall
+
+In Workspace
+sudo ./src/catkin/bin/catkin_make_isolated --install-space /opt/ros/melodic
+
+Add new packages
+rosinstall_generator slam_gmapping navigation --rosdistro melodic --deps --wet-only --tar > melodic-custom_ros.rosinstall
+wstool merge -t src melodic-custom_ros.rosinstall
+wstool update -t src
+rosdep install --from-paths src --ignore-src --rosdistro melodic -y -r --os=debian:buster
+sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/melodic
+
+To use created workspace
+source ~/ros_catkin_ws/install_isolated/setup.bash
