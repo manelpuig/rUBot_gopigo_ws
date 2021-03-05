@@ -5,11 +5,9 @@ from nav_msgs.msg import Odometry
 
 def odom_callback(data):
     data_odom=data.pose.pose.position.x
-    print data_odom
     rospy.loginfo("Robot Odometry x= %f\n",data_odom)
 
 def move_rubot(lin_vel,ang_vel):
-    rospy.init_node('rubot_control', anonymous=False)
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
     rospy.Subscriber('/odom',Odometry, odom_callback)
     rate = rospy.Rate(10) # 10hz
@@ -27,6 +25,7 @@ def move_rubot(lin_vel,ang_vel):
 
 if __name__ == '__main__':
     try:
+        rospy.init_node('rubot_nav', anonymous=False)
         move_rubot(0.1,0)
     except rospy.ROSInterruptException:
         pass

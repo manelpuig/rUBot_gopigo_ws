@@ -1,70 +1,77 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-import rospy 
+import rospy
 import sys
-import tf
+from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
-from sensor_msgs.msg import LaserScan, Range
 
-speed_factor= 0.3 # Reduce wander speeds by this factor
 
-FORWARD_SPEED = 3.8 * speed_factor
-SPIRAL_SPEED = 2.5 * speed_factor
-BACKWARD_SPEED = -0.8 * speed_factor # -0.8 previous value
-ROTATION_SPEED = 1.5 * speed_factor
-laser_BACKWARD_SPEED_multiplier = 1
-laser_ROTATION_SPEED_multiplier = 2
+class GoPiGo3:
 
-class MoveForward():
     def __init__(self):
-        self.distanceLaser=1.6 # = meters (<1.13m, the matching distance to distanceRange=0.8m)
-        self.distanceRange=2 # = meters
-        self.msg=Twist()    
-        self.msg=Twist()
-        
-        rospy.init_node("rubot_nav",anonymous=False)
+
+        rospy.init_node("rubot_nav", anonymous=False)
+
+        self._distanceLaser = rospy.get_param("~distance_laser")
+        self._speedFactor = rospy.get_param("~speed_factor")
+        self._forwardSpeed = rospy.get_param("~forward_speed")
+        self._backwardSpeed = rospy.get_param("~backward_speed")
+        self._rotationSpeed = rospy.get_param("~rotation_speed")
+
+        self._msg = Twist()
+        self._cmdVel = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
+        rospy.Subscriber("/scan", LaserScan, self.callbackLaser)
         rospy.on_shutdown(self.shutdown)
-        
-        self.cmd_vel = rospy.Publisher("/cmd_vel",Twist)
-        rospy.Subscriber("/scan",LaserScan,self.laser_callback)
-        #rospy.Subscriber("/gopigo/distance",Range,self.range_callback)
-        
-        r = rospy.Rate(5)
+
+        self._r = rospy.Rate(5)
+
+    def start(self):
+
         while not rospy.is_shutdown():
-            self.cmd_vel.publish(self.msg)
-            r.sleep()
-    
-    ''' def range_callback(self, scan):
-        closest = scan.range
-        rospy.loginfo("FRONT distance %s m", closest)
-        if closest>self.distanceRange:
-            self.msg.linear.x = FORWARD_SPEED # FORWARD_SPEED m/s
-            self.msg.angular.z = SPIRAL_SPEED
-        elif closest<self.distanceRange:
-            self.msg.linear.x = BACKWARD_SPEED  # BACKWARD_SPEED m/s
-            self.msg.angular.z = -ROTATION_SPEED # ROTATION_SPEED rad/s
-            rospy.loginfo("Within DISTANCE threshold -> ROTATE the robot") '''
-                 
-    
-    def laser_callback(self, scan):
-        closest = min(scan.ranges)
-        furthest = max(scan.ranges)
-        rospy.loginfo("LASER distance %s  --  %s", closest, furthest)
-        if closest<self.distanceLaser:
-            self.msg.linear.x = laser_BACKWARD_SPEED_multiplier *BACKWARD_SPEED
-            self.msg.angular.z = laser_ROTATION_SPEED_multiplier *ROTATION_SPEED
-            rospy.loginfo("Within LASER threshold --> ROTATE FASTER the robot")
-               
+            self._cmdVel.publish(self._msg)
+            self._r.sleep()
+
+    def callbackLaser(self, scan):
+
+        closestDistance, elementIndex = min(
+            (val, idx) for (idx, val) in enumerate(scan.ranges) if scan.range_min < val < scan.range_max
+        )
+        angleClosestDistance = self.__wrapAngle(elementIndex) # only 360 points in simulated lidar!!!
+#       angleClosestDistance = self.__wrapAngle(elementIndex / 2) # Real YDLidar with 720 points!!!
+        rospy.loginfo("Closest distance of %5.2f m at %5.1f degrees.",
+                      closestDistance, angleClosestDistance)
+
+        if closestDistance < self._distanceLaser and -90 < angleClosestDistance < 90:
+            self._msg.linear.x = self._backwardSpeed * self._speedFactor
+            self._msg.angular.z = -self.__sign(
+                angleClosestDistance) * self._rotationSpeed * self._speedFactor
+            rospy.logwarn("Within laser distance threshold. Rotating the robot (z=%4.1f)...", self._msg.angular.z)
+
+        else:
+            self._msg.linear.x = self._forwardSpeed * self._speedFactor
+            self._msg.angular.z = 0
+
+    def __sign(self, val):
+
+        if val >= 0:
+            return 1
+        else:
+            return -1
+
+    def __wrapAngle(self, angle):
+        if 0 <= angle <= 180:
+            return angle
+        else:
+            return angle - 360
+
     def shutdown(self):
-        self.msg.linear.x= 0
-        self.msg.angular.z = 0
-        self.cmd_vel.publish(self.msg)
-        rospy.sleep(1)
+        self._msg.linear.x = 0
+        self._msg.angular.z = 0
+        self._cmdVel.publish(self._msg)
 
 if __name__ == '__main__':
     try:
-        MoveForward()
+        gpg = GoPiGo3()
+        gpg.start()
         rospy.spin()
-    except KeyboardInterrupt:
-        print "Ending MoveForward"
+    except rospy.ROSInterruptException: pass

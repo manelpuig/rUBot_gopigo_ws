@@ -36,7 +36,7 @@ def move_rubot(lin_vel,ang_vel,distance):
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('rubot_control', anonymous=False)
+        rospy.init_node('rubot_nav', anonymous=False)
         v= rospy.get_param("~v")
         w= rospy.get_param("~w")
         d= rospy.get_param("~d")

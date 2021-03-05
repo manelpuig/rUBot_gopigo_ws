@@ -30,7 +30,7 @@
   <!-- run gopigo   -->
   <arg name="v" default="0.1"/>
   <arg name="w" default="0"/>
-  <node pkg="rubot_control" type="move2_gopigo_param.py" name="rubot_control" output="screen" >
+  <node pkg="rubot_control" type="move2_gopigo_param.py" name="rubot_nav" output="screen" >
     <param name="v" value="$(arg v)"/>
     <param name="w" value="$(arg w)"/>
   </node>

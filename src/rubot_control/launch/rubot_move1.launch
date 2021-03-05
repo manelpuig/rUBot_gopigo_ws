@@ -28,5 +28,5 @@
   <!-- Show in Rviz   -->
   <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find rubot_control)/rviz/rubot_nav.rviz"/>
   <!-- run gopigo   -->
-  <node pkg="rubot_control" type="move1_gopigo.py" name="rubot_control" output="screen" />
+  <node pkg="rubot_control" type="move1_gopigo.py" name="rubot_nav" output="screen" />
 </launch>

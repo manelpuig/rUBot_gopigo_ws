@@ -5,7 +5,6 @@ from nav_msgs.msg import Odometry
 
 def odom_callback(data):
     data_odom=data.pose.pose.position.x
-    print data_odom
     rospy.loginfo("Robot Odometry x= %f\n",data_odom)
 
 def move_rubot(lin_vel,ang_vel):
@@ -26,7 +25,7 @@ def move_rubot(lin_vel,ang_vel):
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('rubot_control', anonymous=False) # init node has to be made before param.get
+        rospy.init_node('rubot_nav', anonymous=False) # init node has to be made before param.get
         v= rospy.get_param("~v") # ~ because param is inside node in launchfile 
         w= rospy.get_param("~w") # this is important to distinguish the different robots
         move_rubot(v,w)
