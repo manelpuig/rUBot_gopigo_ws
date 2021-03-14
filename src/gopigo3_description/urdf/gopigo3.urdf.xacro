@@ -246,7 +246,7 @@
     <joint name="scan_joint" type="fixed">
       <parent link="base_link"/>
       <child link="base_scan"/>
-      <origin xyz="-0.02 0 0.085" rpy="0 0 -1.57"/>
+      <origin xyz="-0.02 0 0.085" rpy="0 0 0"/>
       <!--LDS** origin xyz="-0.02 0 0.07" rpy="0 0 -1.6"/-->
     </joint>
 
