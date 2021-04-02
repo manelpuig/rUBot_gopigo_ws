@@ -12,7 +12,7 @@
                 imu:=true "/>
 
   <!-- Start 3 nodes: rviz, joint_state_publisher and robot_state_publisher -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gopigo3_description)/rviz/model_conf.rviz" required="true" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gopigo3_description)/rviz/gopigo3_full_model.rviz" required="true" />
   <!-- (required = "true") if rviz dies, entire roslaunch will be killed -->
   
   <!-- Send joint values -->
