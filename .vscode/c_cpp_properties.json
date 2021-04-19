@@ -1,0 +1,18 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/opt/ros/melodic/include/**",
+        "/home/manel/rubot_mecanum_ws/src/nexus_4wd_mecanum_gazebo/include/**",
+        "/home/manel/rubot_mecanum_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/manel/rubot_mecanum_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}

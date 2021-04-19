@@ -1,4 +1,4 @@
-image: maze2.pgm
+image: ./maze2.pgm
 resolution: 0.010000
 origin: [-10.000000, -10.000000, 0.000000]
 negate: 0
