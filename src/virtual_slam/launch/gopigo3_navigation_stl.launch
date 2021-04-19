@@ -28,7 +28,7 @@
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
-  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping"/>
+
   <!-- AMCL -->
   <include file="$(find virtual_slam)/launch/amcl.launch"/>
 
