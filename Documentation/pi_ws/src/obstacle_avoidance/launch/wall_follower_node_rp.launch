@@ -1,0 +1,21 @@
+<launch>
+
+ <node name="gopigo3" pkg="gopigo3_node" type="gopigo3_driver.py" />
+
+ <include file="$(find rplidar_ros)/launch/rplidar.launch"/>
+
+
+    <arg name="distance_laser" default="0.3" />
+    <arg name="speed_factor" default="0.2" />
+    <arg name="forward_speed" default="3.8" />
+    <arg name="backward_speed" default="-1.5" />
+    <arg name="rotation_speed" default="20" />
+    <node name="obstacle_avoidance" pkg="obstacle_avoidance" type="obstacle_avoidance_node.py" output="screen" >
+        <param name="distance_laser" value="$(arg distance_laser)"/>
+        <param name="speed_factor" value="$(arg speed_factor)"/>
+        <param name="forward_speed" value="$(arg forward_speed)"/>
+        <param name="backward_speed" value="$(arg backward_speed)"/>
+        <param name="rotation_speed" value="$(arg rotation_speed)"/>
+    </node>    
+
+</launch>

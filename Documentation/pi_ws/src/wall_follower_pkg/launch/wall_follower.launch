@@ -1,0 +1,21 @@
+<launch>
+  
+  <node name="gopigo3" pkg="gopigo3_node" type="gopigo3_driver.py" />
+  
+  <include file="$(find ydlidar)/launch/lidar.launch" />
+
+  <!-- Controller node -->
+  <arg name="kp" default="0.5" />
+  <arg name="distance_reference" default="0.3" />
+  <arg name="lookahead_distance" default="0.3" />
+  <arg name="forward_speed" default="0.1" />
+  <arg name="theta" default="40.0" />
+  <node name="wall_follower_controller" pkg="wall_follower_pkg" type="wall_follower_node.py" output="screen" >
+    <param name="kp" value="$(arg kp)"/>
+    <param name="distance_reference" value="$(arg distance_reference)"/>
+    <param name="lookahead_distance" value="$(arg lookahead_distance)"/>
+    <param name="forward_speed" value="$(arg forward_speed)"/>
+    <param name="theta" value="$(arg theta)"/>
+  </node>
+
+</launch>
