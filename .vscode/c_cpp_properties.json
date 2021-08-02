@@ -1,18 +1,23 @@
 {
-  "configurations": [
-    {
-      "browse": {
-        "databaseFilename": "",
-        "limitSymbolsToIncludedHeaders": true
-      },
-      "includePath": [
-        "/opt/ros/melodic/include/**",
-        "/home/manel/rubot_mecanum_ws/src/nexus_4wd_mecanum_gazebo/include/**",
-        "/home/manel/rubot_mecanum_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
-        "/home/manel/rubot_mecanum_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
-        "/usr/include/**"
-      ],
-      "name": "ROS"
-    }
-  ]
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/opt/ros/melodic/include/**",
+                "/home/manel/rubot_mecanum_ws/src/nexus_4wd_mecanum_gazebo/include/**",
+                "/home/manel/rubot_mecanum_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+                "/home/manel/rubot_mecanum_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14"
+        }
+    ],
+    "version": 4
 }
