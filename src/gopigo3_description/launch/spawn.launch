@@ -1,0 +1,10 @@
+<launch>
+ <!-- We resume the logic in gazebo_ros package empty_world.launch, -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+ <!-- Spawn gopigo3 robot into Gazebo -->
+    <!-- Robot URDF definition -->
+    <arg name="model" default="gopigo3" />
+    <param name="robot_description" textfile="$(find gopigo3_description)/urdf/gopigo3_stl.urdf"/>
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" output="screen"
+      args="-urdf -model gopigo3 -param robot_description"/>
+</launch>

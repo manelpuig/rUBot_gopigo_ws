@@ -26,6 +26,13 @@
     <color rgba="1 0.54 0 1"/>
   </material>
 
+  <!-- Dummy link without inertia is needed -->
+  <link name="base_footprint"/>
+  <joint name="base_link_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.05"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
 <!-- Base Link -->
   <link name="base_link">
     <visual>
