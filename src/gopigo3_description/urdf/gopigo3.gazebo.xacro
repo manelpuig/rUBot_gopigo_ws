@@ -154,8 +154,10 @@
           <horizontal>
             <!--samples>360</samples>
             <resolution>1</resolution-->
-            <samples>500</samples>
-            <resolution>0.72</resolution>
+            <!--samples>500</samples-->
+            <!--resolution>0.72</resolution-->
+            <samples>720</samples>
+            <resolution>0.5</resolution>
             <min_angle>0.0</min_angle>
             <max_angle>6.28319</max_angle>
           </horizontal>

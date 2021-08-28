@@ -1,17 +1,12 @@
 <launch>
   <arg name="world" default="world1.world"/> 
-  <arg name="model" default="gopigo3.gazebo" />
+  <arg name="model" default="gopigo3.urdf" />
   <arg name="x_pos" default="0.0"/>
   <arg name="y_pos" default="0.0"/>
   <arg name="z_pos" default="0.0"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find gazebo_control)/worlds/$(arg world)"/>
-    <arg name="paused" value="false"/>
-    <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
-    <arg name="debug" value="false"/>
+    <arg name="world_name" value="$(find gopigo3_description)/worlds/$(arg world)"/>
   </include>
 
   <param name="robot_description" textfile="$(find gopigo3_description)/urdf/$(arg model)" />
@@ -33,7 +28,7 @@
     <arg name="forward_speed" default="2" />
     <arg name="backward_speed" default="-2" />
     <arg name="rotation_speed" default="10" />
-  <node name="rubot_nav" pkg="rubot_control" type="rubot_autonomous_navigation1.py" output="screen" >
+  <node name="rubot_nav" pkg="rubot_control" type="rubot_nav1.py" output="screen" >
         <param name="distance_laser" value="$(arg distance_laser)"/>
         <param name="speed_factor" value="$(arg speed_factor)"/>
         <param name="forward_speed" value="$(arg forward_speed)"/>

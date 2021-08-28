@@ -7,7 +7,7 @@
 
 <!-- Which sensors to include -->
 <xacro:arg name="imu" default="true" />
-<!--xacro:property name="imu" value="true"/-->
+<xacro:property name="imu" value="true"/>
 <xacro:arg name="distance"        default="true"/>
 <xacro:arg name="pi_camera"       default="true"/>
 <xacro:arg name="lds"             default="true"/>
