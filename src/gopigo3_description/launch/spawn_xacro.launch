@@ -1,0 +1,26 @@
+<launch>
+ <!-- We resume the logic in gazebo_ros package empty_world.launch, -->
+  <!-- changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find gopigo3_description)/worlds/gopigo.world"/>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+  </include>
+
+    <!-- Robot URDF definition -->
+    <arg name="model" default="gopigo3" />
+    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find gopigo3_description)/urdf/$(arg model).urdf.xacro'"/>
+    <param name="robot_description" command="$(arg urdf_file) 
+                    distance:=true
+                    pi_camera:=true
+                    lds:=true
+                    imu:=true "/>
+            
+    <!-- Spawn gopigo3 robot into Gazebo -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-urdf -model gopigo3 -param robot_description" />
+
+</launch>

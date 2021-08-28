@@ -23,10 +23,10 @@ def move_rubot(lin_vel,ang_vel):
         pub.publish(vel)
         rate.sleep()
 
-if __name__ == '__main__':
+if __name__ == '__main__':# needed when this file is used as external library
     try:
-        rospy.init_node('rubot_nav', anonymous=False) # init node has to be made before param.get
-        v= rospy.get_param("~v") # ~ because param is inside node in launchfile 
+        rospy.init_node('rubot_nav', anonymous=False) # init node has to be made before get_param
+        v= rospy.get_param("~v") # ~ because param is inside node in launch file 
         w= rospy.get_param("~w") # this is important to distinguish the different robots
         move_rubot(v,w)
     except rospy.ROSInterruptException:

@@ -433,20 +433,6 @@
   <!-- if using a property (just inside this URDF file)-->
   <!--xacro:if value="${imu == 'true'}"-->
   <!--xacro:if value="${imu}"-->
-  <joint name="imu_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="imu_link"/>
-    <origin rpy="0 0 0" xyz="0.06 -0.06 -0.01"/>
-  </joint>
-  <link name="imu_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size="0.003 0.010 0.015"/>
-      </geometry>
-      <material name="cyan"/>
-    </visual>
-  </link>
   <!-- JOINT distance_sensor to base_link -->
   <joint name="distance_sensor_joint" type="fixed">
     <axis xyz="0 1 0"/>

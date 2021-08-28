@@ -1,12 +1,12 @@
 <launch>
   <arg name="world" default="world1.world"/> 
-  <arg name="model" default="gopigo3.gazebo" />
+  <arg name="model" default="gopigo3.urdf" />
   <arg name="x_pos" default="0.0"/>
   <arg name="y_pos" default="0.0"/>
   <arg name="z_pos" default="0.0"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find gazebo_control)/worlds/$(arg world)"/>
+    <arg name="world_name" value="$(find gopigo3_description)/worlds/$(arg world)"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>

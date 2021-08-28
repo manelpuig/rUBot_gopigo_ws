@@ -5,8 +5,8 @@
 
   <xacro:property name="CADscale" value="0.0012" />
 
-  <!-- Which sensors to include -->
-<xacro:arg name="imu" default="false" />
+<!-- Which sensors to include -->
+<xacro:arg name="imu" default="true" />
 <!--xacro:property name="imu" value="true"/-->
 <xacro:arg name="distance"        default="true"/>
 <xacro:arg name="pi_camera"       default="true"/>
