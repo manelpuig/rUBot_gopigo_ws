@@ -12,13 +12,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import rospy
 import yaml
-from 1_take_photo import TakePhoto
-from 2_go_to_specific_point_on_map import GoToPose
+from take_photo import TakePhoto
+from go_to_specific_point_on_map import GoToPose
 
 if __name__ == '__main__':
 
     # Read information from yaml file
-    with open("2_route.yaml", 'r') as stream:
+    with open("route.yaml", 'r') as stream:
         dataMap = yaml.load(stream)
 
     try:
