@@ -1,5 +1,5 @@
 <launch>
-  <arg name="world" default="wall.world"/> 
+  <arg name="world" default="square.world"/> 
   <arg name="model" default="gopigo3.urdf" />
   <arg name="x_pos" default="0.0"/>
   <arg name="y_pos" default="0.0"/>
