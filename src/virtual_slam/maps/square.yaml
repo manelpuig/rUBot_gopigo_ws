@@ -1,4 +1,4 @@
-image: /media/sf_github_manelpuig/rUBot_gopigo_ws/src/virtual_slam/maps/square.pgm
+image: ./square.pgm
 resolution: 0.010000
 origin: [-10.000000, -10.000000, 0.000000]
 negate: 0
