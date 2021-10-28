@@ -28,6 +28,6 @@
     <arg name="forward_speed" default="2" />
     <arg name="backward_speed" default="-2" />
     <arg name="rotation_speed" default="10" />
-  <node name="wall_follower" pkg="rubot_control" type="follow_wall_right.py" output="screen" >
+  <node name="wall_follower" pkg="rubot_control" type="follow_wall_right2.py" output="screen" >
   </node>
 </launch>
