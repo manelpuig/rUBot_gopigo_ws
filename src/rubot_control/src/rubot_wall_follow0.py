@@ -26,11 +26,11 @@ state_dict_ = {
 def clbk_laser(msg):
     global regions_
     regions_ = {
-        'left':  min(min(msg.ranges[135:225]), 3),
-        'fleft': min(min(msg.ranges[45:135]), 3),
+        'left':  min(min(msg.ranges[179:181]), 3),
+        'fleft': min(min(msg.ranges[10:178]), 3),
         'front':  min(msg.ranges[0], 3),
-        'fright':  min(min(msg.ranges[585:675]), 3),
-        'right':   min(min(msg.ranges[495:585]), 3),
+        'fright':  min(min(msg.ranges[541:710]), 3),
+        'right':   min(min(msg.ranges[539:541]), 3),
     }
     print ("front distance: "+ str(regions_["front"]))
     print ("right distance: "+ str(regions_["right"]))
@@ -110,7 +110,7 @@ def follow_the_wall():
 def main():
     global pub_
 
-    rospy.init_node('wall_follower')
+    rospy.init_node('wall_follow')
     pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     sub = rospy.Subscriber('/scan', LaserScan, clbk_laser)
     

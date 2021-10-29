@@ -23,7 +23,7 @@
   <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find rubot_control)/rviz/rubot_nav.rviz"/>
   
   <!-- Navigation Program -->
-  <node name="rubot_nav" pkg="rubot_control" type="lidar_test.py" output="screen" >
+  <node name="rubot_nav" pkg="rubot_control" type="rubot_lidar_test.py" output="screen" >
   </node> 
   
 </launch>

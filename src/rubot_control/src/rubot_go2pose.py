@@ -5,18 +5,16 @@ from nav_msgs.msg import Odometry
 from math import pow, atan2, sqrt, degrees, radians
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
-class nexus:
+class GoPiGo3:
 
     def __init__(self):
         # Creates a node with name 'turtlebot_controller' and make sure it is a
         # unique node (using anonymous=True).
-        rospy.init_node('nexus_control', anonymous=True)
+        rospy.init_node('rubot_control', anonymous=True)
         # Define goal odometry from parameters
         self.x_goal = rospy.get_param("~x")
         self.y_goal = rospy.get_param("~y")
         self.f_goal = radians(rospy.get_param("~f"))
-        print("goal angle= "+str(self.f_goal))
-        
         self.q_goal = quaternion_from_euler(0,0,self.f_goal)
         # Define initial values for actual odometry (read in callback function)
         self.x_pose=0
@@ -50,7 +48,7 @@ class nexus:
         return sqrt(pow((goal_odom.pose.pose.position.x - self.x_pose), 2) +
                     pow((goal_odom.pose.pose.position.y - self.y_pose), 2))
 
-    def linear_vel(self, goal_odom, constant=0.3):
+    def linear_vel(self, goal_odom, constant=0.5):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return constant * self.euclidean_distance(goal_odom)
 
@@ -58,7 +56,7 @@ class nexus:
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return atan2(goal_odom.pose.pose.position.y - self.y_pose, goal_odom.pose.pose.position.x - self.x_pose)
 
-    def angular_vel(self, goal_odom, constant=3):
+    def angular_vel(self, goal_odom, constant=1):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return constant * (self.steering_angle(goal_odom) - self.yaw)
 
@@ -69,14 +67,10 @@ class nexus:
         # Get the input from the user.
         goal_odom.pose.pose.position.x = self.x_goal
         goal_odom.pose.pose.position.y = self.y_goal
-        goal_odom.pose.pose.orientation.x = self.q_goal[0]
-        goal_odom.pose.pose.orientation.y = self.q_goal[1]
-        goal_odom.pose.pose.orientation.z= self.q_goal[2]
-        goal_odom.pose.pose.orientation.w= self.q_goal[3]
-        
-        # Please, insert tolerances a number slightly greater than 0 (e.g. 0.1).
-        distance_tolerance = 0.1
-        angle_tolerance = 0.1
+                
+        # Please, insert tolerances a number slightly greater than 0 (e.g. 0.01).
+        distance_tolerance = 0.2
+        angle_tolerance = 0.02
 
         vel_msg = Twist()
 
@@ -89,39 +83,36 @@ class nexus:
             vel_msg.angular.x = 0
             vel_msg.angular.y = 0
             vel_msg.angular.z = self.angular_vel(goal_odom)
-
             # Publishing our vel_msg
             self.velocity_publisher.publish(vel_msg)
-
             # Publish at the desired rate.
             self.rate.sleep()
-        while self.f_goal-self.yaw >= angle_tolerance:
-            # Linear velocity in the x-axis.
-            vel_msg.linear.x = 0
-            vel_msg.linear.y = 0
-            vel_msg.linear.z = 0
-            # Angular velocity in the z-axis.
-            vel_msg.angular.x = 0
-            vel_msg.angular.y = 0
-            vel_msg.angular.z = (self.f_goal-self.yaw)*0.5
-
-            # Publishing our vel_msg
-            self.velocity_publisher.publish(vel_msg)
-
-            # Publish at the desired rate.
-            self.rate.sleep()
+        else:
+            while abs(self.f_goal-self.yaw) >= angle_tolerance:
+                # Linear velocity in the x-axis.
+                vel_msg.linear.x = 0
+                vel_msg.linear.y = 0
+                vel_msg.linear.z = 0
+                # Angular velocity in the z-axis.
+                vel_msg.angular.x = 0
+                vel_msg.angular.y = 0
+                vel_msg.angular.z = (self.f_goal-self.yaw)*0.5
+                 # Publishing our vel_msg
+                self.velocity_publisher.publish(vel_msg)
+                # Publish at the desired rate.
+                self.rate.sleep()
 
         # Stopping our robot after the movement is over.
         vel_msg.linear.x = 0
         vel_msg.angular.z = 0
-        self.velocity_publisher.publish(vel_msg)
+        rospy.loginfo("Goal POSE reached!")
 
         # If we press control + C, the node will stop.
         rospy.spin()
 
 if __name__ == '__main__':
     try:
-        go = nexus()
+        go = GoPiGo3()
         go.move2pose()
     except rospy.ROSInterruptException:
         pass
