@@ -55,20 +55,32 @@ def take_action():
 
     state_description = ''
 
-    d = 0.5
+    d = 1
 
     if regions['front'] > d and regions['fleft'] > d and regions['fright'] > d:
         state_description = 'case 1 - nothing'
         change_state(0)
-    elif regions['front'] < d:# and regions['fleft'] > d and regions['fright'] > d:
+    elif regions['front'] < d and regions['fleft'] > d and regions['fright'] > d:
         state_description = 'case 2 - front'
         change_state(1)
-    elif regions['fright'] < d:
+    elif regions['front'] > d and regions['fleft'] > d and regions['fright'] < d:
         state_description = 'case 3 - fright'
-        change_state(1)
-    elif regions['left'] < d: 
-        state_description = 'case 4 - right'
         change_state(2)
+    elif regions['front'] > d and regions['fleft'] < d and regions['fright'] > d:
+        state_description = 'case 4 - fleft'
+        change_state(0)
+    elif regions['front'] < d and regions['fleft'] > d and regions['fright'] < d:
+        state_description = 'case 5 - front and fright'
+        change_state(1)
+    elif regions['front'] < d and regions['fleft'] < d and regions['fright'] > d:
+        state_description = 'case 6 - front and fleft'
+        change_state(1)
+    elif regions['front'] < d and regions['fleft'] < d and regions['fright'] < d:
+        state_description = 'case 7 - front and fleft and fright'
+        change_state(1)
+    elif regions['front'] > d and regions['fleft'] < d and regions['fright'] < d:
+        state_description = 'case 8 - fleft and fright'
+        change_state(0)
     else:
         state_description = 'unknown case'
         rospy.loginfo(regions)
