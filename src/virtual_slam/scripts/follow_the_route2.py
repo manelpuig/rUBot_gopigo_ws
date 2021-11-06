@@ -20,8 +20,8 @@ from math import radians, degrees
 if __name__ == '__main__':
 
     # Read information from yaml file
-    with open("route2.yaml", 'r') as stream:
-        dataMap = yaml.load(stream)
+    with open('route2.yaml', 'r') as stream:
+        dataMap = yaml.load(stream, Loader=yaml.FullLoader)
 
     try:
         # Initialize

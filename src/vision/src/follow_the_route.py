@@ -18,7 +18,7 @@ from go_to_specific_point_on_map import GoToPose
 if __name__ == '__main__':
 
     # Read information from yaml file
-    with open('route.yaml','r') as stream:
+    with open("route.yaml", 'r') as stream:
         dataMap = yaml.load(stream)
 
     try:
