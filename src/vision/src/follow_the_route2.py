@@ -20,7 +20,7 @@ from math import radians, degrees
 if __name__ == '__main__':
 
     # Read information from yaml file
-    with open("route2.yaml", 'r') as stream:
+    with open("/media/sf_github_manelpuig/rUBot_gopigo_ws/src/vision/src/route2.yaml", 'r') as stream:
         dataMap = yaml.load(stream)
 
     try:
