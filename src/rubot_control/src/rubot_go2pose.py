@@ -56,7 +56,7 @@ class GoPiGo3:
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return atan2(goal_odom.pose.pose.position.y - self.y_pose, goal_odom.pose.pose.position.x - self.x_pose)
 
-    def angular_vel(self, goal_odom, constant=1):
+    def angular_vel(self, goal_odom, constant=5):
         """See video: https://www.youtube.com/watch?v=Qh15Nol5htM."""
         return constant * (self.steering_angle(goal_odom) - self.yaw)
 
