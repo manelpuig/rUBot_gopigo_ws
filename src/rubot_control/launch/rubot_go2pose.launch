@@ -18,9 +18,9 @@
       args="-urdf -model gopigo3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
   
   <!-- run navigation program  -->
-    <arg name="x" default="0.7"/>
-    <arg name="y" default="-0.7"/>
-    <arg name="f" default="-135"/>
+    <arg name="x" default="-0.7"/>
+    <arg name="y" default="0.7"/>
+    <arg name="f" default="45"/>
     <node pkg="rubot_control" type="rubot_go2pose.py" name="rubot_control" output="screen" >
       <param name="x" value="$(arg x)"/>
       <param name="y" value="$(arg y)"/>
