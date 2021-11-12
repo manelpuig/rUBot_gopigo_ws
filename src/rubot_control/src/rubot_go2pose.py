@@ -69,7 +69,7 @@ class GoPiGo3:
         goal_odom.pose.pose.position.y = self.y_goal
                 
         # Please, insert tolerances a number slightly greater than 0 (e.g. 0.01).
-        distance_tolerance = 0.2
+        distance_tolerance = 0.1
         angle_tolerance = 0.02
 
         vel_msg = Twist()
@@ -99,6 +99,7 @@ class GoPiGo3:
                 vel_msg.angular.z = (self.f_goal-self.yaw)*0.5
                  # Publishing our vel_msg
                 self.velocity_publisher.publish(vel_msg)
+                rospy.loginfo("Yaw: " + str(round(degrees(self.yaw), ndigits=1)))
                 # Publish at the desired rate.
                 self.rate.sleep()
 

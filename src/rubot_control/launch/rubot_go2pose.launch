@@ -17,10 +17,10 @@
     <node pkg="gazebo_ros" type="spawn_model" name="spawn_model"
       args="-urdf -model gopigo3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
   
-  <!-- run navigation program  -->
+  <!-- run navigation program. Target Orientation 0 to 180  -->
     <arg name="x" default="-0.7"/>
     <arg name="y" default="0.7"/>
-    <arg name="f" default="45"/>
+    <arg name="f" default="120"/>
     <node pkg="rubot_control" type="rubot_go2pose.py" name="rubot_control" output="screen" >
       <param name="x" value="$(arg x)"/>
       <param name="y" value="$(arg y)"/>

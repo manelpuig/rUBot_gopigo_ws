@@ -27,9 +27,9 @@ def clbk_laser(msg):
     global regions_
     regions_ = {
         'left':  min(min(msg.ranges[179:181]), 3),
-        'fleft': min(min(msg.ranges[1:178]), 3),
-        'front':  min(msg.ranges[0], 3),
-        'fright':  min(min(msg.ranges[541:719]), 3),
+        'fleft': min(min(msg.ranges[61:178]), 3),
+        'front':  min(min(msg.ranges[0:60]), min(msg.ranges[660:719]), 3),
+        'fright':  min(min(msg.ranges[541:659]), 3),
         'right':   min(min(msg.ranges[539:541]), 3),
     }
     print ("front distance: "+ str(regions_["front"]))
@@ -55,7 +55,7 @@ def take_action():
 
     state_description = ''
 
-    d = 1
+    d = 0.5
 
     if regions['front'] > d and regions['fleft'] > d and regions['fright'] > d:
         state_description = 'case 1 - nothing'
