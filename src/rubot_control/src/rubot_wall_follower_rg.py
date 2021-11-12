@@ -27,9 +27,9 @@ def clbk_laser(msg):
     global regions_
     regions_ = {
         'left':  min(min(msg.ranges[179:181]), 3),
-        'fleft': min(min(msg.ranges[10:178]), 3),
+        'fleft': min(min(msg.ranges[1:178]), 3),
         'front':  min(msg.ranges[0], 3),
-        'fright':  min(min(msg.ranges[541:710]), 3),
+        'fright':  min(min(msg.ranges[541:719]), 3),
         'right':   min(min(msg.ranges[539:541]), 3),
     }
     print ("front distance: "+ str(regions_["front"]))
@@ -104,6 +104,7 @@ def follow_the_wall():
 
     msg = Twist()
     msg.linear.x = 0.1
+    msg.angular.z = 0.05
     return msg
 
 
