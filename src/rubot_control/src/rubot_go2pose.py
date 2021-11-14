@@ -85,6 +85,7 @@ class GoPiGo3:
             vel_msg.angular.z = self.angular_vel(goal_odom)
             # Publishing our vel_msg
             self.velocity_publisher.publish(vel_msg)
+            rospy.loginfo("Distance to target: " + str(round(self.euclidean_distance(goal_odom), ndigits=2)))
             # Publish at the desired rate.
             self.rate.sleep()
         else:
@@ -99,7 +100,7 @@ class GoPiGo3:
                 vel_msg.angular.z = (self.f_goal-self.yaw)*0.5
                  # Publishing our vel_msg
                 self.velocity_publisher.publish(vel_msg)
-                rospy.loginfo("Yaw: " + str(round(degrees(self.yaw), ndigits=1)))
+                rospy.loginfo("Orientation error: " + str(round(degrees(self.f_goal-self.yaw), ndigits=2)))
                 # Publish at the desired rate.
                 self.rate.sleep()
 
