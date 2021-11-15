@@ -107,6 +107,8 @@ class GoPiGo3:
         # Stopping our robot after the movement is over.
         vel_msg.linear.x = 0
         vel_msg.angular.z = 0
+        # Publishing our vel_msg
+        self.velocity_publisher.publish(vel_msg)
         rospy.loginfo("Goal POSE reached!")
 
         # If we press control + C, the node will stop.
