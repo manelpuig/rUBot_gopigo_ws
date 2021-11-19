@@ -1,12 +1,10 @@
-# rubot_gopigo3_ws
-## Test2
-test3
-- guio1
-- guio2
-
-| This | is   |
+# rubot_gopigo3
+This workspace is organized in:
+| Document | Contents   |
 |------|------|
-|   a  | table|
-
-<img src="./Documentation/Images/1_USB.png" />
-Hola
+|   Gopigo Model&Control  | Simulated model and different control actions|
+|   rbpi Model&Control  | Control actions in rbpi3|
+|   Gopigo Slam&Navigation  | Slam techniques to generate a map and perform navigation|
+| rbpi Slam&Navigation | Slam and Navigation in rbpi3 |
+| Gopigo Vision projects | Gazebo simulated Vision projects |
+| rbpi Vision Projects | Vision projects in rbpi3
