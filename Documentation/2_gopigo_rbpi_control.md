@@ -276,6 +276,9 @@ roslaunch gopigo_control rubotRP_wall_follower_gm.launch
   <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find obstacle_avoidance)/rviz/laserscan.rviz"/>-->
 </launch>
 ```
+You can see the video result:
+
+[![Watch the video](https://img.youtube.com/vi/z5sAyiFs-RU/maxresdefault.jpg)](https://youtu.be/z5sAyiFs-RU)
 #### **b) ranges method**
 In src folder you create the python file for wall follower purposes
 
