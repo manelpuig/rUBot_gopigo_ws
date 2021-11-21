@@ -97,7 +97,9 @@ The gopigo3 model includes different sensors and actuators:
 
 Sensors:
 - a two-dimensional camera: correspondas to RBPi camera
-- a 360º LIDAR sensor: corresponds to the EAI YDLIDAR X4 (https://www.robotshop.com/es/es/escaner-laser-360-ydlidar-x4.html) or RPLidar A1M8 (https://www.robotshop.com/es/es/rplidar-a1m8-kit-desarrollo-escaner-laser-360-grados.html)
+- a 360º LIDAR sensor: 
+  - the EAI YDLIDAR X4 (https://www.robotshop.com/es/es/escaner-laser-360-ydlidar-x4.html) 
+  - or RPLidar A1M8 (https://www.robotshop.com/es/es/rplidar-a1m8-kit-desarrollo-escaner-laser-360-grados.html)
 
 Actuator:
 - Differential drive actuator: based on 2 DC motors with encoders to obtain the Odometry information

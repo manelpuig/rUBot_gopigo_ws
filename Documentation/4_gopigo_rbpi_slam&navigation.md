@@ -35,7 +35,10 @@ roslaunch raspicam_node camerav2_1280x960_10fps.launch enable_raw:=true camera_f
 You can also launch a bringup launch file to launch gopigo3 and LIDAR (do not launch the raspicam to speed up the gmapping process).
 
 Type:
-- roslaunch gopigo_control gopigo3yd_bringup.launch (or the rp version)
+```shell
+roslaunch gopigo_control gopigo3yd_bringup.launch
+```
+> Select the corresponding launch file for the rp lidar version
 
 we can see now the nodes that are running in our ROS workspace:
 <img src="./Images/2_nodes_cam.png">
