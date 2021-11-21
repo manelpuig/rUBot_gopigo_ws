@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Define the needed parameters -->
+  <arg name="world" default="square.world"/> 
+  <arg name="model" default="nexus.urdf" />
+  <arg name="x_pos" default="0.5"/>
+  <arg name="y_pos" default="0.5"/>
+  <arg name="z_pos" default="0.0"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find nexus_mecanum)/worlds/$(arg world)" />
+  </include>
+  <!-- Spawn the robot -->
+  <!-- Robot URDF definition -->
+    <param name="robot_description" textfile="$(find nexus_mecanum)/urdf/$(arg model)"/>
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+    args="-urdf -model nexus -param robot_description -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)" />
+</launch>
