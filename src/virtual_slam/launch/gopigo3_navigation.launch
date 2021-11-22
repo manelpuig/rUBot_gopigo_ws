@@ -8,7 +8,7 @@
   <arg name="move_forward_only" default="false"/>
 
   <!-- GoPiGo3 URDF model & robot_state_publisher -->
-  <param name="robot_description" textfile="$(find gopigo3_description)/urdf/$(arg model)" />
+  <param name="robot_description" textfile="$(find nexus_mecanum)/urdf/$(arg model)" />
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="50.0" />

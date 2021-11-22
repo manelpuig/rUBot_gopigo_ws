@@ -12,7 +12,7 @@ sudo apt install ros-melodic-navigation
 ```
 And finally the slam_gmapping package, that is already available in its binary version (https://wiki.ros.org/slam_gmapping)
 ```shell
-sudo apt-get install ros-melodic-slam-gmapping
+sudo apt install ros-melodic-slam-gmapping
 ```
 Open the .bashrc file and verify to source to the proper workspace:
 ```shell
