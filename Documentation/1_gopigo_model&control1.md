@@ -549,7 +549,9 @@ A rubot_wall_follower_gm.launch is generated to test the node within a specified
 roslaunch rubot_control rubot_wall_follower_gm.launch
 ```
 <img src="./Images/1_wall_follower_gm.png">
-You can see a video for the wall follower process in Folder: Files/wallFollower
+
+You can see a video for the Maze wall follower process in: 
+[![IMAGE_ALT](https://img.youtube.com/vi/z5sAyiFs-RU/maxresdefault.jpg)](https://youtu.be/z5sAyiFs-RU)
 
 
 ##### **b) Lidar ranges method**
