@@ -165,7 +165,9 @@ To obtain a proper localisation of your robot, move it right and left using the 
 ```shell
 rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 ```
-![Getting Started](./Images/3_slam_maze.png)
+![Getting Started](./Images/3_nav1_gopigo.png)
+![Getting Started](./Images/3_nav2_gopigo.png)
+![Getting Started](./Images/3_nav3_gopigo.png)
 
 >Careful!!
 
