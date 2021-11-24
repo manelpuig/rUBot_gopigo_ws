@@ -44,7 +44,7 @@ Now you can follow the next steps:
 ### **1. Spawn the robot in our custom made maze**
 We open a new terminal and type:
 ```shell
-roslaunch virtual_slam gopigo3_world.launch
+roslaunch gopigo3_slam gopigo3_world.launch
 ```
 ### **2. Generate the MAP**
 We will start the slam_gmapping node. This node is highly configurable and has lots of parameters you can change in order to improve the mapping performance. (http://wiki.ros.org/gmapping)
@@ -58,7 +58,7 @@ Let's now check some of the most important ones that usually have to be changed:
 
 Open the "gmapping.launch" file and change properly the parameters you consider. Then launch the gopigo_slam file:
 ```shell
-roslaunch virtual_slam gopigo3_slam.launch
+roslaunch gopigo3_slam gopigo3_slam.launch
 ```
 Teleoperate the robot to make it cover as much as possible of the surface of the current Gazebo world. 
 
@@ -72,7 +72,7 @@ rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 ```
 Or use the navigation program you have designed to follow the walls for exemple to properly generate the map.
 ```shell
-roslaunch rubot_control node_wall_follower_gm.launch
+roslaunch gopigo3_control node_wall_follower_gm.launch
 ```
 > Take care to launch only the wall_follower node
 
@@ -140,12 +140,12 @@ So, basically, we have to do the following:
 
 - Open the gopigo3 robot in Hospital3 world (if you have closed it before)
 ```shell
-roslaunch virtual_slam gopigo3_world.launch
+roslaunch gopigo3_slam gopigo3_world.launch
 ```
 
 - Open Navigation launch file including the map location:
 ```shell
-roslaunch virtual_slam gopigo3_navigation.launch
+roslaunch gopigo3_slam gopigo3_navigation.launch
 ```
 > Take care in launch file to read the correct map file in "maps" folder
 

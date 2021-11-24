@@ -452,10 +452,10 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 ## 3. gopigo3 navigation control in the new world environment
 
-Once the world has been generated we will create a ROS Package "rubot_control" to perform the autonomous navigation
+Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the autonomous navigation
 ```shell
 cd ~/rubot_gopigo_ws/src
-catkin_create_pkg rubot_control rospy std_msgs sensor_msgs geometry_msgs nav_msgs
+catkin_create_pkg gopigo3_control rospy std_msgs sensor_msgs geometry_msgs nav_msgs
 cd ..
 catkin_make
 ```
@@ -467,9 +467,9 @@ We will create now different navigation python files in "src" folder:
 
 Specific launch files have been created to launch the nodes and python files created above:
 ```shell
-roslaunch rubot_control rubot_move1.launch
-roslaunch rubot_control rubot_move2.launch
-roslaunch rubot_control rubot_move3.launch
+roslaunch gopigo3_control rubot_move1.launch
+roslaunch gopigo3_control rubot_move2.launch
+roslaunch gopigo3_control rubot_move3.launch
 ```
 ![Getting Started](./Images/1_rubot_move3.png)
 ## **gopigo3 autonomous navigation and obstacle avoidance**
@@ -481,7 +481,7 @@ In order to navigate autonomously and avoid obstacles, we have created diferent 
 
 we will create also a "launch" folder including the corresponding launch files
 #### **1. LIDAR test**
-We have created a world to test the rubot model. This world is based on a wall to verify that the LIDAR see the obstacle in the correct angle. We have to launch the "rubot_lidar_test.launch" file in the "rubot_control" package.
+We have created a world to test the rubot model. This world is based on a wall to verify that the LIDAR see the obstacle in the correct angle. We have to launch the "rubot_lidar_test.launch" file in the "gopigo3_control" package.
 
 ```python
 #! /usr/bin/env python
@@ -507,7 +507,7 @@ sub = rospy.Subscriber('/scan', LaserScan, callback)
 rospy.spin()
 ```
 ```shell
-roslaunch rubot_control rubot_lidar_test.launch
+roslaunch gopigo3_control rubot_lidar_test.launch
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 ![Getting Started](./Images/1_lidar_test.png)
@@ -516,7 +516,7 @@ We will use now the created world to test the autonomous navigation with obstacl
 
 We have to launch the "rubot_self_nav.launch" file in the "rubot_control" package.
 ```shell
-roslaunch rubot_control rubot_self_nav.launch
+roslaunch gopigo3_control rubot_self_nav.launch
 ```
 >Careful:
 - we have included in launch file: gazebo spawn, rviz visualization and rubot_nav node execution 
@@ -546,7 +546,7 @@ https://github.com/Albert-Alvarez/ros-gopigo3/blob/lab-sessions/develop/ROS%20co
 <img src="./Images/2_wall_follower1.png">
 A rubot_wall_follower_gm.launch is generated to test the node within a specified world
 ```shell
-roslaunch rubot_control rubot_wall_follower_gm.launch
+roslaunch gopigo3_control rubot_wall_follower_gm.launch
 ```
 <img src="./Images/1_wall_follower_gm.png">
 
@@ -565,7 +565,7 @@ The algorith is based on laser ranges test and depends on the LIDAR type:
 <img src="./Images/1_wall_follower2.png">
 
 ```shell
-roslaunch rubot_control rubot_wall_follower_rg.launch
+roslaunch gopigo3_control rubot_wall_follower_rg.launch
 ```
 <img src="./Images/1_wall_ranges.png">
 
@@ -580,6 +580,6 @@ Modify the python script developed in turlesim control package according to the 
 
 For validation type:
 ```shell
-roslaunch rubot_control rubot_go2pose.launch
+roslaunch gopigo3_control rubot_go2pose.launch
 ```
 ![Getting Started](./Images/1_rubot_go2point.png)
