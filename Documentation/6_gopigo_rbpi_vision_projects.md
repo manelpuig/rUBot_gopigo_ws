@@ -12,6 +12,7 @@ References:
 - https://industrial-training-master.readthedocs.io/en/melodic/_source/session5/OpenCV-in-Python.html
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## **Hardware architecture**
 
 To optimize the hardware/software capabilities, we will distribute the ROS nodes between raspberrypi3 and a PC.
@@ -41,6 +42,8 @@ First of all, copy the "gopigo3_projects" package we have prepared to the "rUBot
 
 Now open a new terminal in workspace and lauch roscore:
 =======
+=======
+>>>>>>> bf64a4b42e0f62ae18f6bf8da81876fda91e87bd
 We will 
 Master en pc
 
