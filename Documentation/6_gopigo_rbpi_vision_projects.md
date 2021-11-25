@@ -11,6 +11,7 @@ References:
 - http://wiki.ros.org/Camera%2BDynamixelRobotSample/CameraPictureServer
 - https://industrial-training-master.readthedocs.io/en/melodic/_source/session5/OpenCV-in-Python.html
 
+<<<<<<< HEAD
 ## **Hardware architecture**
 
 To optimize the hardware/software capabilities, we will distribute the ROS nodes between raspberrypi3 and a PC.
@@ -39,6 +40,33 @@ When different hardware have to communicate in a closed-loop within ROS, is need
 First of all, copy the "gopigo3_projects" package we have prepared to the "rUBot_gopigo_ws" workspace in /src folder. Compile the workspace with catkin_make.
 
 Now open a new terminal in workspace and lauch roscore:
+=======
+We will 
+Master en pc
+
+en rbpi3:
+installar sync
+fitxer conf posar ip pc
+export master uri: pc
+
+bringup amb camera
+
+en pc:
+installar sync
+fitxer conf posar ip rbpi
+canviar el nom del topic 
+
+roslaunch gopigo3_slam navigation
+rosrun gopigo3_projects 
+
+## 1. Take photo using Code:
+
+https://learn.turtlebot.com/2015/02/04/3/
+
+Modify the "take_photo.py" python file with:
+- the proper topic name /gopigo/camera1/image_raw
+- the proper photo folder path: /media/sf_github_manelpuig/rUBot_gopigo_ws/Documentation/photos/photo1.jpg
+>>>>>>> bf64a4b42e0f62ae18f6bf8da81876fda91e87bd
 ```shell
 roscore
 ```
