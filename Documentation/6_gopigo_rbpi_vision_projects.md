@@ -1,7 +1,6 @@
 # **gopigo3 challenging projects in raspberrypi3**
 
-The projects proposed will be based on:
-1. Image processing
+The projects proposed will be based on Image processing and navigation
 References:
 - https://learn.turtlebot.com/
 - https://learn.turtlebot.com/2015/02/04/1/
@@ -11,19 +10,20 @@ References:
 - http://wiki.ros.org/Camera%2BDynamixelRobotSample/CameraPictureServer
 - https://industrial-training-master.readthedocs.io/en/melodic/_source/session5/OpenCV-in-Python.html
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 ## **Hardware architecture**
 
 To optimize the hardware/software capabilities, we will distribute the ROS nodes between raspberrypi3 and a PC.
+
 ![](./Images/6_architecture.png)
+
 - ROS Master will be located on the PC
 - In Raspberrypi3 we will launch: gopigo3, lidar and raspicam
 - In PC we will launch: slam, navigation and the other project nodes
 
 When different hardware have to communicate in a closed-loop within ROS, is needed:
 1. Clock syncronisation has to be ensured. 
-    - We have to install chrony in raspberrypi3 and PC
+    - We have to install "chrony" in raspberrypi3 and PC
     - define the config with the corresponding IP address
 2. Environment variables
     - In PC: open a new terminal and type
@@ -41,35 +41,7 @@ When different hardware have to communicate in a closed-loop within ROS, is need
 First of all, copy the "gopigo3_projects" package we have prepared to the "rUBot_gopigo_ws" workspace in /src folder. Compile the workspace with catkin_make.
 
 Now open a new terminal in workspace and lauch roscore:
-=======
-=======
->>>>>>> bf64a4b42e0f62ae18f6bf8da81876fda91e87bd
-We will 
-Master en pc
 
-en rbpi3:
-installar sync
-fitxer conf posar ip pc
-export master uri: pc
-
-bringup amb camera
-
-en pc:
-installar sync
-fitxer conf posar ip rbpi
-canviar el nom del topic 
-
-roslaunch gopigo3_slam navigation
-rosrun gopigo3_projects 
-
-## 1. Take photo using Code:
-
-https://learn.turtlebot.com/2015/02/04/3/
-
-Modify the "take_photo.py" python file with:
-- the proper topic name /gopigo/camera1/image_raw
-- the proper photo folder path: /media/sf_github_manelpuig/rUBot_gopigo_ws/Documentation/photos/photo1.jpg
->>>>>>> bf64a4b42e0f62ae18f6bf8da81876fda91e87bd
 ```shell
 roscore
 ```
