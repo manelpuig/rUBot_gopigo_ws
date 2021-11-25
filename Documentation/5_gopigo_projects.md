@@ -14,7 +14,7 @@ References:
 - http://wiki.ros.org/Camera%2BDynamixelRobotSample/CameraPictureServer
 - https://industrial-training-master.readthedocs.io/en/melodic/_source/session5/OpenCV-in-Python.html
 
-The first step is to create a new package "rubot_vision" with dependencies:
+The first step is to create a new package "gopigo3_projects" with dependencies:
 - rospy
 - sensor_msgs
 - std_msgs
@@ -126,7 +126,7 @@ The objective is to follow the route and take pictures. Proceed with the followi
     ```
 
 >Careful!: 
-Be sure to execute the rosrun instruction inside the folder where your yaml file is located, or specify the absolute pathe or relative path to the yaml file.
+Be sure to execute the rosrun instruction inside the "rUBot_gopigo_ws" folder. Review the the absolute path or relative path to the yaml file and the picture path destination.
 
 ![Getting Started](./Images/5_follow_route2.png)
 
