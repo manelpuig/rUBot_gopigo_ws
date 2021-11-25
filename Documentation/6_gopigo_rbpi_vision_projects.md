@@ -11,6 +11,24 @@ References:
 - http://wiki.ros.org/Camera%2BDynamixelRobotSample/CameraPictureServer
 - https://industrial-training-master.readthedocs.io/en/melodic/_source/session5/OpenCV-in-Python.html
 
+We will 
+Master en pc
+
+en rbpi3:
+installar sync
+fitxer conf posar ip pc
+export master uri: pc
+
+bringup amb camera
+
+en pc:
+installar sync
+fitxer conf posar ip rbpi
+canviar el nom del topic 
+
+roslaunch gopigo3_slam navigation
+rosrun gopigo3_projects 
+
 ## 1. Take photo using Code:
 
 https://learn.turtlebot.com/2015/02/04/3/
