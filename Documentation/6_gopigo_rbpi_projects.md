@@ -25,16 +25,35 @@ When different hardware have to communicate in a closed-loop within ROS, is need
 1. Clock syncronisation has to be ensured. 
     - We have to install "chrony" in raspberrypi3 and PC
     - define the config with the corresponding IP address
+        - in PC open the file /etc/chrony/chrony.conf and add the lines:
+        ```shell
+        # Step the system clock instead of slewing it if the adjustment is larger than
+        # one second, but only in the first three clock updates.
+        makestep 1 3
+        local stratum 8
+        allow 192.168.4.1
+        ```
+        - in Raspberrypi3 open the file /etc/chrony/chrony.conf and add the lines:
+        ```shell
+        # Step the system clock instead of slewing it if the adjustment is larger than
+        # one second, but only in the first three clock updates.
+        makestep 1 3
+        server 192.168.4.16 minpoll 0 maxpoll 5 maxdelay .05
+        ```
+        > verify the IP address of the PC within the gopigo3 network
+        > 
+        > Open the file as superuser: sudo nano chrony.conf
+
 2. Environment variables
-    - In PC: open a new terminal and type
+    - In PC: open a new terminal and type (or add them to .bashrc file)
     ```shell
-    export ROS_IP=192.168.4.xx
-    export ROS_MASTER_URI=http://192.168.4.xx:11311
+    export ROS_IP=192.168.4.16
+    export ROS_MASTER_URI=http://192.168.4.16:11311
     ```
-    - In raspberrypi3: open a new terminal and type
+    - In raspberrypi3: open a new terminal and type (or add them to .bashrc file)
     ```shell
     export ROS_IP=192.168.4.1
-    export ROS_MASTER_URI=http://192.168.4.xx:11311
+    export ROS_MASTER_URI=http://192.168.4.16:11311
     ```
 
 ## **Launch ROS Master in PC**
@@ -49,7 +68,7 @@ roscore
 You are now ready to launch the different nodes in raspberrypi3 (gopigo3, lidar and raspicam).
 - Open a new terminal in raspberrypi3 and type:
 ```shell
-roslaunch gopigo3_control bringup.launch
+roslaunch gopigo3_control gopigo3yd_bringup.launch
 ```
 
 ## **Projects execution in PC**
@@ -128,10 +147,6 @@ We have generated  the python file "Follow_the_route2.py" that reads input data 
 
 The objective is to follow the route and take pictures. Proceed with the following steps:
 
-- Launch gopigo3_bringup in rbpi3 terminal: (If you have closed it)
-    ```shell
-    roslaunch gopigo3_control gopigo3_bringup.launch
-    ```
 - Run the navigation using the previously generated map::
     ```shell
     roslaunch gopigo3_slam gopigo3_navigation.launch
