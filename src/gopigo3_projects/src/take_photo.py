@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
     # Use '_image_title' parameter from command line
     # Default value is 'photo.jpg'
-    img_title = rospy.get_param('~image_title', '/media/sf_github_manelpuig/rUBot_gopigo_ws/Documentation/photos/photo2.jpg')
+    img_title = rospy.get_param('~image_title', './src/gopigo3_projects/photos/photo_sim.jpg')
 
     if camera.take_picture(img_title):
         rospy.loginfo("Saved image " + img_title)
