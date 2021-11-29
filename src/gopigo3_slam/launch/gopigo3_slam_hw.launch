@@ -1,5 +1,5 @@
 <launch>
-  <arg name="lidar_model" />
+  <arg name="lidar_model" default="yd"/>
   <arg name="model" default="gopigo3" />
   <arg name="open_rviz" default="true"/>
 
@@ -20,15 +20,7 @@
     <param name="use_gui" value="False"/>
   </node>
 
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="50.0" />
-    <param name="tf_prefix" value=""/>
-  </node>
   <include file="$(find gopigo3_slam)/launch/gmapping.launch"/>
-
-  <include file="$(find gopigo3_slam)/launch/move_base.launch">
-    <arg name="move_forward_only" value="false" />
-  </include>
 
   <node if="$(arg open_rviz)" pkg="rviz" type="rviz" name="rviz" required="true"
     args="-d $(find gopigo3_slam)/rviz/gmapping.rviz"/>

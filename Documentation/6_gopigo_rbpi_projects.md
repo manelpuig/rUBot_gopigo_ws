@@ -64,15 +64,15 @@ When different hardware have to communicate in a closed-loop within ROS, is need
 
 2. Environment variables
     - In PC: open a new terminal and type (or add them to .bashrc file)
-    ```shell
-    export ROS_IP=192.168.4.16
-    export ROS_MASTER_URI=http://192.168.4.16:11311
-    ```
+        ```shell
+        export ROS_IP=192.168.4.16
+        export ROS_MASTER_URI=http://192.168.4.16:11311
+        ```
     - In raspberrypi3: open a new terminal and type (or add them to .bashrc file)
-    ```shell
-    export ROS_IP=192.168.4.1
-    export ROS_MASTER_URI=http://192.168.4.16:11311
-    ```
+        ```shell
+        export ROS_IP=192.168.4.1
+        export ROS_MASTER_URI=http://192.168.4.16:11311
+        ```
 
 ## **Launch ROS Master in PC**
 First of all, copy the "gopigo3_projects" package we have prepared to the "rUBot_gopigo_ws" workspace in /src folder. Compile the workspace with catkin_make.
@@ -91,22 +91,52 @@ To work in raspberrypi3 you can:
     ```
 You are now ready to launch the different nodes in raspberrypi3 (gopigo3, lidar and raspicam).
 - Open a new terminal in raspberrypi3 and type:
-```shell
-roslaunch gopigo3_control gopigo3yd_bringup.launch
-```
+    ```shell
+    roslaunch gopigo_control gopigo3_bringup.launch
+    ```
+    > the argument "lidar_model" is "yd" by default. Change the launch file default value or specify the value typing:
+    ```shell
+    roslaunch gopigo_control gopigo3_bringup.launch lidar_model:=rp
+    ```
 
 ## **Projects execution in PC**
 We will now start different nodes corresponding to the different projects we are planning for this section:
+- Make a new map
 - Take a photo
 - Go to specific point in the map
 - Go to specific point in the map and take a photo
 
-## 1. Take photo using Code:
+## 1. Make a new map
+Let's generate a new map, but now with this new architecture will be done significantly faster!
+
+- We open a new terminal in PC to launch the slam:
+    ```shell
+    roslaunch gopigo3_slam gopigo3_slam_hw.launch
+    ```
+    > The launch file has by default the arguments lidar_model:=yd and model:=gopigo3
+    >
+    > You can change the default values in launch file or add them in the instruction:
+    ```shell
+    roslaunch gopigo3_slam gopigo3_slam_hw.launch lidar_model:=rp model:=gopigo3rp
+    ```
+- We open a new terminal in Raspberrypi to launch the wall_follower node:
+    ```shell
+    roslaunch gopigo_control rubot_wall_follower_gm.launch lidar_model:=rp model:=gopigo3rp
+    ```
+- When the map generation is finished, we open a new terminal in PC and type in the destination map file location:
+    ```shell
+    rosrun map_server map_saver -f mimapa
+    ```
+- We can close all the processes in terminals
+
+## 2. Take photo using Code:
 The objective is to program a python code to take a photo using raspicam in gopigo3 robot prototype.
 
-Important information is taken from: https://learn.turtlebot.com/2015/02/04/3/
-
 Follow the procedure:
+- In raspberrypi3: We consider you have your gopigo3 launched included with the raspicam. Verify the gopigo3_bringup.launch file to have the raspicam activated. If it is not activated, change it, close the process and type:
+    ```shell
+    roslaunch gopigo_control gopigo3_bringup.launch
+    ```
 - Identify the topic name where raspicam publishes the photo as a mesage of type sensor_msgs. In a new terminal type:
     ```shell
     rostopic list
