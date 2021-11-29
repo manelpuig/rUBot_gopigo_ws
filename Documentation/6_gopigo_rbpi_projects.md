@@ -23,26 +23,44 @@ To optimize the hardware/software capabilities, we will distribute the ROS nodes
 
 When different hardware have to communicate in a closed-loop within ROS, is needed:
 1. Clock syncronisation has to be ensured. 
-    - We have to install "chrony" in raspberrypi3 and PC
+    - We have to install "chrony" in raspberrypi3 and PC. Open a new terminal and install it (you need internet connection)
+    ```shell
+    sudo apt-get install chrony
+    ```
     - define the config with the corresponding IP address
-        - in PC open the file /etc/chrony/chrony.conf and add the lines:
-        ```shell
-        # Step the system clock instead of slewing it if the adjustment is larger than
-        # one second, but only in the first three clock updates.
-        makestep 1 3
-        local stratum 8
-        allow 192.168.4.1
-        ```
-        - in Raspberrypi3 open the file /etc/chrony/chrony.conf and add the lines:
-        ```shell
-        # Step the system clock instead of slewing it if the adjustment is larger than
-        # one second, but only in the first three clock updates.
-        makestep 1 3
-        server 192.168.4.16 minpoll 0 maxpoll 5 maxdelay .05
-        ```
-        > verify the IP address of the PC within the gopigo3 network
-        > 
-        > Open the file as superuser: sudo nano chrony.conf
+        - in PC (will be the Master-the Server):
+            - open the file /etc/chrony/chrony.conf 
+            ```shell
+            sudo nano /etc/chrony/chrony.conf
+            ```
+            - add the lines:
+            ```shell
+            # Step the system clock instead of slewing it if the adjustment is larger than
+            # one second, but only in the first three clock updates.
+            makestep 1 3
+            local stratum 8
+            allow 192.168.4.1
+            ```
+            > to save and close the nano editor type ctrl+o and ctrl+x
+            - init the chrony syncronization service:
+            ```shell
+            sudo /etc/init.d/chrony stop
+            sudo /etc/init.d/chrony start
+            ```
+        - in Raspberrypi3 (will be the Client):
+            - open the file /etc/chrony/chrony.conf and add the lines:
+            ```shell
+            # Step the system clock instead of slewing it if the adjustment is larger than
+            # one second, but only in the first three clock updates.
+            makestep 1 3
+            server 192.168.4.16 minpoll 0 maxpoll 5 maxdelay .05
+            ```
+            > verify the IP address of the PC within the gopigo3 network
+            - init the chrony syncronization service:
+            ```shell
+            sudo /etc/init.d/chrony stop
+            sudo /etc/init.d/chrony start
+            ```
 
 2. Environment variables
     - In PC: open a new terminal and type (or add them to .bashrc file)
@@ -65,6 +83,12 @@ Now open a new terminal in workspace and lauch roscore:
 roscore
 ```
 ## **Gopigo3 bringup in raspberrypi3**
+To work in raspberrypi3 you can:
+- use VNC
+- open a terminal in windows and connect to rbpi3 using ssh
+    ```slell
+    ssh pi@192.168.4.1
+    ```
 You are now ready to launch the different nodes in raspberrypi3 (gopigo3, lidar and raspicam).
 - Open a new terminal in raspberrypi3 and type:
 ```shell
