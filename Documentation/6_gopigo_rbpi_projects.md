@@ -27,7 +27,7 @@ When different hardware have to communicate in a closed-loop within ROS, is need
     ```shell
     sudo apt-get install chrony
     ```
-    - define the config with the corresponding IP address
+    - define the configuration with the corresponding IP address
         - in PC (will be the Master-the Server):
             - open the file /etc/chrony/chrony.conf 
             ```shell
@@ -55,14 +55,14 @@ When different hardware have to communicate in a closed-loop within ROS, is need
             makestep 1 3
             server 192.168.4.16 minpoll 0 maxpoll 5 maxdelay .05
             ```
-            > verify the IP address of the PC within the gopigo3 network
+            > verify the IP address of the PC within the gopigo3 network. In my case is 192.168.4.16
             - init the chrony syncronization service:
             ```shell
             sudo /etc/init.d/chrony stop
             sudo /etc/init.d/chrony start
             ```
 
-2. Environment variables
+2. Source the new environment variables
     - In PC: open a new terminal and type (or add them to .bashrc file)
         ```shell
         export ROS_IP=192.168.4.16
@@ -98,6 +98,7 @@ You are now ready to launch the different nodes in raspberrypi3 (gopigo3, lidar 
     ```shell
     roslaunch gopigo_control gopigo3_bringup.launch lidar_model:=rp
     ```
+    > The raspicam_node is not activated by default, if you want to activate it, modify the launch file
 
 ## **Projects execution in PC**
 We will now start different nodes corresponding to the different projects we are planning for this section:
@@ -119,10 +120,13 @@ Let's generate a new map, but now with this new architecture will be done signif
     ```shell
     roslaunch gopigo3_slam gopigo3_slam_hw.launch lidar_model:=rp model:=gopigo3rp
     ```
-- We open a new terminal in Raspberrypi to launch the wall_follower node:
+- We open a new terminal in PC to launch the wall_follower node:
     ```shell
-    roslaunch gopigo_control rubot_wall_follower_gm.launch lidar_model:=rp model:=gopigo3rp
+    roslaunch gopigo3_control node_hw_wall_follower_gm.launch
     ```
+    > The launch file has by default the arguments lidar_model:=yd and model:=gopigo3
+    >
+    > You can change the default values in launch file or add the new arguments in the roslaunch instruction
 - When the map generation is finished, we open a new terminal in PC and type in the destination map file location:
     ```shell
     rosrun map_server map_saver -f mimapa
@@ -133,7 +137,7 @@ Let's generate a new map, but now with this new architecture will be done signif
 The objective is to program a python code to take a photo using raspicam in gopigo3 robot prototype.
 
 Follow the procedure:
-- In raspberrypi3: We consider you have your gopigo3 launched included with the raspicam. Verify the gopigo3_bringup.launch file to have the raspicam activated. If it is not activated, change it, close the process and type:
+- In raspberrypi3: We consider you have your gopigo3 launched including the raspicam node. Verify the gopigo3_bringup.launch file to have the raspicam node activated. If it is not activated, change it, close the process and type again:
     ```shell
     roslaunch gopigo_control gopigo3_bringup.launch
     ```
@@ -142,8 +146,8 @@ Follow the procedure:
     rostopic list
     ```
 - Then modify the "take_photo.py" python file with:
-    - the proper topic name /gopigo/camera1/image_raw
-    - the proper photo filename in folder path: /media/sf_github_manelpuig/rUBot_gopigo_ws/Documentation/photos/photo1.jpg
+    - the proper topic name
+    - the proper photo filename in folder path: ./src/gopigo3_projects/photos/photo1.jpg
 - run the "take_photo.py" python file to take a photo
     ```shell
     rosrun gopigo3_projects take_photo.py
@@ -152,7 +156,7 @@ Follow the procedure:
 
 ![](./Images/5_photo1.png)
 
-## **2. Go to specific point in the map**
+## 3. Go to specific point in the map
 
 In this project we will learn how to send robot a command: “go to a specific position at map”.
 
@@ -165,10 +169,9 @@ Follow the procedure:
     ```shell
     roslaunch gopigo3_control gopigo3_bringup.launch
     ```
-- Generate the map of your real world following instructions of lesson 4
 - Launch the navigation using the previously generated map:
     ```shell
-    roslaunch gopigo3_slam gopigo3_navigation.launch
+    roslaunch gopigo3_slam gopigo3_navigation_hw.launch
     ```
 - Choose a target point in RVIZ using "Publish point" and select the target coordinates (i.e. x=2.0 y=-0.7)
 ![Getting Started](./Images/5_go2point.png)
@@ -181,11 +184,8 @@ Follow the procedure:
     ```shell
     rosrun gopigo3_projects go_to_specific_point_on_map.py
     ```
-![Getting Started](./Images/6_go_to_point.png)
->Carefull!!:
-- if the python program is not working, be sure to make "source devel/setup.bash"
 
-## **3. Go to specific point in the map and take a photo**
+## 4. Go to specific point in the map and take a photo
 
 We will combine our skills from two previous objectives: 
 - “Going to a Specific Location on Your Map Using Code” 
@@ -200,18 +200,16 @@ We have generated  the python file "Follow_the_route2.py" that reads input data 
 - {filename: './src/gopigo3_projects/photos/room33.png', position: { x: 1.7, y: 0.5}, angle: {fi: 0}}
 
 The objective is to follow the route and take pictures. Proceed with the following steps:
-
-- Run the navigation using the previously generated map::
+- Launch gopigo3_bringup **in rbpi3 terminal**: (If you have closed it)
     ```shell
-    roslaunch gopigo3_slam gopigo3_navigation.launch
+    roslaunch gopigo3_control gopigo3_bringup.launch
     ```
-- Specify a "route2.yaml" file with the desired points to follow and take photo:
+- Launch the navigation **in PC terminal**, using the previously generated map:
+    ```shell
+    roslaunch gopigo3_slam gopigo3_navigation_hw.launch
+    ```
 
-- {filename: './src/gopigo3_projects/photos/room11.png', position: { x: -0.3, y: -0.8}, angle: {fi: -90}}
-- {filename: './src/gopigo3_projects/photos/room22.png', position: { x: 1.7, y: -0.7}, angle: {fi: 0}}
-- {filename: './src/gopigo3_projects/photos/room33.png', position: { x: 1.7, y: 0.5}, angle: {fi: 0}}
-
-- Open a terminal in the "rUBot_gopigo_ws" and launch the "follow_the_route.py" program:
+- Launch the "follow_the_route2.py" program **in PC terminal**, in the "rUBot_gopigo_ws" folder:
     ```shell
     rosrun gopigo3_projects follow_the_route2.py
     ```

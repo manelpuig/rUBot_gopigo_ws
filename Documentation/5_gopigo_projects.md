@@ -23,7 +23,7 @@ The first step is to create a new package "gopigo3_projects" with dependencies:
 ```shell
 catkin_create_pkg gopigo3_projects rospy std_msgs sensor_msgs cv_bridge
 ```
-This package is already created and ready to use it!
+This package is already created and ready to use it!. You have not to create it.
 
 We will perform some specific projects related to gopigo3 vision capabilities in a navigation process.
 
@@ -40,7 +40,7 @@ rostopic list
 ```
 - Then modify the "take_photo.py" python file with:
     - the proper topic name /gopigo/camera1/image_raw
-    - the proper photo filename in folder path: /media/sf_github_manelpuig/rUBot_gopigo_ws/Documentation/photos/photo1.jpg
+    - the proper photo filename in folder path: ./src/gopigo3_projects/photos/photo_sim.jpg
 - run the "take_photo.py" python file to take a photo
 ```shell
 rosrun gopigo3_projects take_photo.py

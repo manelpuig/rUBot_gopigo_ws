@@ -1,5 +1,0 @@
-<launch>
-  <include file="$(find gazebo_ros)/launch/empty_world.launch" />
-  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
-    args="-file $(find nexus_mecanum)/urdf/nexus.urdf -urdf -model nexus" output="screen"/>
-</launch>
