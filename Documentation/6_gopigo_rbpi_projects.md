@@ -21,12 +21,15 @@ To optimize the hardware/software capabilities, we will distribute the ROS nodes
 - In Raspberrypi3 we will launch: gopigo3, lidar and raspicam
 - In PC we will launch: slam, navigation and the other project nodes
 
+First of all power on the gopigo3 and connect the PC to the RoboticsUB XX hotspot.
+
 When different hardware have to communicate in a closed-loop within ROS, is needed:
 1. Clock syncronisation has to be ensured. 
     - We have to install "chrony" in raspberrypi3 and PC. Open a new terminal and install it (you need internet connection)
     ```shell
     sudo apt-get install chrony
     ```
+    > Connect the raspberrypi to the router using ethernet cable
     - define the configuration with the corresponding IP address
         - in PC (will be the Master-the Server):
             - open the file /etc/chrony/chrony.conf 
