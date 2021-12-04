@@ -1,7 +1,7 @@
 <launch>
   <arg name="lidar_model" default="yd"/>
   <arg name="model" default="gopigo3" />
-  <arg name="map_file" default="Hospital3_map"/>
+  <arg name="map_file" default="mimapa"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
   
@@ -14,7 +14,7 @@
     textfile="$(find gopigo3_description)/urdf/$(arg model)rp.urdf" />
 
   
-  <node pkg="map_server" name="map_server" type="map_server" args="$(find gopigo_slam)/maps/$(arg map_file).yaml"/>
+  <node pkg="map_server" name="map_server" type="map_server" args="$(find gopigo3_slam)/maps/$(arg map_file).yaml"/>
   
   <include file="$(find gopigo3_slam)/launch/amcl.launch"/>
   

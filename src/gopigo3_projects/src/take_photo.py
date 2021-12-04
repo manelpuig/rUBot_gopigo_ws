@@ -28,7 +28,9 @@ class TakePhoto:
         self.image_received = False
 
         # Connect image topic
-        img_topic = "/gopigo/camera1/image_raw"
+        # in HW raspicam: /raspicam_node/image
+        # in SW gopigo3: /gopigo/camera1/image_raw
+        img_topic = "/raspicam_node/image/compressed"
         self.image_sub = rospy.Subscriber(img_topic, Image, self.callback)
 
         # Allow up to one second to connection

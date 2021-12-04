@@ -121,7 +121,7 @@ Let's generate a new map, but now with this new architecture will be done signif
     >
     > You can change the default values in launch file or add them in the instruction:
     ```shell
-    roslaunch gopigo3_slam gopigo3_slam_hw.launch lidar_model:=rp model:=gopigo3rp
+    roslaunch gopigo3_slam gopigo3_slam_hw.launch lidar_model:=rp
     ```
 - We open a new terminal in PC to launch the wall_follower node:
     ```shell
