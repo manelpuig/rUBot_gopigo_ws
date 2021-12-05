@@ -1,7 +1,7 @@
 <launch>
   <arg name="lidar_model" default="yd"/>
   <arg name="model" default="gopigo3" />
-  <arg name="map_file" default="mimapa"/>
+  <arg name="map_file" default="mimapa1"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
   
