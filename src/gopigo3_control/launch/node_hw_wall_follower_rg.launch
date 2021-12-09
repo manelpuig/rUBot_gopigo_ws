@@ -1,0 +1,7 @@
+<launch>
+  <arg name="lidar_model" default="rp" />
+  <!-- Navigation Program   -->
+  <node name="wall_follow" pkg="gopigo3_control" type="rubot_wall_follower_rg1_hw.py" output="screen" >
+      <param name="LIDAR" value="$(arg lidar_model)"/>
+  </node>
+</launch>

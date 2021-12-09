@@ -1,9 +1,9 @@
 <launch>
   <!-- launch follow wall   -->
   <arg name="lidar_model" default="rp" />
-  <arg name="kp" default="0.5" />
-  <arg name="distance_reference" default="0.3" />
-  <arg name="lookahead_distance" default="0.3" />
+  <arg name="kp" default="5" />
+  <arg name="distance_reference" default="0.25" />
+  <arg name="lookahead_distance" default="0.25" />
   <arg name="forward_speed" default="0.04" />
   <arg name="theta" default="50.0" />
   <node name="wall_follower_controller" pkg="gopigo3_control" type="rubot_wall_follower_gm_hw.py" output="screen" >

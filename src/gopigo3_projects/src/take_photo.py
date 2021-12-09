@@ -30,7 +30,7 @@ class TakePhoto:
         # Connect image topic
         # in HW raspicam: /raspicam_node/image
         # in SW gopigo3: /gopigo/camera1/image_raw
-        img_topic = "/raspicam_node/image/compressed"
+        img_topic = "/raspicam_node/image"
         self.image_sub = rospy.Subscriber(img_topic, Image, self.callback)
 
         # Allow up to one second to connection
@@ -65,7 +65,8 @@ if __name__ == '__main__':
 
     # Use '_image_title' parameter from command line
     # Default value is 'photo.jpg'
-    img_title = rospy.get_param('~image_title', './src/gopigo3_projects/photos/photo_sim.jpg')
+    #img_title = rospy.get_param('~image_title', './src/gopigo3_projects/photos/photo_sim.jpg')
+    img_title = "./src/gopigo3_projects/photos/photo_hw.jpg"
 
     if camera.take_picture(img_title):
         rospy.loginfo("Saved image " + img_title)
