@@ -270,6 +270,34 @@ It is important to note that:
 - the number of points of real YDLidar is 720 (one each half degree)
 - the number of points of simulated Lidar has to be adapted to the same 720 (by default is 360 (one each degree))
 
+> Suggestion!:
+> 
+> The best solution is to mount the LIDAR with the motor in back position in order to have the zero index in front
+>
+> In this case the model is defined by:
+```xml
+  <joint name="scan_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_scan"/>
+    <origin rpy="0 0 0" xyz="-0.02 0 0.085"/>
+  </joint>
+  <link name="base_scan">
+    <visual>
+      <origin rpy="0 0 3.1416" xyz="0 0 0.02"/>
+      <geometry>
+        <mesh filename="package://gopigo3_description/meshes/sensors/X4.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+```
+> For slam & navigation purposes:
+>- the zero angle is consideres in the motor position
+>- you will have to add a 180ª rotation across z axis:
+```xml
+<node if="$(eval model=='gopigo3rp.urdf')" pkg="tf" type="static_transform_publisher" name="base_link_to_base_scan"
+    args="-0.033 0.0 0.08 3.14 0.0 0.0   /base_link /base_scan 40" />
+```
+
 #### **Using Xacro package**
 
 Xacro (short for XML Macros) helps in reducing the overall size of the URDF file and makes it easier to read and maintain. It also allows us to create modules and reutilize them to create repeated structures, such as several arms or legs. With this package you can use costants, simple math and macros to create your robot model easier and compact.
