@@ -611,3 +611,22 @@ For validation type:
 roslaunch gopigo3_control rubot_go2pose.launch
 ```
 ![Getting Started](./Images/1_rubot_go2point.png)
+
+#### **5. gopigo3 bringup**
+You can also create a new "gopigo3_bringup.launch" file to bringup your robot model in gazebo within the designed world and then launch the specific control node.
+
+This is a good option when:
+- working with real gopigo3 robot
+- you want to use different HW platforms: 
+  - raspberrypi3 to bringup the robot with sensors & actuators
+  - PC to launch the other nodes that requires power computing and graphical interface
+
+Let's see an exemple:
+```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
+```
+To bringup your gopigo3 model in gazebo
+```shell
+roslaunch gopigo3_control node_wall_follower_rg.launch
+```
+To launch the wall_follower node
