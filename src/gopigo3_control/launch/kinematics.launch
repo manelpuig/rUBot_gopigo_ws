@@ -23,7 +23,7 @@
   <!-- Show in Rviz   -->
   <node name="rviz" pkg="rviz" type="rviz"  args="-d $(find gopigo3_control)/rviz/rubot_nav.rviz"/>
   <!-- run gopigo   -->
-  <arg name="v" default="0.2"/>
+  <arg name="v" default="0.4"/>
   <arg name="w" default="0.2"/>
   <arg name="d" default="0.8"/>
   <node pkg="gopigo3_control" type="kinematics.py" name="rubot_nav" output="screen" >
