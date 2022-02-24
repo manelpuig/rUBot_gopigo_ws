@@ -576,11 +576,11 @@ We have to launch the "rubot_self_nav.launch" file in the "rubot_control" packag
 ```shell
 roslaunch gopigo3_control rubot_self_nav.launch
 ```
->Careful:
-- we have included in launch file: gazebo spawn, rviz visualization and rubot_nav node execution 
-- Verify in rviz you have to change the fixed frame to "odom" frame
+>Be careful:
+>- we have included in launch file: gazebo spawn, rviz visualization and >rubot_nav node execution 
+>- Verify in rviz if you have to change the fixed frame to "odom" frame
 
-![Getting Started](./Images/1_rubot_self_nav.png)
+![](./Images/1_rubot_self_nav.png)
 The algorithm description functionality is:
 - "rubot_self_nav.py": The Python script makes the robot go forward. 
     - LIDAR is allways searching the closest distance and the angle
@@ -601,12 +601,12 @@ We have developed 2 different methods for wall follower:
 
 Follow the instructions to perform the rubot_wall_follower_gm.py python program are in the notebook: 
 https://github.com/Albert-Alvarez/ros-gopigo3/blob/lab-sessions/develop/ROS%20con%20GoPiGo3%20-%20S4.md
-<img src="./Images/2_wall_follower1.png">
+![](./Images/2_wall_follower1.png)
 A rubot_wall_follower_gm.launch is generated to test the node within a specified world
 ```shell
 roslaunch gopigo3_control rubot_wall_follower_gm.launch
 ```
-<img src="./Images/1_wall_follower_gm.png">
+![](./Images/1_wall_follower_gm.png)
 
 You can see a video for the Maze wall follower process in: 
 [![IMAGE_ALT](https://img.youtube.com/vi/z5sAyiFs-RU/maxresdefault.jpg)](https://youtu.be/z5sAyiFs-RU)
@@ -618,14 +618,14 @@ We have created another rubot_wall_follower_rg.py file based on the reading dist
 
 Follow the instructions to create the rubot_wall_follower_rg.py python file: https://www.theconstructsim.com/wall-follower-algorithm/
 
-<img src="./Images/1_wall_follower.png">
+![](./Images/1_wall_follower.png)
 The algorith is based on laser ranges test and depends on the LIDAR type:
-<img src="./Images/1_wall_follower2.png">
+![](./Images/1_wall_follower2.png)
 
 ```shell
 roslaunch gopigo3_control rubot_wall_follower_rg.launch
 ```
-<img src="./Images/1_wall_ranges.png">
+![](./Images/1_wall_ranges.png)
 
 #### **4. Go to POSE**
 Define a specific Position and Orientation as a target point to gopigo3 robot
@@ -640,7 +640,7 @@ For validation type:
 ```shell
 roslaunch gopigo3_control rubot_go2pose.launch
 ```
-![Getting Started](./Images/1_rubot_go2point.png)
+![](./Images/1_rubot_go2point.png)
 
 #### **5. gopigo3 bringup**
 You can also create a new "gopigo3_bringup.launch" file to bringup your robot model in gazebo within the designed world and then launch the specific control node.
