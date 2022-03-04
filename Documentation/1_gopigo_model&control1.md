@@ -26,18 +26,19 @@ Interesting complementary information could be found:
 
 ## **1. rUBot gopigo3 model generation**
 
-First of all, we have to create the "gopigo3_description" package containing the gopigo3 model:
+We have already created the "gopigo3_description" package to generate our robot model.
+We remind you the needed instructions to create the package if you want to do it from zero:
 ```shell
-cd ~/rubot_gopigo_ws/src
+cd ~/Desktop/rUBot_gopigo_ws/src
 catkin_create_pkg gopigo3_description rospy
 cd ..
 catkin_make
 ```
 Then open the .bashrc file and verify the environment variables and source to the proper workspace:
 ```shell
-source ~/rubot_gopigo_ws/devel/setup.bash
+source ~/Desktop/rUBot_gopigo_ws/devel/setup.bash
 ```
-To create our robot model, we use URDF files (Unified Robot Description Format). URDF file is an XML format file for representing a robot model.(http://wiki.ros.org/urdf/Tutorials)
+To create our robot model, we use URDF files (Unified Robot Description Format). URDF file is an XML format file for representing a robot model (http://wiki.ros.org/urdf/Tutorials).
 
 We have created 2 folders for model description:
 - URDF: folder where different URDF models are located
@@ -106,7 +107,7 @@ Actuator:
 
 The full model contains also information about the sensor and actuator controllers using specific Gazebo plugins (http://gazebosim.org/tutorials?tut=ros_gzplugins#Tutorial:UsingGazebopluginswithROS). 
 
-Gazebo plugins give your URDF models greater functionality and compatible with ROS messages and service calls for sensor output and motor input. 
+Gazebo plugins give your URDF models greater functionality and compatiblility with ROS messages and service calls for sensor output and motor input. 
 
 These plugins can be referenced through a URDF file, and to insert them in the URDF file, you have to follow the sintax:
 - for Differential drive actuator:
@@ -261,7 +262,7 @@ Some modifications in the initial model "gopigo3_init.gazebo" have been made to:
 
 Special attention has to be done to the YDLIDAR sensor.
 
-- YDLIDAR X4 is a 360-degree two-dimensional rangefinder (hereinafter referred to as X4) developed by YDLIDAR team. 
+- YDLIDAR X4 is a 360-degree two-dimensional rangefinder developed by YDLIDAR team. 
 - Based on the principle of triangulation, it is equipped with related optics, electronics and algorithm design to achieve high-frequency and high-precision distance measurement. 
 - The mechanical structure rotates 360 degrees to continuously output the angle information as well as the point cloud data of the scanning environment while ranging.
 - 10m Ranging distance (2cm absolute error)
@@ -270,11 +271,11 @@ It is important to note that:
 - the number of points of real YDLidar is 720 (one each half degree)
 - the number of points of simulated Lidar has to be adapted to the same 720 (by default is 360 (one each degree))
 
-> Suggestion!:
-> 
-> The best solution is to mount the LIDAR with the motor in back position in order to have the zero index in front
+> Be careful!:
+> - Robots with RPlidar have been assembled with the motor in front position and then have the zero angle in its back
+> - Robots with YDlidar have been assembled with the motor in back position and then have the zero angle in its front
 >
-> In this case the model is defined by:
+> In this last case the model is defined by:
 ```xml
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
@@ -291,10 +292,10 @@ It is important to note that:
     </visual>
 ```
 > For slam & navigation purposes:
->- the zero angle is consideres in the motor position
->- you will have to add a 180ª rotation across z axis:
+>- Zero angle is considered allways in its back
+>- When using YDlidar robot, you will have to add a 180ª rotation across z axis:
 ```xml
-<node if="$(eval model=='gopigo3rp.urdf')" pkg="tf" type="static_transform_publisher" name="base_link_to_base_scan"
+<node if="$(eval model=='gopigo3yd.urdf')" pkg="tf" type="static_transform_publisher" name="base_link_to_base_scan"
     args="-0.033 0.0 0.08 3.14 0.0 0.0   /base_link /base_scan 40" />
 ```
 
@@ -314,13 +315,16 @@ We have a public gopigo3_description package (https://github.com/ros-gopigo3/gop
 To display the xacro model a specific display_xacro.launch file is created
 
 To make convertion from xacro files to urdf file fotmat, type:
-- xacro gopigo3.urdf.xacro > gopigo3.urdf
+```shell
+xacro gopigo3.urdf.xacro > gopigo3.urdf
+```
 
 You can display this new model in rviz
 ```shell
 roslaunch gopigo3_description display.launch
 ```
-![Getting Started](./Images/1_gopigo_stl.png)
+![](./Images/1_gopigo_stl.png)
+
 ### **Final model:**
 Create and verify in the final model taking care about:
 - Activate all the sensors: in model.urdf.xacro verify if all the sensors are activated
@@ -331,8 +335,10 @@ Create and verify in the final model taking care about:
 - Differential drive plugin: 
     - Take care about the maximum acceleration of wheels and torque. Usually we have to decrease this value to avoid slidings. We take acceleration 0.5 and torque 1
     - Be sure the Odom TF is published <publishOdomTF>true</publishOdomTF>
-- YDLidar plugin:
+- Lidar plugin:
     - By default there are 500 samples with 0.72deg resolution you have to change this to 720 samples with 1 sample resolution
+
+Edit the "gopigo3.urdf.xacro" file to verify the sensors included:
 ```xml
 <!-- Which sensors to include -->
 <xacro:arg name="imu" default="true" />
@@ -341,6 +347,7 @@ Create and verify in the final model taking care about:
 <xacro:arg name="pi_camera"       default="true"/>
 <xacro:arg name="lds"             default="true"/>
 ```
+Edit the "gopigo3.gazebo.xacro" file to verify the sensors/actuators properties:
 ```xml
         <scan>
           <horizontal>
@@ -373,11 +380,12 @@ roslaunch gopigo3_description spawn.launch
       args="-urdf -model gopigo3 -param robot_description"/>
 </launch>
 ```
-A very simple world "gopigo3.world" is created using gazebo:
-- sudo gazebo
-- save as to "worlds" folder
+You can create a very simple world "gopigo3.world" using gazebo:
+- Type: sudo gazebo
+- add some objects in the empty world
+- save the final world to "worlds" folder
 
-The robot could be spawn in this world using this new spawn_world.launch file
+The robot could be spawn in a predefined position inside this new created world using this new spawn_world.launch file:
 ```xml
 <launch>
     <!-- Define the needed parameters -->
@@ -397,20 +405,23 @@ The robot could be spawn in this world using this new spawn_world.launch file
         args="-urdf -model gopigo3 -param robot_description -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)"/>
    </launch>
    ```
-   ```shell
-   roslaunch gopigo3_description spawn_world.launch
+   Type the following to spawn the robot inside the world and test the sensor values using rviz:
+```shell
+roslaunch gopigo3_description spawn_world.launch
 roslaunch gopigo3_description display.launch
 ```
 ![Getting Started](./Images/1_gopigo3_spawn_rviz.png)
->Carefully!:
+>Be careful!:
 - If there is an error "libcurl: (51) SSL: no alternative certificate subject name matches target host name ‘api.ignitionfuel.org’" then follow instructions:
     - Open "~/.ignition/fuel/config.yaml" (to see the hidden files type ctrl+h)
     - replace: "api.ignitionfuel.org" with "fuel.ignitionrobotics.org"
     
- https://varhowto.com/how-to-fix-libcurl-51-ssl-no-alternative-certificate-subject-name-matches-target-host-name-api-ignitionfuel-org-gazebo-ubuntu-ros-melodic/
+  https://varhowto.com/how-to-fix-libcurl-51-ssl-no-alternative-certificate-subject-name-matches-target-host-name-api-ignitionfuel-org-gazebo-ubuntu-ros-melodic/
 
 You can see the nodes and topics generated using rqt_graph
-![Getting Started](./Images/01_rubot_spawn_rqt.png)
+
+![](./Images/01_rubot_spawn_rqt.png)
+
 >In order to kill the previous Gazebo process, type:
 >
 >killall gzserver && killall gzclient
@@ -423,42 +434,51 @@ Here we have first to design the project world, for exemple a maze from where ou
 
 There is a very useful and simple tool to design a proper world: "Building editor" in gazebo.
 
-Open gazebo as superuser:
+- Open gazebo as superuser:
 ```shell
 sudo gazebo
 ```
-You can build your world using "Building Editor" in Edit menu
-![Getting Started](./Images/1_BuildingWorld1_1.png)
-You can save:
-- the generated model in a model folder (without extension)
+- build your world using "Building Editor" in Edit menu
 
-Close the Builder Editor, modify the model position and add other elements if needed. Save:
-- the generated world (with extension .world) in the world folder.
+![](./Images/1_BuildingWorld1_1.png)
 
-Once you finish is better to close the terminal you have work as superuser
+- save the generated model in a model folder (without extension)
+
+- Close the Builder Editor, modify the model position and add other elements if needed. 
+- save the generated world (with extension .world) in the world folder.
+
+Once you finish is better to close the terminal you have worked as superuser
 
 #### ***Modify a created world***
+To modify a previously created world:
 - Open a terminal where you have the world you want to modify
 - type: sudo gazebo ./maze1.world
 - make modifications
-- save your world in a Desktop directory
+- save your world in the desired directory
 - close gazebo and the terminal
+
 #### **Create world with model parts**
-You can create model parts like walls of 1m or 0,5m with a geometry and color, using building editor. These parts can be saved in "home/ubuntu/building_editor_models/" and you will have acces in gazebo insert section. Then you can construct your world adding parts.
+You can create model parts like walls of 1m or 0,5m with a geometry and color, using building editor. These parts can be saved in "home/ubuntu/building_editor_models/" and you will have acces in gazebo insert section. Then you can construct your world adding these model parts.
 
 This is an exemple:
-![Getting Started](./Images/1_BuildingEditor.png)
+![](./Images/1_BuildingEditor.png)
+
 ### **Exercise:**
 Generate a proper world corresponding to the real world we want to spawn our gopigo3 robot in. For exemple a maze.
 
+Use model parts in size 90cmx30cmx1cm and 60cmx30cmx1cm
+
 Save this world as maze.world
+
 ### **Spawn the gopigo3 robot in project world**
 
 Now, spawn the gopigo3 robot in our generated world. You have to create a "navigation.launch" file:
+
 ``` shell
 roslaunch gopigo3_description navigation.launch
 ```
-![Getting Started](./Images/1_maze1.png)
+![](./Images/1_maze1.png)
+
 To control the robot with the Keyboard you have to install the "teleop-tools" package:
 
 Perhaps is needed to setup your Keys again:
@@ -469,25 +489,31 @@ sudo apt get update
 Then you can install:
 ```shell
 sudo apt-get install ros-melodic-teleop-tools
-or
 sudo apt-get install ros-melodic-teleop-twist-keyboard
 ```
 Then you will be able to control the robot with the Keyboard typing:
 ```shell
 rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
-or
+```
+If you want to have access to the latearal and diagonal directions (Omni-Mecanum robots), then launch the teleop_twist_keyboard file:
+```shell
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 ## 3. gopigo3 navigation control in the new world environment
 
-Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the autonomous navigation
+Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the autonomous navigation.
+
+This package is already created, but we will remind you how it is created:
 ```shell
-cd ~/rubot_gopigo_ws/src
+cd ~/Desktop/rUBot_gopigo_ws/src
 catkin_create_pkg gopigo3_control rospy std_msgs sensor_msgs geometry_msgs nav_msgs
 cd ..
 catkin_make
 ```
-![Getting Started](./Images/1_rubot_control.png)
+The desired closed loop control structure is depicted below:
+
+![](./Images/1_rubot_control.png)
+
 We will create now different navigation python files in "src" folder:
 - move1_gopigo.py: to define a rubot movement with linear and angular speed
 - move2_gopigo_param.py: to perform the same operation using params
@@ -500,6 +526,7 @@ roslaunch gopigo3_control rubot_move2.launch
 roslaunch gopigo3_control rubot_move3.launch
 ```
 ![Getting Started](./Images/1_rubot_move3.png)
+
 ## **gopigo3 autonomous navigation and obstacle avoidance**
 In order to navigate autonomously and avoid obstacles, we have created diferent python files in "src" folder:
 - rubot_lidar_test.py: to test the LIDAR distance readings and angles
@@ -508,8 +535,9 @@ In order to navigate autonomously and avoid obstacles, we have created diferent 
 - rubot_go2pose.py: to reach speciffic position and orientation
 
 we will create also a "launch" folder including the corresponding launch files
+
 #### **1. LIDAR test**
-We have created a world to test the rubot model. This world is based on a wall to verify that the LIDAR see the obstacle in the correct angle. We have to launch the "rubot_lidar_test.launch" file in the "gopigo3_control" package.
+We have created a world to test the rubot model. This world is based on a square to verify that the LIDAR see the obstacle in the correct angle. We have to launch the "rubot_lidar_test.launch" file in the "gopigo3_control" package.
 
 ```python
 #! /usr/bin/env python
@@ -534,11 +562,13 @@ rospy.init_node('scan_values')
 sub = rospy.Subscriber('/scan', LaserScan, callback)
 rospy.spin()
 ```
+To launch this node type:
 ```shell
 roslaunch gopigo3_control rubot_lidar_test.launch
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
-![Getting Started](./Images/1_lidar_test.png)
+![](./Images/1_lidar_test.png)
+
 #### **2. Autonomous navigation with obstacle avoidance**
 We will use now the created world to test the autonomous navigation with obstacle avoidance performance. 
 
@@ -546,11 +576,11 @@ We have to launch the "rubot_self_nav.launch" file in the "rubot_control" packag
 ```shell
 roslaunch gopigo3_control rubot_self_nav.launch
 ```
->Careful:
-- we have included in launch file: gazebo spawn, rviz visualization and rubot_nav node execution 
-- Verify in rviz you have to change the fixed frame to "odom" frame
+>Be careful:
+>- we have included in launch file: gazebo spawn, rviz visualization and >rubot_nav node execution 
+>- Verify in rviz if you have to change the fixed frame to "odom" frame
 
-![Getting Started](./Images/1_rubot_self_nav.png)
+![](./Images/1_rubot_self_nav.png)
 The algorithm description functionality is:
 - "rubot_self_nav.py": The Python script makes the robot go forward. 
     - LIDAR is allways searching the closest distance and the angle
@@ -571,12 +601,12 @@ We have developed 2 different methods for wall follower:
 
 Follow the instructions to perform the rubot_wall_follower_gm.py python program are in the notebook: 
 https://github.com/Albert-Alvarez/ros-gopigo3/blob/lab-sessions/develop/ROS%20con%20GoPiGo3%20-%20S4.md
-<img src="./Images/2_wall_follower1.png">
+![](./Images/2_wall_follower1.png)
 A rubot_wall_follower_gm.launch is generated to test the node within a specified world
 ```shell
 roslaunch gopigo3_control rubot_wall_follower_gm.launch
 ```
-<img src="./Images/1_wall_follower_gm.png">
+![](./Images/1_wall_follower_gm.png)
 
 You can see a video for the Maze wall follower process in: 
 [![IMAGE_ALT](https://img.youtube.com/vi/z5sAyiFs-RU/maxresdefault.jpg)](https://youtu.be/z5sAyiFs-RU)
@@ -588,14 +618,14 @@ We have created another rubot_wall_follower_rg.py file based on the reading dist
 
 Follow the instructions to create the rubot_wall_follower_rg.py python file: https://www.theconstructsim.com/wall-follower-algorithm/
 
-<img src="./Images/1_wall_follower.png">
+![](./Images/1_wall_follower.png)
 The algorith is based on laser ranges test and depends on the LIDAR type:
-<img src="./Images/1_wall_follower2.png">
+![](./Images/1_wall_follower2.png)
 
 ```shell
 roslaunch gopigo3_control rubot_wall_follower_rg.launch
 ```
-<img src="./Images/1_wall_ranges.png">
+![](./Images/1_wall_ranges.png)
 
 #### **4. Go to POSE**
 Define a specific Position and Orientation as a target point to gopigo3 robot
@@ -610,7 +640,7 @@ For validation type:
 ```shell
 roslaunch gopigo3_control rubot_go2pose.launch
 ```
-![Getting Started](./Images/1_rubot_go2point.png)
+![](./Images/1_rubot_go2point.png)
 
 #### **5. gopigo3 bringup**
 You can also create a new "gopigo3_bringup.launch" file to bringup your robot model in gazebo within the designed world and then launch the specific control node.
