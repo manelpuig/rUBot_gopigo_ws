@@ -488,8 +488,8 @@ sudo apt get update
 ```
 Then you can install:
 ```shell
-sudo apt-get install ros-melodic-teleop-tools
-sudo apt-get install ros-melodic-teleop-twist-keyboard
+sudo apt-get install ros-noetic-teleop-tools
+sudo apt-get install ros-noetic-teleop-twist-keyboard
 ```
 Then you will be able to control the robot with the Keyboard typing:
 ```shell

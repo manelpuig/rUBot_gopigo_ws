@@ -469,12 +469,12 @@
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
     <child link="base_scan"/>
-    <origin rpy="0 0 3.14" xyz="-0.02 0 0.085"/>
+    <origin rpy="0 0 3014" xyz="-0.02 0 0.085"/>
     <!--LDS** origin xyz="-0.02 0 0.07" rpy="0 0 -1.6"/-->
   </joint>
   <link name="base_scan">
     <visual>
-      <origin rpy="0 0 3.14" xyz="0 0 0.02"/>
+      <origin rpy="0 0 3014" xyz="0 0 0.02"/>
       <geometry>
         <mesh filename="package://gopigo3_description/meshes/sensors/X4.stl" scale="0.001 0.001 0.001"/>
         <!--LDS** mesh filename="package://gopigo3_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/-->
