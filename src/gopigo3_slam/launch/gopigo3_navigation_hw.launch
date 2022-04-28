@@ -1,5 +1,5 @@
 <launch>
-  <arg name="lidar_model" default="yd"/>
+  <arg name="lidar_model" default="rp"/>
   <arg name="model" default="gopigo3" />
   <arg name="map_file" default="Hospital"/>
   <arg name="open_rviz" default="true"/>
