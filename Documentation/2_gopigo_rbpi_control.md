@@ -27,25 +27,20 @@ The raspberrypi3 onboard is preinstalled with:
 
 This repository is located in /home/pi/Desktop folder and it is already compiled.
 
-#### Notebook visualization in raspberrypi
-Use the NBviewer program from Jupyter:
-
-https://nbviewer.ipython.org/
-
 #### Raspberrypi configuration and setup
 
-The raspberrypi3 is configured:
+The raspberrypi4 is configured:
 - to generate a hotspot 
-- VNC activated 
+- LIDAR activated 
 - raspicam activated 
 
-When powering the raspberrypi3, generates a hotspot you have to connect to:
+When powering the raspberrypi4, generates a hotspot you have to connect to:
 - SSID name: rubot_10 
 - password "CorrePiCorre"
 
-Once you are connected to this network you will be able to connect your computer to the raspberrypi3 using VNC viewer:
-- download and install the VNC viewer for windows at: https://www.realvnc.com/en/connect/download/viewer/
-- Select the raspberrypi IP address: 192.168.4.1
+Once you are connected to this network you will be able to connect your computer to the raspberrypi4 using Nomachine Display:
+- download and install the Nomachine for windows at: 
+- Select the raspberrypi IP address: 10.42.0.1
 - you have to specify:
     - user: pi
     - password: raspberry
@@ -53,7 +48,7 @@ Once you are connected to this network you will be able to connect your computer
 
 ![](./Images/2_vnc1.png)
 
-If you not have the "gopigo3_rbpi3_ws" folder in your desktop, you can "transfer" folder from your PC (it takes 30s)
+If you not have the "gopigo3_rbpi_ws" folder in your desktop, you can "transfer" folder from your PC (it takes 30s)
 
 The first time you copy the folder, you need to compile the workspace:
 - open a terminal in the ws
