@@ -221,3 +221,8 @@ The objective is to follow the route and take pictures. Proceed with the followi
 Be sure to execute the rosrun instruction inside the "rUBot_gopigo_ws" folder. Review the the absolute path or relative path to the yaml file and the picture path destination.
 
 ![Getting Started](./Images/5_follow_route2.png)
+
+## **5. YOLO image identification**
+
+Follow this exemples:
+https://qengineering.eu/deep-learning-examples-on-raspberry-32-64-os.html
