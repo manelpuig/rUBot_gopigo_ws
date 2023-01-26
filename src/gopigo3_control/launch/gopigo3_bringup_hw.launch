@@ -1,0 +1,12 @@
+<launch>
+  <arg name="lidar_model" default="rp"/>
+  <include file="$(find gopigo3_node)/launch/gopigo3.launch"/>
+  <include if="$(eval lidar_model=='yd')" file="$(find ydlidar)/launch/lidar.launch"/>
+  <include if="$(eval lidar_model=='rp')" file="$(find rplidar_ros)/launch/rplidar.launch"/>
+
+  <!-- launch raspicam   -->
+  <include file="$(find raspicam_node)/launch/camerav2_1280x960_10fps.launch">
+	<arg name="enable_raw" value="true"/>
+	<arg name="camera_frame_id" value="base_scan"/>
+  </include>
+</launch>
