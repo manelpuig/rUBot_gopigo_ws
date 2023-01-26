@@ -77,10 +77,24 @@ You can review from the "gopigo3_rbpi3_ws" workspace the src/gopigo_control fold
 
 ### **1. gopigo bringup**
 
-To properly perform a especific movement control we have first to bringup our robot:
+To properly perform a especific movement control we have first to install some HW packages:
+```shell
+sudo apt install ros-noetic-rplidar-ros
+```
+For the raspicam:
+```shell
+sudo sh -c 'echo "deb https://packages.ubiquityrobotics.com/ubuntu/ubiquity xenial main" > /etc/apt/sources.list.d/ubiquity-latest.list'
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C3032ED8
+sudo apt update
+sudo apt upgrade
+sudo apt install ros-noetic-raspicam-node
+```
+Now you can bringup our robot:
 - launch the gopigo3 node: able to control de 2 motors and measure the odometry
 - launch the raspicam node
 - launch the LIDAR sensor node
+
+This is done in the 
 
 ![Getting Started](./Images/2_nodes_cam.png)
 
