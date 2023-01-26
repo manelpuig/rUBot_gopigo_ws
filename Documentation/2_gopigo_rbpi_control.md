@@ -43,16 +43,18 @@ Once you are connected to this network you will be able to connect your computer
 - Select the raspberrypi IP address: 10.42.0.1
 - you have to specify:
     - user: pi
-    - password: raspberry
-- You will have the raspberrypi3 desktop on your windows VNC screen
+    - password: ubuntu0ubuntu1
+- You will have the raspberrypi desktop on your windows nomachine screen
 
 ![](./Images/2_vnc1.png)
 
-If you not have the "gopigo3_rbpi_ws" folder in your desktop, you can "transfer" folder from your PC (it takes 30s)
-
-The first time you copy the folder, you need to compile the workspace:
-- open a terminal in the ws
-- type "catkin_make" (it takes 10min)
+The first time you have to clone the "rUBot_gopigo_ws" repository to the home folder.
+```shell
+cd /home
+git clone https://github.com/manelpuig/rUBot_gopigo_ws
+cd rUBot_gopigo_ws
+catkin_make
+```
 
 >Carefull!: Some actions have to be done:
 - review the ~/.bashrc: source to the ws and delete the environment variables
@@ -73,29 +75,29 @@ You can review from the "gopigo3_rbpi3_ws" workspace the src/gopigo_control fold
 
 ![](./Images/2_vnc2.png)
 
-To properly perform a especific movement control we have first to:
+### **1. gopigo bringup**
+
+To properly perform a especific movement control we have first to bringup our robot:
 - launch the gopigo3 node: able to control de 2 motors and measure the odometry
 - launch the raspicam node
 - launch the LIDAR sensor node
-- launch the rUBot_nav node to perform the specific movement control
 
 ![Getting Started](./Images/2_nodes_cam.png)
 
-We will create specific python files and launch files for each movement control
-
-### **1. Keyboard movement control**
+### **2. Keyboard movement control**
 
 To control the gopigo robot with keyboard, we need to install "teleop_tools" package. This is already installed in our master_ws as you can see in the previous figure.
 
 You will only need to:
-- launch the gopigo3 node
-- launch the key_teleop node
+- Install teleop-tools package:
+```shell
+sudo apt install ros-noetic-teleop-tools
+```
 
-Open 1 terminal and type:
-- roslaunch gopigo3_node gopigo3.launch
-
-Then open a new terminal and type:
-- rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
+Open a new terminal and type:
+```shell
+rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
+```
 
 Carefull: if there are problems, make a source in each terminal
 
