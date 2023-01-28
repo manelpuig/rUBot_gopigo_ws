@@ -9,7 +9,7 @@ The main objectives are:
 - Define a route to be followed by the gopigo3 robot using Navigation package
 
 let's see how to fulfill these objectives
-## **Gopigo3 robot prototype setup**
+## **1. Gopigo3 robot prototype setup**
 
 This tobot prototype is based on:
 - On-board computer based on raspberrypi3 board
@@ -27,7 +27,7 @@ The raspberrypi3 onboard is preinstalled with:
 
 This repository is located in /home/pi/Desktop folder and it is already compiled.
 
-#### Raspberrypi configuration and setup
+### **Raspberrypi configuration and setup**
 
 The raspberrypi4 is configured:
 - to generate a hotspot 
@@ -60,6 +60,98 @@ catkin_make
 - review the ~/.bashrc: source to the ws and delete the environment variables
 - make executable the c++ and python files
 
+
+### **1. gopigo bringup**
+
+To properly perform a especific movement control we have first to install some HW packages:
+> Information is in: https://forum.dexterindustries.com/t/setup-python3-gopigo3-and-di-sensors-on-ubuntu-server-20-04-64-bit-for-non-root-access/8305
+
+#### **1.1 gopigo3_node**
+This node is responsible to drive the wheels and obtain the odometry
+
+You have to clone (or copy) the repository in src folder
+```shell
+cd src
+git clone https://github.com/ros-gopigo/gopigo3_node
+```
+#### **1.2 LIDAR**
+This node is responsible to see the obstacle distances 360º arround. We have 2 different LIDAR models (RPLIDAR and YDLIDAR) and we will install the 2 packages
+
+a) RPLIDAR
+
+This can be installed with apt (in opt/ros/noetic/share folder)
+```shell
+sudo apt install ros-noetic-rplidar-ros
+```
+or clone (or copy) the repostory in src folder
+```shell
+cd src
+git clone https://github.com/Slamtec/rplidar_ros
+```
+b) YDLIDAR
+
+This can be installed clonning (or copying) the package in src folder:
+```shell
+cd src
+git clone https://github.com/EAIBOT/ydlidar
+```
+
+#### **1.3. RASPICAM**
+This node is responsible to view images from camera
+
+First of all we have to open /boot/firmware/config.txt file and add:
+```shell
+start_x=1
+gpu_mem=128
+```
+then you can install package following instructions in:https://github.com/UbiquityRobotics/raspicam_node
+
+```shell
+cd src
+git clone https://github.com/UbiquityRobotics/raspicam_node
+```
+#### **1.4. OPEN CV**
+This package is used for image processing with OpenCV and ROS
+
+This can be installed with apt (in opt/ros/noetic/share folder)
+```shell
+sudo apt install ros-noetic-vision-opencv
+```
+or clone (or copy) the repostory in src folder
+```shell
+cd src
+git clone https://github.com/ros-perception/vision_opencv
+```
+#### **1.5. Teleop-tools**
+This package is used to control robot with keyboard or joypad
+
+This can be installed with apt (in opt/ros/noetic/share folder)
+```shell
+sudo apt install ros-noetic-teleop-tools
+```
+or clone (or copy) the repostory in src folder
+```shell
+cd src
+git clone https://github.com/ros-teleop/teleop_tools
+```
+
+Once all drivers are installed, you can compile the ws and proceed for the bringup
+
+#### **1.6. Bringup**
+Now you can bringup our robot:
+- launch the gopigo3 node: able to control de 2 motors and measure the odometry
+- launch the raspicam node
+- launch the LIDAR sensor node
+
+This is done in the 
+
+![Getting Started](./Images/2_nodes_cam.png)
+
+A launch file is made to automatically make the bringup hardware:
+```shell
+roslaunch gopigo3_control gopigo3_bringup_hw.launch
+```
+
 ## **2. gopigo3 first control movements**
 First, let's control the gopigo3 movement to perform:
 - movement control using keyboard
@@ -75,38 +167,9 @@ You can review from the "gopigo3_rbpi3_ws" workspace the src/gopigo_control fold
 
 ![](./Images/2_vnc2.png)
 
-### **1. gopigo bringup**
-
-To properly perform a especific movement control we have first to install some HW packages:
-```shell
-sudo apt install ros-noetic-rplidar-ros
-```
-For the raspicam:
-```shell
-sudo sh -c 'echo "deb https://packages.ubiquityrobotics.com/ubuntu/ubiquity xenial main" > /etc/apt/sources.list.d/ubiquity-latest.list'
-sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C3032ED8
-sudo apt update
-sudo apt upgrade
-sudo apt install ros-noetic-raspicam-node
-```
-Now you can bringup our robot:
-- launch the gopigo3 node: able to control de 2 motors and measure the odometry
-- launch the raspicam node
-- launch the LIDAR sensor node
-
-This is done in the 
-
-![Getting Started](./Images/2_nodes_cam.png)
-
-### **2. Keyboard movement control**
+### **2.1. Keyboard movement control**
 
 To control the gopigo robot with keyboard, we need to install "teleop_tools" package. This is already installed in our master_ws as you can see in the previous figure.
-
-You will only need to:
-- Install teleop-tools package:
-```shell
-sudo apt install ros-noetic-teleop-tools
-```
 
 Open a new terminal and type:
 ```shell
@@ -123,7 +186,7 @@ rqt_graph
 ```
 Pres q and crtl+C to close the terminals
 
-### **2. Movement control with specific python script**
+### **2.2. Movement control with specific python script**
 
 You want to perform the movement control in "move3_gopigo_distance.py" simulation ws.
 
