@@ -479,27 +479,8 @@ roslaunch gopigo3_description navigation.launch
 ```
 ![](./Images/1_maze1.png)
 
-To control the robot with the Keyboard you have to install the "teleop-tools" package:
 
-Perhaps is needed to setup your Keys again:
-```shell
-curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-sudo apt get update
-```
-Then you can install:
-```shell
-sudo apt-get install ros-noetic-teleop-tools
-sudo apt-get install ros-noetic-teleop-twist-keyboard
-```
-Then you will be able to control the robot with the Keyboard typing:
-```shell
-rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
-```
-If you want to have access to the latearal and diagonal directions (Omni-Mecanum robots), then launch the teleop_twist_keyboard file:
-```shell
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
-```
-## 3. gopigo3 navigation control in the new world environment
+## **3. gopigo3 navigation control in the new world environment**
 
 Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the autonomous navigation.
 
@@ -510,20 +491,43 @@ catkin_create_pkg gopigo3_control rospy std_msgs sensor_msgs geometry_msgs nav_m
 cd ..
 catkin_make
 ```
-The desired closed loop control structure is depicted below:
+
+### **3.1. gopigo3 bringup**
+
+Usually we first bring up the robot in a virtual environment.
+
+A speciffic "gopigo3_bringup_sw.launch" file is created considering if you have rp or yd lidar installed.
+```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
+```
+The closed loop control structure is depicted below:
 
 ![](./Images/1_rubot_control.png)
 
-We will create now different navigation python files in "src" folder:
+### **3.2. gopigo3 control with keyboard**
+
+To control the robot with the Keyboard you have to install the "teleop-tools" package:
+
+```shell
+sudo apt-get install ros-noetic-teleop-tools
+sudo apt-get install ros-noetic-teleop-twist-keyboard
+```
+Then you will be able to control the robot with the Keyboard typing:
+```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
+rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
+```
+### **3.3. gopigo3 control with custom node**
+
+To control the robot with a cistom designed node, We will create different navigation python files in "src" folder:
 - move1_gopigo.py: to define a rubot movement with linear and angular speed
 - move2_gopigo_param.py: to perform the same operation using params
 - move3_gopigo_distance.py: to specify a maximum distance
 
 Specific launch files have been created to launch the nodes and python files created above:
 ```shell
-roslaunch gopigo3_control rubot_move1.launch
-roslaunch gopigo3_control rubot_move2.launch
-roslaunch gopigo3_control rubot_move3.launch
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_control gopigo3_nav.launch
 ```
 ![Getting Started](./Images/1_rubot_move3.png)
 
