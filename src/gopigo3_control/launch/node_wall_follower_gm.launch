@@ -1,13 +1,11 @@
 <launch>
   <!-- launch follow wall   -->
-  <arg name="lidar_model" default="yd" />
   <arg name="kp" default="2" />
   <arg name="distance_reference" default="0.4" />
   <arg name="lookahead_distance" default="0.25" />
   <arg name="forward_speed" default="0.1" />
   <arg name="theta" default="30.0" />
   <node name="wall_follower_controller" pkg="gopigo3_control" type="rubot_wall_follower_gm.py" output="screen" >
-    <param name="LIDAR" value="$(arg lidar_model)"/>
     <param name="kp" value="$(arg kp)"/>
     <param name="distance_reference" value="$(arg distance_reference)"/>
     <param name="lookahead_distance" value="$(arg lookahead_distance)"/>

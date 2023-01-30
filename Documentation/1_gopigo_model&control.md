@@ -519,19 +519,17 @@ rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 ```
 ### **3.3. gopigo3 control with custom node**
 
-To control the robot with a cistom designed node, We will create different navigation python files in "src" folder:
-- move1_gopigo.py: to define a rubot movement with linear and angular speed
-- move2_gopigo_param.py: to perform the same operation using params
-- move3_gopigo_distance.py: to specify a maximum distance
+To control the robot with a custom designed node, We will create a navigation python file in "src" folder:
+- gopigo3_nav.py: to specify a twist message and a maximum distance
 
-Specific launch files have been created to launch the nodes and python files created above:
+Specific launch file has been created to launch the node and python file created above:
 ```shell
 roslaunch gopigo3_control gopigo3_bringup_sw.launch
-roslaunch gopigo3_control gopigo3_nav.launch
+roslaunch gopigo3_control node_nav.launch
 ```
 ![Getting Started](./Images/1_rubot_move3.png)
 
-## **gopigo3 autonomous navigation and obstacle avoidance**
+## **3.4. gopigo3 autonomous navigation and obstacle avoidance**
 In order to navigate autonomously and avoid obstacles, we have created diferent python files in "src" folder:
 - rubot_lidar_test.py: to test the LIDAR distance readings and angles
 - rubot_self_nav.py: to perform a simple algorithm for navigation with obstacle avoidance
@@ -543,33 +541,11 @@ we will create also a "launch" folder including the corresponding launch files
 #### **1. LIDAR test**
 We have created a world to test the rubot model. This world is based on a square to verify that the LIDAR see the obstacle in the correct angle. We have to launch the "rubot_lidar_test.launch" file in the "gopigo3_control" package.
 
-```python
-#! /usr/bin/env python
-
-import rospy
-from sensor_msgs.msg import LaserScan
-
-def callback(msg):
-    print len(msg.ranges)
-    # values at 0 degree
-    print msg.ranges[0]
-    # values at 90 degree
-    print msg.ranges[90]
-    # values at 180 degree
-    print msg.ranges[180]
-    # values at 270 degree
-    print msg.ranges[270]
-    # values at 360 degree
-    print msg.ranges[359]
-
-rospy.init_node('scan_values')
-sub = rospy.Subscriber('/scan', LaserScan, callback)
-rospy.spin()
-```
 To launch this node type:
 ```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
 roslaunch gopigo3_control rubot_lidar_test.launch
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 ```
 ![](./Images/1_lidar_test.png)
 
@@ -578,10 +554,10 @@ We will use now the created world to test the autonomous navigation with obstacl
 
 We have to launch the "rubot_self_nav.launch" file in the "rubot_control" package.
 ```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
 roslaunch gopigo3_control rubot_self_nav.launch
 ```
 >Be careful:
->- we have included in launch file: gazebo spawn, rviz visualization and >rubot_nav node execution 
 >- Verify in rviz if you have to change the fixed frame to "odom" frame
 
 ![](./Images/1_rubot_self_nav.png)
@@ -608,6 +584,7 @@ https://github.com/Albert-Alvarez/ros-gopigo3/blob/lab-sessions/develop/ROS%20co
 ![](./Images/2_wall_follower1.png)
 A rubot_wall_follower_gm.launch is generated to test the node within a specified world
 ```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
 roslaunch gopigo3_control rubot_wall_follower_gm.launch
 ```
 ![](./Images/1_wall_follower_gm.png)
@@ -627,6 +604,7 @@ The algorith is based on laser ranges test and depends on the LIDAR type:
 ![](./Images/1_wall_follower2.png)
 
 ```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
 roslaunch gopigo3_control rubot_wall_follower_rg.launch
 ```
 ![](./Images/1_wall_ranges.png)
@@ -642,25 +620,7 @@ Modify the python script developed in turlesim control package according to the 
 
 For validation type:
 ```shell
+roslaunch gopigo3_control gopigo3_bringup_sw.launch
 roslaunch gopigo3_control rubot_go2pose.launch
 ```
 ![](./Images/1_rubot_go2point.png)
-
-#### **5. gopigo3 bringup**
-You can also create a new "gopigo3_bringup.launch" file to bringup your robot model in gazebo within the designed world and then launch the specific control node.
-
-This is a good option when:
-- working with real gopigo3 robot
-- you want to use different HW platforms: 
-  - raspberrypi3 to bringup the robot with sensors & actuators
-  - PC to launch the other nodes that requires power computing and graphical interface
-
-Let's see an exemple:
-```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
-```
-To bringup your gopigo3 model in gazebo
-```shell
-roslaunch gopigo3_control node_wall_follower_rg.launch
-```
-To launch the wall_follower node

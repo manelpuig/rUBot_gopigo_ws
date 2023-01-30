@@ -11,7 +11,7 @@ class GoPiGo3:
     def __init__(self):
 
         rospy.init_node("rubot_nav", anonymous=False)
-
+        self._LIDAR = rospy.get_param("LIDAR")
         self._distanceLaser = rospy.get_param("~distance_laser")
         self._speedFactor = rospy.get_param("~speed_factor")
         self._forwardSpeed = rospy.get_param("~forward_speed")
@@ -36,7 +36,11 @@ class GoPiGo3:
         closestDistance, elementIndex = min(
             (val, idx) for (idx, val) in enumerate(scan.ranges) if scan.range_min < val < scan.range_max
         )
-        angleClosestDistance = self.__wrapAngle(elementIndex / 2) # YDLidar with 720 points in 360deg
+        if self._LIDAR == "rp":
+            angleClosestDistance = (elementIndex / 2)-180 # RPLidar zero angle in backside
+        else:
+            angleClosestDistance = self.__wrapAngle(elementIndex / 2) # YDLidar zero angle in frontside
+
         rospy.loginfo("Closest distance of %5.2f m at %5.1f degrees.",
                       closestDistance, angleClosestDistance)
 

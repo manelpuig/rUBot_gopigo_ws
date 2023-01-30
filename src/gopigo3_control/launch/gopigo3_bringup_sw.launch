@@ -1,6 +1,7 @@
 <launch>
+  <arg name="lidar_model" default="rp"/>
   <arg name="world" default="square.world"/> 
-  <arg name="model" default="gopigo3.urdf" />
+  <arg name="model" default="gopigo3rp.urdf" />
   <arg name="x_pos" default="1.0"/>
   <arg name="y_pos" default="0.0"/>
   <arg name="yaw" default="1.0"/>
@@ -10,7 +11,8 @@
   </include>
 
   <param name="robot_description" textfile="$(find gopigo3_description)/urdf/$(arg model)" />
-  
+  <param name="LIDAR" value="$(arg lidar_model)"/>
+
   <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"
     args="-urdf -model gopigo3 -x $(arg x_pos) -y $(arg y_pos) -Y $(arg yaw) -param robot_description" />
 
