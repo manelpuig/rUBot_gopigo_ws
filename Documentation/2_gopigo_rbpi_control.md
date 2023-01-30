@@ -83,28 +83,19 @@ This can be installed with apt (in opt/ros/noetic/share folder)
 ```shell
 sudo apt install ros-noetic-rplidar-ros
 ```
-or clone (or copy) the repostory in src folder
-```shell
-cd src
-git clone https://github.com/Slamtec/rplidar_ros
-```
+
 b) YDLIDAR
 
 This can be installed clonning (or copying) the package in src folder:
 ```shell
 cd src
-git clone https://github.com/EAIBOT/ydlidar
+git clone https://github.com/YDLIDAR/ydlidar_ros_driver
 ```
 
 #### **1.3. RASPICAM**
 This node is responsible to view images from camera
 
-First of all we have to open /boot/firmware/config.txt file and add:
-```shell
-start_x=1
-gpu_mem=128
-```
-then you can install package following instructions in:https://github.com/UbiquityRobotics/raspicam_node
+You can install package following instructions in:https://github.com/UbiquityRobotics/raspicam_node
 
 ```shell
 cd src
@@ -117,22 +108,13 @@ This can be installed with apt (in opt/ros/noetic/share folder)
 ```shell
 sudo apt install ros-noetic-vision-opencv
 ```
-or clone (or copy) the repostory in src folder
-```shell
-cd src
-git clone https://github.com/ros-perception/vision_opencv
-```
+
 #### **1.5. Teleop-tools**
 This package is used to control robot with keyboard or joypad
 
 This can be installed with apt (in opt/ros/noetic/share folder)
 ```shell
 sudo apt install ros-noetic-teleop-tools
-```
-or clone (or copy) the repostory in src folder
-```shell
-cd src
-git clone https://github.com/ros-teleop/teleop_tools
 ```
 
 Once all drivers are installed, you can compile the ws and proceed for the bringup
