@@ -6,8 +6,6 @@ Gopigo3 robot prototype is based on:
 - RaspiCAM RGB camera
 - LIDAR sensor
 
-![Getting Started](./Images/1_gopigo3_UB.png)
-
 The main objectives of this chapter are:
 - Getting started with gopigo in simulation environment
 - Getting started with gopigo in real raspberrypi4 based robot
@@ -86,8 +84,6 @@ To connect ou PC to the Robot, we have to:
     - password: ubuntu0ubuntu1
 
 You will have the rUBot desktop on your windows nomachine screen
-
-![](./Images/2_vnc1.png)
 
 ### **2.2. Clone a repository**
 
