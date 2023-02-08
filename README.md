@@ -1,10 +1,17 @@
-# rubot_gopigo3
+# **rubot_gopigo**
+
+This workspace is designed for:
+- Simulation in Gazebo based virtual environment
+- Execution on real gopigo3 robot with raspberrypi4
+
 This workspace is organized in:
 | Document | Contents   |
 |------|------|
-|   Gopigo Model&Control  | Simulated model and different control actions|
-|   rbpi Model&Control  | Control actions in rbpi3|
-|   Gopigo Slam&Navigation  | Slam techniques to generate a map and perform navigation|
-| rbpi Slam&Navigation | Slam and Navigation in rbpi3 |
-| Gopigo Vision projects | Gazebo simulated Vision projects |
-| rbpi Vision Projects | Vision projects in rbpi3
+|   Gopigo Setup  | Getting started in **simulation** and on **real raspberrypi4 based robot**|
+|   Gopigo Model&Control  | Model and control in **simulation**|
+|   rbpi Model&Control  | Control actions in **rbpi4**|
+|   Gopigo Slam&Navigation  | Navigation in **simulation**|
+| rbpi Slam&Navigation | Navigation in **rbpi4** |
+| Gopigo Vision projects | Projects in **simulation** |
+| rbpi Vision Projects | Projects in **rbpi4**
+
