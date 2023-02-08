@@ -111,10 +111,6 @@ Now you can bringup our robot:
 - launch the raspicam node
 - launch the LIDAR sensor node
 
-This is done in the 
-
-![Getting Started](./Images/2_nodes_cam.png)
-
 A launch file is made to automatically make the bringup hardware:
 ```shell
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
