@@ -36,6 +36,7 @@ catkin_make
 
 Review the ~/.bashrc: Verify the last lines:
 ```shell
+source /opt/ros/noetic/setup.bash
 source /home/rUBot_gopigo_ws/devel/setup.bash
 ```
 
@@ -97,6 +98,7 @@ catkin_make
 
 Review the ~/.bashrc: Verify the last lines:
 ```shell
+source /opt/ros/noetic/setup.bash
 source /home/rUBot_gopigo_ws/devel/setup.bash
 ```
 
