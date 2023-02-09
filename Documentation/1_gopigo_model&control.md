@@ -1,18 +1,14 @@
 # **gopigo3 model & control**
 The objectives of this chapter are:
 - Create a model of our gopigo3 robot 
-- use rviz package to view the different topics and nodes
-- create a model of the virtual environment
-- use gazebo package to simulate the robot kinematics and dynamics
-- locate the robot in our created environment
-- create our firsts programs to control the robot movement with obstacle avoidance
+- Create a model of the virtual environment
+- Bringup the robot in our virtual environment
+- Control the robot movement with obstacle avoidance
 
 
 The final model represents the real gopigo3 robot we will use in the laboratory
 
 Interesting complementary information could be found:
-
-- https://brjapon.medium.com/learning-robotics-with-ros-made-easy-12197c918dab
 
 - http://wiki.ros.org/Robots/gopigo3
 
@@ -20,7 +16,6 @@ Interesting complementary information could be found:
 
 - https://github.com/ros-gopigo3/gopigo3
 
-- https://bitbucket.org/theconstructcore/two-wheeled-robot-motion-planning/src/master/
 
 <img src="./Images/1_gopigo3_UB.png" />
 
@@ -29,22 +24,20 @@ Interesting complementary information could be found:
 We have already created the "gopigo3_description" package to generate our robot model.
 We remind you the needed instructions to create the package if you want to do it from zero:
 ```shell
-cd ~/Desktop/rUBot_gopigo_ws/src
+cd /home/rUBot_gopigo_ws/src
 catkin_create_pkg gopigo3_description rospy
 cd ..
 catkin_make
 ```
 Then open the .bashrc file and verify the environment variables and source to the proper workspace:
 ```shell
-source ~/Desktop/rUBot_gopigo_ws/devel/setup.bash
+source /home/rUBot_gopigo_ws/devel/setup.bash
 ```
-To create our robot model, we use URDF files (Unified Robot Description Format). URDF file is an XML format file for representing a robot model (http://wiki.ros.org/urdf/Tutorials).
+To create our robot model, we use **URDF files** (Unified Robot Description Format). URDF file is an XML format file for representing a robot model (http://wiki.ros.org/urdf/Tutorials).
 
 We have created 2 folders for model description:
 - URDF: folder where different URDF models are located
 - meshes: folder where 3D body models in stl format are located.
-
-You can reduce the amount of code in a URDF file using Xacro package. With this package you can use constants, simple math and macros to create your robot model easier and compact.
 
 The main parts of URDF model are:
 - links: diferent bodies/plastic elements
@@ -105,12 +98,12 @@ Sensors:
 Actuator:
 - Differential drive actuator: based on 2 DC motors with encoders to obtain the Odometry information
 
-The full model contains also information about the sensor and actuator controllers using specific Gazebo plugins (http://gazebosim.org/tutorials?tut=ros_gzplugins#Tutorial:UsingGazebopluginswithROS). 
+The full model contains also information about the sensor and actuator controllers using specific **Gazebo plugins** (http://gazebosim.org/tutorials?tut=ros_gzplugins#Tutorial:UsingGazebopluginswithROS). 
 
 Gazebo plugins give your URDF models greater functionality and compatiblility with ROS messages and service calls for sensor output and motor input. 
 
 These plugins can be referenced through a URDF file, and to insert them in the URDF file, you have to follow the sintax:
-- for Differential drive actuator:
+- **Plugin for Differential drive actuator**:
 ```xml
  <!-- Differential Drive Controller -->
   <gazebo>
@@ -136,13 +129,8 @@ These plugins can be referenced through a URDF file, and to insert them in the U
     </plugin>
   </gazebo>
   ```
-In this gazebo plugin, the kinematics of the robot configuration is defined:
-- Forward kinematics: obtaining the robot POSE (odometry) with the robot wheel speeds information
-- Inverse kinematics: obtaining the robot wheels speds to reach specific robot POSE (odometry)
 
-The equations are sumarized below
-![Getting Starter](./Images/1_Drive_kine.png)
-- for Raspicam sensor plugins:
+- **Plugin for Raspicam sensor**:
 ```xml
   <!-- 2D Camera controller -->
   <gazebo reference="camera_rgb_frame">
@@ -178,7 +166,7 @@ The equations are sumarized below
     </sensor>
   </gazebo>
   ```
-- for LIDAR sensor plugin:
+- **Plugin for LIDAR sensor**:
 ```xml
   <!-- Laser Distance Sensor YDLIDAR X4 controller-->
   <gazebo reference="base_scan">
@@ -220,24 +208,18 @@ The equations are sumarized below
   ```
 #### **Generated models in URDF**
 The diferent model files we have created in urdf folder are:
-- gopigo3_v1.urdf: includes only the geometrical description of gopigo robot.
-- gopigo3_v2.urdf: includes sensors and actuator:
-    - the 2D camera and LDS sensors
-    - the differential drive actuator
-- gopigo3_v3.urdf: includes sensors and actuator:
-    - the 2D camera, LDS and LIDAR sensors
-    - the differential drive actuator
-- gopigo3_v4.gazebo: includes corrections in the proposed model:
-    - base_link geometry and inertia
-    - 2D camera real position
-    - LIDAR scaling and orientation
+- gopigo3rp.urdf: with RPlidar
+- gopigo3yd.urdf: with YDlidar
 
+  > - Robots with RPlidar have been assembled with the motor in front position and then have the zero angle in its back
+  > - Robots with YDlidar have been assembled with the motor in back position and then have the zero angle in its front
+>
 We use a specific "display.launch" launch file where we specify the robot model we want to open in rviz with a configuration specified in "urdf.rviz":
 ```xml
 <?xml version="1.0"?>
 <launch>
   <!-- set these parameters on Parameter Server -->
-  <param name="robot_description" textfile="$(find gopigo3_description)/urdf/gopigo3.urdf" />
+  <param name="robot_description" textfile="$(find gopigo3_description)/urdf/gopigo3rp.urdf" />
   <!-- send fake joint values -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="False"/>
@@ -253,114 +235,11 @@ RViz only represents the robot visual features. You have available all the optio
 ```shell
 roslaunch gopigo3_description display.launch
 ```
-![Getting Starter](./Images/1_gopigo_basic_rviz.png)
-![Getting Starter](./Images/1_gopigo3_rviz.png)
-### **gopigo3 model improvements**
-Some modifications in the initial model "gopigo3_init.gazebo" have been made to:
-- locate the LIDAR in the correct position
-- locate the camera axis in front position to see properly
 
-Special attention has to be done to the YDLIDAR sensor.
-
-- YDLIDAR X4 is a 360-degree two-dimensional rangefinder developed by YDLIDAR team. 
-- Based on the principle of triangulation, it is equipped with related optics, electronics and algorithm design to achieve high-frequency and high-precision distance measurement. 
-- The mechanical structure rotates 360 degrees to continuously output the angle information as well as the point cloud data of the scanning environment while ranging.
-- 10m Ranging distance (2cm absolute error)
-![Getting Started](./Images/1_ydlidar.png)
-It is important to note that:
-- the number of points of real YDLidar is 720 (one each half degree)
-- the number of points of simulated Lidar has to be adapted to the same 720 (by default is 360 (one each degree))
-
-> Be careful!:
-> - Robots with RPlidar have been assembled with the motor in front position and then have the zero angle in its back
-> - Robots with YDlidar have been assembled with the motor in back position and then have the zero angle in its front
->
-> In this last case the model is defined by:
-```xml
-  <joint name="scan_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_scan"/>
-    <origin rpy="0 0 0" xyz="-0.02 0 0.085"/>
-  </joint>
-  <link name="base_scan">
-    <visual>
-      <origin rpy="0 0 3.1416" xyz="0 0 0.02"/>
-      <geometry>
-        <mesh filename="package://gopigo3_description/meshes/sensors/X4.stl" scale="0.001 0.001 0.001"/>
-      </geometry>
-      <material name="orange"/>
-    </visual>
-```
-> For slam & navigation purposes:
->- Zero angle is considered allways in its back
->- When using YDlidar robot, you will have to add a 180ª rotation across z axis:
-```xml
-<node if="$(eval model=='gopigo3yd.urdf')" pkg="tf" type="static_transform_publisher" name="base_link_to_base_scan"
-    args="-0.033 0.0 0.08 3.14 0.0 0.0   /base_link /base_scan 40" />
-```
-
-#### **Using Xacro package**
-
-Xacro (short for XML Macros) helps in reducing the overall size of the URDF file and makes it easier to read and maintain. It also allows us to create modules and reutilize them to create repeated structures, such as several arms or legs. With this package you can use costants, simple math and macros to create your robot model easier and compact.
-
-Usefull information:
-- http://wiki.ros.org/urdf/Tutorials/Using%20Xacro%20to%20Clean%20Up%20a%20URDF%20File
-- https://www.theconstructsim.com/exploring-ros-2-wheeled-robot-part-02-xacros/
-
-We have a public gopigo3_description package (https://github.com/ros-gopigo3/gopigo3) where the robot model is defined in xacro format within the files:
-- gopigo3.urdf.xacro
-- gopigo3.gazebo.xacro
-- common_properties.xacro
-
-To display the xacro model a specific display_xacro.launch file is created
-
-To make convertion from xacro files to urdf file fotmat, type:
-```shell
-xacro gopigo3.urdf.xacro > gopigo3.urdf
-```
-
-You can display this new model in rviz
-```shell
-roslaunch gopigo3_description display.launch
-```
 ![](./Images/1_gopigo_stl.png)
 
-### **Final model:**
-Create and verify in the final model taking care about:
-- Activate all the sensors: in model.urdf.xacro verify if all the sensors are activated
-    - Camera
-    - Lidar
-    - Distance sensor
-    - IMU (usually IMU is not activated)
-- Differential drive plugin: 
-    - Take care about the maximum acceleration of wheels and torque. Usually we have to decrease this value to avoid slidings. We take acceleration 0.5 and torque 1
-    - Be sure the Odom TF is published <publishOdomTF>true</publishOdomTF>
-- Lidar plugin:
-    - By default there are 500 samples with 0.72deg resolution you have to change this to 720 samples with 1 sample resolution
 
-Edit the "gopigo3.urdf.xacro" file to verify the sensors included:
-```xml
-<!-- Which sensors to include -->
-<xacro:arg name="imu" default="true" />
-<!--xacro:property name="imu" value="true"/-->
-<xacro:arg name="distance"        default="true"/>
-<xacro:arg name="pi_camera"       default="true"/>
-<xacro:arg name="lds"             default="true"/>
-```
-Edit the "gopigo3.gazebo.xacro" file to verify the sensors/actuators properties:
-```xml
-        <scan>
-          <horizontal>
-            <samples>720</samples>
-            <resolution>1</resolution>
-            <min_angle>0.0</min_angle>
-            <max_angle>6.28319</max_angle>
-          </horizontal>
-        </scan>
-```
-## **2. rUBot gopigo3 spawn in world environment**
-
-In robotics research, always before working with a real robot, we simulate the robot behaviour in a virtual environment close to the real one. The dynamic simulation of a robot, is a better approach to examining the actual behavior of the robot rather than just using software. Rigid body mechanics, including mass and inertia, friction, damping, motor controllers, sensor detection properties, noise signals, and every aspect of the robot and the environment that can be retained in a model with reasonable accuracy is much less expensive when replicated in a simulator than if you tried to do this with physical hardware.
+In robotics research, always before working with a real robot, we simulate the robot behaviour in a virtual environment close to the real one. 
 
 Gazebo is an open source 3D robotics simulator and includes an ODE physics engine and OpenGL rendering, and supports code integration for closed-loop control in robot drives. This is sensor simulation and actuator control.
 
@@ -374,7 +253,7 @@ roslaunch gopigo3_description spawn.launch
   <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
  <!-- Spawn gopigo3 robot into Gazebo -->
     <!-- Robot URDF definition -->
-    <arg name="model" default="gopigo3.urdf" />
+    <arg name="model" default="gopigo3rp.urdf" />
     <param name="robot_description" textfile="$(find gopigo3_description)/urdf/$(arg model)"/>
   <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" output="screen"
       args="-urdf -model gopigo3 -param robot_description"/>
@@ -390,7 +269,7 @@ The robot could be spawn in a predefined position inside this new created world 
 <launch>
     <!-- Define the needed parameters -->
     <arg name="world" default="gopigo3.world"/> 
-    <arg name="model" default="gopigo3.urdf" />
+    <arg name="model" default="gopigo3rp.urdf" />
     <arg name="x_pos" default="0.5"/>
     <arg name="y_pos" default="0.5"/>
     <arg name="z_pos" default="0.0"/>
@@ -405,30 +284,24 @@ The robot could be spawn in a predefined position inside this new created world 
         args="-urdf -model gopigo3 -param robot_description -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)"/>
    </launch>
    ```
-   Type the following to spawn the robot inside the world and test the sensor values using rviz:
+Type the following to spawn the robot inside the world and test the sensor values using rviz:
 ```shell
 roslaunch gopigo3_description spawn_world.launch
 roslaunch gopigo3_description display.launch
 ```
 ![Getting Started](./Images/1_gopigo3_spawn_rviz.png)
->Be careful!:
-- If there is an error "libcurl: (51) SSL: no alternative certificate subject name matches target host name ‘api.ignitionfuel.org’" then follow instructions:
-    - Open "~/.ignition/fuel/config.yaml" (to see the hidden files type ctrl+h)
-    - replace: "api.ignitionfuel.org" with "fuel.ignitionrobotics.org"
-    
-  https://varhowto.com/how-to-fix-libcurl-51-ssl-no-alternative-certificate-subject-name-matches-target-host-name-api-ignitionfuel-org-gazebo-ubuntu-ros-melodic/
 
 You can see the nodes and topics generated using rqt_graph
 
 ![](./Images/01_rubot_spawn_rqt.png)
 
->In order to kill the previous Gazebo process, type:
->
->killall gzserver && killall gzclient
->
->or type ctrl+r and kill
 
-### **Design the Project world**
+### **Exercise**
+Modify the robot model to change the color (in RVIZ and Gazebo) of LIDAR sensor in function of the model:
+- Brawn for RP Lidar
+- BLUE for YD lidar
+
+## **2. Design the Project world**
 
 Here we have first to design the project world, for exemple a maze from where our rUBot gopigo3 has to navigate autonomously.
 
@@ -470,17 +343,26 @@ Use model parts in size 90cmx30cmx1cm and 60cmx30cmx1cm
 
 Save this world as maze.world
 
-### **Spawn the gopigo3 robot in project world**
+## **3. Bringup the gopigo3 robot in project world**
 
-Now, spawn the gopigo3 robot in our generated world. You have to create a "navigation.launch" file:
+Now, you can bringup the gopigo3 robot in our generated world. 
+You have to create a "bringup.launch" file:
 
 ``` shell
-roslaunch gopigo3_description navigation.launch
+roslaunch gopigo3_description bringup.launch
 ```
 ![](./Images/1_maze1.png)
 
+### **Exercise:**
+Generate a proper bringup launch file to:
+- Spawn your gopigo model in the generated world
+- Take into account the Lidar model
+- Open RVIZ
+- Specify the desired POSE
 
-## **3. gopigo3 navigation control in the new world environment**
+## **4. gopigo3 control**
+
+### **4.1 gopigo3 navigation**
 
 Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the autonomous navigation.
 
