@@ -1,16 +1,10 @@
 # **Control of gopigo3 in RaspberryPi**
 
-In a hospital, a delivery robot carries samples or food from one room to another.
-
 The main objectives are:
+- Describe the gopigo robot
+- Describe the gopigo bringup installation process
+- Control the gopigo robot to perform different movements
 
-- Assemble a real robot (gopigo3)
-- Control the gopigo3 robot movement
-- use SLAM (Simultaneous Localization and Mapping) techniques to generate and store a map of the room
-- use Navigation ROS package to find an optimal trajectory to reach a speciffic target position
-- Define a route to be followed by the gopigo3 robot using Navigation package
-
-let's see how to fulfill these objectives
 
 ## **1. Gopigo3 robot prototype setup**
 
@@ -23,60 +17,12 @@ This tobot prototype is based on:
 
 ![Getting Started](./Images/1_gopigo3_UB.png)
 
-The raspberrypi3 onboard is preinstalled with:
 
-- raspbian OS
-- ROS source installation with rviz
-- a "master_ws_original_copy" repository. You have NOT to use this repository. This could be used only in case you need to restart the repository with the original settings
-- a "gopigo3_rbpi3_ws" repository. This will be used by the students to perform the project with gopigo3 robot. This folder will be placed in the raspberrypi3 Desktop.
-
-This repository is located in /home/pi/Desktop folder and it is already compiled.
-
-### **Raspberrypi configuration and setup**
-
-The raspberrypi4 is configured:
-
-- to generate a hotspot
-- LIDAR activated
-- raspicam activated
-
-When powering the raspberrypi4, generates a hotspot you have to connect to:
-
-- SSID name: rubot_10
-- password "CorrePiCorre"
-
-Once you are connected to this network you will be able to connect your computer to the raspberrypi4 using Nomachine Display:
-
-- download and install the Nomachine for windows at:
-- Select the raspberrypi IP address: 10.42.0.1
-- you have to specify:
-  - user: pi
-  - password: ubuntu0ubuntu1
-- You will have the raspberrypi desktop on your windows nomachine screen
-
-![](./Images/2_vnc1.png)
-
-The first time you have to clone the "rUBot_gopigo_ws" repository to the home folder.
-
-```shell
-cd /home
-git clone https://github.com/manelpuig/rUBot_gopigo_ws
-cd rUBot_gopigo_ws
-catkin_make
-```
-
-> Carefull!: Some actions have to be done:
-
-- review the ~/.bashrc: source to the ws and delete the environment variables
-- make executable the c++ and python files
-
-### **1. gopigo bringup**
+## **2. Gopigo3 bringup**
 
 To properly perform a especific movement control we have first to install some HW packages:
 
-> Information is in: https://forum.dexterindustries.com/t/setup-python3-gopigo3-and-di-sensors-on-ubuntu-server-20-04-64-bit-for-non-root-access/8305
-
-#### **1.1 gopigo3_node**
+### **2.1 gopigo3_node**
 
 This node is responsible to drive the wheels and obtain the odometry
 
@@ -87,7 +33,7 @@ cd src
 git clone https://github.com/ros-gopigo/gopigo3_node
 ```
 
-#### **1.2 LIDAR**
+### **2.2 LIDAR**
 
 This node is responsible to see the obstacle distances 360º arround. We have 2 different LIDAR models (RPLIDAR and YDLIDAR) and we will install the 2 packages
 
@@ -110,7 +56,7 @@ git clone https://github.com/YDLIDAR/ydlidar_ros_driver
 
 Follow instructions in readme to install YDlidar SDK. This is already made in raspberrypi4
 
-#### **1.3. RASPICAM**
+### **2.3. RASPICAM**
 
 This node is responsible to view images from camera
 
@@ -121,7 +67,7 @@ cd src
 git clone https://github.com/UbiquityRobotics/raspicam_node
 ```
 
-#### **1.4. OPEN CV**
+### **2.4. OPEN CV**
 
 This package is used for image processing with OpenCV and ROS
 
@@ -131,7 +77,7 @@ This can be installed with apt (in opt/ros/noetic/share folder)
 sudo apt install ros-noetic-vision-opencv
 ```
 
-#### **1.5. Teleop-tools**
+### **2.5. Teleop-tools**
 
 This package is used to control robot with keyboard or joypad
 
@@ -143,7 +89,7 @@ sudo apt install ros-noetic-teleop-tools
 
 Once all drivers are installed, you can compile the ws and proceed for the bringup
 
-#### **1.6. Bringup**
+### **2.6. Bringup**
 
 Now you can bringup our robot:
 
@@ -163,27 +109,25 @@ roslaunch gopigo3_control gopigo3_bringup_hw.launch
 
 > Specify in launch file if you have YDlidar or RPlidar
 
-## **2. gopigo3 first control movements**
+## **3. gopigo3 first control movements**
 
 First, let's control the gopigo3 movement to perform:
 
 - movement control using keyboard
-- movement control with specific python script
+- Navigation
 - autonomous navigation
-- autonomous navigation following right or left wall
+- autonomous navigation following right wall
 - Navigation to speciffic POSE
 
 We have created a specific package "gopigo_control" where all these controls are programed.
-You can review from the "gopigo3_rbpi3_ws" workspace the src/gopigo_control folder where there are 2 new folders:
+You can review the src/gopigo_control folder where there are 2 new folders:
 
-- scrip folder: with the python programs for specific movement control
+- scrip folder: with the python nodes for specific movement control
 - launch folder: with programs to launch the movement control
 
-![](./Images/2_vnc2.png)
+### **3.1. Keyboard movement control**
 
-### **2.1. Keyboard movement control**
-
-To control the gopigo robot with keyboard, we need to install "teleop_tools" package. This is already installed in our master_ws as you can see in the previous figure.
+To control the gopigo robot with keyboard, we have installed "teleop_tools" package. 
 
 Open a  terminal and type:
 
@@ -209,16 +153,13 @@ rqt_graph
 
 Pres q and crtl+C to close the terminals
 
-### **2.2. Movement control with specific python script**
+### **3.2. Navigation**
 
-You want to perform the movement control in "move3_gopigo_distance.py" simulation ws.
+You want to perform the movement control:
+- with a desired v and w
+- up to a x distance "d"
 
-You will only need to:
-
-- copy this python file to the script folder
-- create a new "move_gopigo3.launch" file to launch gopigo3 and the control node
-
-> Carefull!: be sure the new python file is executable.
+This is made in a speciffic python node "move3_gopigo_distance.py".
 
 Type:
 
@@ -226,8 +167,13 @@ Type:
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
 roslaunch gopigo3_control node_nav.launch
 ```
+### **Lab Activity:**
 
-### **2.3. Autonomous navigation**
+You want to perform the movement control:
+- with a desired v and w
+- during a time interval "t"
+
+### **3.3. Autonomous navigation**
 
 For autonomous navigation you need the LIDAR sensor.
 
@@ -239,28 +185,33 @@ Type the following commands to each terminal:
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
 rosrun gopigo3_control node_lidar_test.launch
 ```
+### **Lab Activity**
+Verify that the forward direction corresponds to the zero angle. Is it true???
+- Modify the "rubot_lidar_test.py" node to be independent of laser beams
+- The program will take into account only the angle
 
-You need to verify that the forward direction corresponds to the zero angle. Is it true???
+### **Lab Activity**
+Now you can perform the autonomous navigation defined in node "rubot_self_nav.py"
 
-Now you can perform the autonomous navigation defined in "rubot_self_nav.py"
+You will have to modify the python node to take into account:
+- the zero angle if you have RP or YD lidar
+- To be independent of the number of laser beams
 
-Carefull!: be sure the new python file is executable
-
-Type in different terminals:
+To verify, type in different terminals:
 
 ```shell
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
 roslaunch gopigo3_control rubot_self_nav.launch
 ```
 
-In order to see the rubot with the topics information we will use rviz. Open rviz in a new terminal.
+In order to see the rubot with the topics information we will use rviz. 
 
-In rviz, select the fixed frame to "base_scan", and add Camera and LaserScan with the corresponding topics names.
+In rviz, verify the fixed frame to "base_scan", and add Camera and LaserScan with the corresponding topics names.
 
 You can then save the config file as laserscan.rviz name and use it in the launch file
 ![Getting Started](./Images/2_self_nav.png)
 
-### **2.4. Wall Follower**
+### **3.4. Wall Follower**
 
 This control task consist on find a wall and follow it at a certain distance. We will see that this is an important control task because this will be used later to make accurate maps of working environments.
 
@@ -274,6 +225,11 @@ https://github.com/Albert-Alvarez/ros-gopigo3/blob/lab-sessions/develop/ROS%20co
 
 We have created a launch file to start the node responsible to wall follower process.
 
+### **Lab Activity**
+You will have to adjust the different parameters to obtain a soft mobement
+
+To verify the performances, type:
+
 ```shell
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
 roslaunch gopigo3_control node_wall_follower_gm.launch
@@ -283,7 +239,7 @@ You can see the video result:
 
 [![Watch the video](https://img.youtube.com/vi/z5sAyiFs-RU/maxresdefault.jpg)](https://youtu.be/z5sAyiFs-RU)
 
-### **2.5. Go to POSE**
+### **3.5. Go to POSE**
 
 The objective is to program the robot to reach a speciffic target POSE defining:
 
@@ -291,9 +247,12 @@ The objective is to program the robot to reach a speciffic target POSE defining:
 - y position
 - angle orientation (from 0º to 180º)
 
-We can take the same python script you have programed for simulated Gazebo environment
+We can take the same python node you have programed for simulated Gazebo environment
 
-Type:
+### **Lab Activity**
+You will have to adjust the resolution to reach the POSE with enough accuracy.
+
+To verify the performances, open a terminal and type:
 
 ```shell
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
