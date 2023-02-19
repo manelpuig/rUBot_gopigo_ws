@@ -12,7 +12,7 @@ The main objectives of this chapter are:
 
 ## **1. Getting started with gopigo in simulation environment**
 
-The simulation environment is properly installes in "ROS1_Noetic_osrf" docker container.
+The simulation environment is properly installed in "ROS1_Noetic_osrf" docker container.
 
 
 ### **1.1. Connection to Docker container**
@@ -49,7 +49,7 @@ Now you can bringup our robot:
 
 A launch file is made to automatically make the bringup hardware:
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_description gopigo3_bringup_sw.launch
 ```
 > Specify in launch file if you have YDlidar or RPlidar
 
@@ -68,7 +68,7 @@ When connected to power, it is configured to:
 
 ### **2.1. Robot connection from PC**
 
-To connect ou PC to the Robot, we have to:
+To connect your PC to the Robot, we have to:
 - select the rubot hotspot:
     - SSID name: rubot_XX 
     - password "CorrePiCorre"
@@ -95,6 +95,7 @@ git clone https://github.com/manelpuig/rUBot_gopigo_ws
 cd rUBot_gopigo_ws
 catkin_make
 ```
+> If you have not internet connection you can copy the folder from a pendrive on the raspberrypi4 USB port
 
 Review the ~/.bashrc: Verify the last lines:
 ```shell
