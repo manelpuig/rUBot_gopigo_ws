@@ -72,19 +72,48 @@ To connect your PC to the Robot, we have to:
 - select the rubot hotspot:
     - SSID name: rubot_XX 
     - password "CorrePiCorre"
-- Connect your computer to the robot using Nomachine:
-    - Plug the pendrive to USB port
-    - Execute "nxplayer.exe" 
-- Add new robot and edit the connection:
-    - Name: rUBot_XX
-    - Host: 10.42.0.1
-    - Port: 4000
-    - Protocol: NX
-- Connect
-    - user: pi
-    - password: ubuntu0ubuntu1
+
+#### **2.1.1. Using nomachine remote desktop**
+To connect your computer to the robot using Nomachine:
+- Plug the pendrive to USB port
+- Execute "nxplayer.exe" 
+
+Add new robot and edit the connection:
+- Name: rUBot_XX
+- Host: 10.42.0.1
+- Port: 4000
+- Protocol: NX
+
+Connect
+- user: pi
+- password: ubuntu0ubuntu1
 
 You will have the rUBot desktop on your windows nomachine screen
+
+#### **2.1.2. Using VS Code remote connection**
+To connect your computer to the robot using VS Code remote connection:
+- You need the latest version (1.75.1).
+- First time you will need to connect the rock-board to internet with ethernet cable ti install some capabilities.
+
+Install the extensions:
+- Remote development
+- Git Extension Pack (in your remote 10.42.0.1 board)
+
+The **first time** you connect the VS Code to the Remote machine:
+
+- You will need to sign autorization to VS code to access github (will be in left-side bar menu, accounts symbol)
+- When sync the changes, you will have to type your email and user name (following the git output information)
+- You can work without internet connection, but When you want to sync your repository you will need the ethernet cable connected.
+
+For **succesive connections**, follow the instructions:
+
+- In windows open VS Code as administrator
+- Select the rUBot_XX wifi network
+- From "remote Explorer" (left-side bar menu) select "Remote" and type the IP
+- Select linux system for remote connection
+- type the password
+
+You will have the VS Code attached to remote machine!
 
 ### **2.2. Clone a repository**
 
