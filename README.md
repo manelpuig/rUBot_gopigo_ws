@@ -12,6 +12,6 @@ This workspace is organized in:
 |   rbpi Model&Control  | Control actions in **rbpi4**|
 |   Gopigo Slam&Navigation  | Navigation in **simulation**|
 | rbpi Slam&Navigation | Navigation in **rbpi4** |
-| Gopigo Vision projects | Projects in **simulation** |
-| rbpi Vision Projects | Projects in **rbpi4**
+| Gopigo projects | Projects in **simulation** |
+| rbpi Projects | Projects in **rbpi4**
 
