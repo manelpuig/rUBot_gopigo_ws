@@ -1,10 +1,10 @@
 <launch>
   <!-- launch follow wall   -->
-  <arg name="kp" default="2" />
+  <arg name="kp" default="5" />
   <arg name="distance_reference" default="0.4" />
-  <arg name="lookahead_distance" default="0.25" />
+  <arg name="lookahead_distance" default="0.5" />
   <arg name="forward_speed" default="0.1" />
-  <arg name="theta" default="30.0" />
+  <arg name="theta" default="65.0" />
   <node name="wall_follower_controller" pkg="gopigo3_control" type="rubot_wall_follower_gm.py" output="screen" >
     <param name="kp" value="$(arg kp)"/>
     <param name="distance_reference" value="$(arg distance_reference)"/>
