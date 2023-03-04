@@ -42,7 +42,16 @@
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
   <gazebo reference="base_link">
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/GreenTransparent</material>
+  </gazebo>
+  <gazebo reference="name_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="base_scan">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="camera_link">
+    <material>Gazebo/Red</material>
   </gazebo>
   <!-- Left wheel mechanical properties -->
   <gazebo reference="wheel_left_link">
@@ -99,81 +108,6 @@
       <rosDebugLevel>na</rosDebugLevel>
     </plugin>
   </gazebo>
-  <!-- Distance Sensor controller -->
-  <gazebo reference="distance_sensor">
-    <sensor name="laser_distance" type="ray">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
-      <update_rate>10</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>10</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.01</min_angle>
-            <max_angle>0.01</max_angle>
-          </horizontal>
-          <vertical>
-            <samples>10</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.01</min_angle>
-            <max_angle>0.01</max_angle>
-          </vertical>
-        </scan>
-        <range>
-          <min>0.01</min>
-          <max>3</max>
-          <resolution>0.01</resolution>
-        </range>
-      </ray>
-      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_ir">
-        <gaussianNoise>0.005</gaussianNoise>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <topicName>gopigo/distance</topicName>
-        <frameName>distance_sensor</frameName>
-        <radiation>INFRARED</radiation>
-        <fov>0.02</fov>
-      </plugin>
-    </sensor>
-  </gazebo>
-  <!-- IMU sensor -->
-  <gazebo reference="imu_link">
-    <sensor name="imu" type="imu">
-      <always_on>true</always_on>
-      <visualize>false</visualize>
-    </sensor>
-    <material>Gazebo/FlatBlack</material>
-  </gazebo>
-  <!-- IMU plugin -->
-  <gazebo>
-    <plugin filename="libgazebo_ros_imu.so" name="imu_plugin">
-      <alwaysOn>true</alwaysOn>
-      <bodyName>imu_link</bodyName>
-      <frameName>imu_link</frameName>
-      <topicName>imu</topicName>
-      <serviceName>imu_service</serviceName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>200</updateRate>
-      <imu>
-        <noise>
-          <type>gaussian</type>
-          <rate>
-            <mean>0.0</mean>
-            <stddev>2e-4</stddev>
-            <bias_mean>0.0000075</bias_mean>
-            <bias_stddev>0.0000008</bias_stddev>
-          </rate>
-          <accel>
-            <mean>0.0</mean>
-            <stddev>1.7e-2</stddev>
-            <bias_mean>0.1</bias_mean>
-            <bias_stddev>0.001</bias_stddev>
-          </accel>
-        </noise>
-      </imu>
-    </plugin>
-  </gazebo>
   <!-- Laser Distance Sensor YDLIDAR X4 controller-->
   <gazebo reference="base_scan">
     <material>Gazebo/Blue</material>
@@ -184,10 +118,6 @@
       <ray>
         <scan>
           <horizontal>
-            <!--samples>360</samples>
-            <resolution>1</resolution-->
-            <!--samples>500</samples-->
-            <!--resolution>0.72</resolution-->
             <samples>720</samples>
             <resolution>1</resolution>
             <min_angle>0.0</min_angle>
@@ -215,46 +145,8 @@
       </plugin>
     </sensor>
   </gazebo>
-  <!-- Distance Sensor controller -->
-  <gazebo reference="distance_sensor">
-    <sensor name="laser_distance" type="ray">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>false</visualize>
-      <update_rate>10</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>10</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.01</min_angle>
-            <max_angle>0.01</max_angle>
-          </horizontal>
-          <vertical>
-            <samples>10</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.01</min_angle>
-            <max_angle>0.01</max_angle>
-          </vertical>
-        </scan>
-        <range>
-          <min>0.01</min>
-          <max>3</max>
-          <resolution>0.01</resolution>
-        </range>
-      </ray>
-      <plugin filename="libgazebo_ros_range.so" name="gazebo_ros_ir">
-        <gaussianNoise>0.005</gaussianNoise>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <topicName>gopigo/distance</topicName>
-        <frameName>distance_sensor</frameName>
-        <radiation>INFRARED</radiation>
-        <fov>0.02</fov>
-      </plugin>
-    </sensor>
-  </gazebo>
   <!-- 2D Camera controller -->
-  <gazebo reference="camera_rgb_frame">
+  <gazebo reference="camera_link">
     <sensor name="camera1" type="camera">
       <always_on>true</always_on>
       <visualize>false</visualize>
@@ -294,34 +186,34 @@
     <parent link="base_footprint"/>
     <child link="base_link"/>
     <!-- CAD of body of GoPiGo3 has its reference coordinate system at the center of the wheels shaft -->
-    <origin rpy="0 0 0" xyz="0 0 0.075"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
   <link name="base_link">
     <visual>
       <!-- Decentering of the CAD model coordinate system-->
-      <origin rpy="0 0 -4.71" xyz="-0.12 0.033 -0.08"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://gopigo3_description/meshes/GoPiGo3_Body.stl" scale="0.0012 0.0012 0.0012"/>
+        <mesh filename="package://gopigo3_description/meshes/GoPiGo3_Body2.stl" scale="0.0012 0.0012 0.0012"/>
       </geometry>
       <material name="cyan"/>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="-0.038 0 -0.015"/>
       <geometry>
-        <box size="0.245 0.088 0.07"/>
+        <box size="0.2 0.1 0.05"/>
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="-0.02 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="0.534"/>
-      <inertia ixx="1.0e-03" ixy="0" ixz="0" iyy="1.0e-03" iyz="0" izz="2.45e-03"/>
+      <inertia ixx="1.0e-03" ixy="0" ixz="0" iyy="2.0e-03" iyz="0" izz="2.45e-03"/>
     </inertial>
   </link>
   <!-- ============ wheel_left ====================== -->
   <joint name="wheel_left_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_left_link"/>
-    <origin rpy="0 0 1.57" xyz="0 0.058 -0.042"/>
+    <origin rpy="0 0 1.57" xyz="0 0.058 0.0"/>
     <axis xyz="1 0 0"/>
   </joint>
   <link name="wheel_left_link">
@@ -348,7 +240,7 @@
   <joint name="wheel_right_joint" type="continuous">
     <parent link="base_link"/>
     <child link="wheel_right_link"/>
-    <origin rpy="0 0 -1.57" xyz="0 -0.058 -0.042"/>
+    <origin rpy="0 0 -1.57" xyz="0 -0.058 0.0"/>
     <axis xyz="-1 0 0"/>
   </joint>
   <link name="wheel_right_link">
@@ -375,11 +267,11 @@
   <joint name="caster_back_joint" type="fixed">
     <parent link="base_link"/>
     <child link="caster_back_link"/>
-    <origin rpy="0 0 0" xyz="-0.132 0 -0.075"/>
+    <origin rpy="0 0 0" xyz="-0.132 0 0"/>
   </joint>
   <link name="caster_back_link">
     <collision>
-      <origin rpy="1.57 0 0" xyz="0 0 0.01"/>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
       <geometry>
         <cylinder length="0.009" radius="0.01"/>
       </geometry>
@@ -400,32 +292,31 @@
   <joint name="scan_joint" type="fixed">
     <parent link="base_link"/>
     <child link="base_scan"/>
-    <origin rpy="0 0 0" xyz="-0.008 0 0.085"/>
+    <origin rpy="0 0 0" xyz="0 0 0.14"/>
   </joint>
   <link name="base_scan">
     <visual>
-      <origin rpy="0 0 3.1416" xyz="0 0 0.02"/>
+      <origin rpy="0 0 3.1416" xyz="0.005 0 0"/>
       <geometry>
         <mesh filename="package://gopigo3_description/meshes/sensors/X4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="blue"/>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 -0.0215"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <cylinder length="0.055" radius="0.035"/>
       </geometry>
     </collision>
     <inertial>
       <mass value="0.178"/>
-      <origin xyz="0 0 0"/>
       <inertia ixx="1.10e-04" ixy="-1.56e-04" ixz="-3.12e-04" iyy="1.85e-04" iyz="-2.23e-04" izz="2.21e-04"/>
     </inertial>
   </link>
   <!-- Pi Camera -->
   <link name="camera_link">
     <visual>
-      <origin rpy="0 1.570795 0" xyz="0.005 0.000 0.013"/>
+      <origin rpy="0 1.57 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://gopigo3_description/meshes/sensors/piCamera.stl" scale="0.00125 0.00125 0.00125"/>
       </geometry>
@@ -437,10 +328,13 @@
         <box size="0.015 0.030 0.027"/>
       </geometry>
     </collision>
+    <inertial>
+      <mass value="0.02"/>
+      <inertia ixx="1.10e-04" ixy="0" ixz="0" iyy="1.85e-04" iyz="0" izz="2.21e-04"/>
+    </inertial>
   </link>
-  <!-- Pi Camera -->
   <joint name="camera_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.07 0 -0.02"/>
+    <origin rpy="0 0 0" xyz="0.07 0 0.03"/>
     <parent link="base_link"/>
     <child link="camera_link"/>
   </joint>
@@ -454,14 +348,18 @@
       <material name="yellow"/>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 -0.0215"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.1 0.05 0.02"/>
       </geometry>
     </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="1.10e-04" ixy="0" ixz="0" iyy="1.85e-04" iyz="0" izz="2.21e-04"/>
+    </inertial>
   </link>
   <joint name="name_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="-0.11 0 0.025"/>
+    <origin rpy="0 0 0" xyz="-0.115 0 0.057"/>
     <parent link="base_link"/>
     <child link="name_link"/>
   </joint>
