@@ -1,7 +1,7 @@
 <launch>
-  <arg name="lidar_model" default="rp"/>
+  <arg name="lidar_model" default="yd"/>
   <arg name="world" default="square.world"/> 
-  <arg name="model" default="gopigo3rp.urdf" />
+  <arg name="model" default="gopigo3ydmpuig.urdf" />
   <arg name="x_pos" default="1.0"/>
   <arg name="y_pos" default="0.0"/>
   <arg name="yaw" default="1.0"/>
