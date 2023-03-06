@@ -352,7 +352,10 @@ You have to create a "bringup.launch" file:
 roslaunch gopigo3_description bringup.launch
 ```
 ![](./Images/1_maze1.png)
-
+> To properly kill a gazebo process, type
+>killall gzserver && killall gzclient
+>or
+>pkill gzserver && pkill gzclient
 ### **Exercise:**
 Generate a proper bringup launch file to:
 - Spawn your gopigo model in the generated world
