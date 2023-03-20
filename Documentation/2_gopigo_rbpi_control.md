@@ -54,7 +54,9 @@ cd src
 git clone https://github.com/YDLIDAR/ydlidar_ros_driver
 ```
 
-Follow instructions in readme to install YDlidar SDK. This is already made in raspberrypi4
+For a better installation, follow instructions in readme to install YDlidar SDK: https://github.com/YDLIDAR/YDLidar-SDK/blob/master/doc/howto/how_to_build_and_install.md
+
+This is already made in raspberrypi4
 
 ### **2.3. RASPICAM**
 
@@ -143,7 +145,6 @@ rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 
 Carefull: if there are problems, make a source in each terminal
 
-![Getting Started](./Images/2_key.png)
 
 Open a new terminal and see all the nodes and topics involved:
 
@@ -201,7 +202,7 @@ To verify, type in different terminals:
 
 ```shell
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
-roslaunch gopigo3_control rubot_self_nav.launch
+roslaunch gopigo3_control node_self_nav.launch
 ```
 
 In order to see the rubot with the topics information we will use rviz. 
@@ -209,7 +210,6 @@ In order to see the rubot with the topics information we will use rviz.
 In rviz, verify the fixed frame to "base_scan", and add Camera and LaserScan with the corresponding topics names.
 
 You can then save the config file as laserscan.rviz name and use it in the launch file
-![Getting Started](./Images/2_self_nav.png)
 
 ### **3.4. Wall Follower**
 
@@ -226,7 +226,7 @@ https://github.com/Albert-Alvarez/ros-gopigo3/blob/lab-sessions/develop/ROS%20co
 We have created a launch file to start the node responsible to wall follower process.
 
 ### **Lab Activity**
-You will have to adjust the different parameters to obtain a soft mobement
+You will have to adjust the different parameters to obtain a soft movement
 
 To verify the performances, type:
 
