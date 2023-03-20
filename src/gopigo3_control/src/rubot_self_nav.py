@@ -37,7 +37,7 @@ class GoPiGo3:
             (val, idx) for (idx, val) in enumerate(scan.ranges) if scan.range_min < val < scan.range_max
         )
         if self._LIDAR == "rp":
-            angleClosestDistance = (elementIndex / 2)-180 # RPLidar zero angle in backside
+            angleClosestDistance = self.__wrapAngle(elementIndex / 2)-180 # RPLidar zero angle in backside
         else:
             angleClosestDistance = self.__wrapAngle(elementIndex / 2) # YDLidar zero angle in frontside
 
