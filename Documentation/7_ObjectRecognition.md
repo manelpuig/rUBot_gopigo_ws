@@ -95,7 +95,7 @@ if __name__ == '__main__':
 * Collect images with your mobile for each sign and upload them to the project.
 * Train the model.
 * Export the model as a keras .h5 model: 
-* Install Keras in the Robot: `sudo pip install keras`
+* Install Keras and TensorFlow in the Robot: `sudo pip install keras` `sudo pip install tensorflow`
 * Create a ROS node that uses the model for inference:
   
 ```python
