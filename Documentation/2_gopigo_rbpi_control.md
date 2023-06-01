@@ -93,7 +93,7 @@ This is done in the
 A launch file is made to automatically make the bringup hardware:
 
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_hw.launch
+roslaunch gopigo3_description gopigo3_bringup_hw.launch
 ```
 
 
@@ -120,7 +120,7 @@ To control the gopigo robot with keyboard, we have installed "teleop_tools" pack
 Open a  terminal and type:
 
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_hw.launch
+roslaunch gopigo3_description gopigo3_bringup_hw.launch
 ```
 
 Open a new terminal and type:
@@ -151,7 +151,7 @@ This is made in a speciffic python node "move3_gopigo_distance.py".
 Type:
 
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_hw.launch
+roslaunch gopigo3_description gopigo3_bringup_hw.launch
 roslaunch gopigo3_control node_nav.launch
 ```
 ### **Lab Activity:**
@@ -169,8 +169,8 @@ First test your LIDAR angles with the program: rubot_lidar_test.py
 Type the following commands to each terminal:
 
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_hw.launch
-rosrun gopigo3_control node_lidar_test.launch
+roslaunch gopigo3_description gopigo3_bringup_hw.launch
+roslaunch gopigo3_control node_lidar_test.launch
 ```
 ### **Lab Activity**
 Verify that the forward direction corresponds to the zero angle. Is it true???
