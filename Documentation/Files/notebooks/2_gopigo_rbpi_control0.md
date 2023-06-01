@@ -35,13 +35,26 @@ git clone https://github.com/ros-gopigo/gopigo3_node
 
 ### **2.2 LIDAR**
 
-This node is responsible to see the obstacle distances 360º arround.
+This node is responsible to see the obstacle distances 360º arround. We have 2 different LIDAR models (RPLIDAR and YDLIDAR) and we will install the 2 packages
+
+a) RPLIDAR
 
 This can be installed with apt (in opt/ros/noetic/share folder)
 
 ```shell
 sudo apt install ros-noetic-rplidar-ros
 ```
+
+b) YDLIDAR
+
+This can be installed clonning (or copying) the package in src folder:
+
+```shell
+cd src
+git clone https://github.com/YDLIDAR/ydlidar_ros_driver
+```
+
+For a better installation, follow instructions in readme to install YDlidar SDK: https://github.com/YDLIDAR/YDLidar-SDK/blob/master/doc/howto/how_to_build_and_install.md
 
 This is already made in raspberrypi4
 
@@ -96,6 +109,7 @@ A launch file is made to automatically make the bringup hardware:
 roslaunch gopigo3_control gopigo3_bringup_hw.launch
 ```
 
+> Specify in launch file if you have YDlidar or RPlidar
 
 ## **3. gopigo3 first control movements**
 
