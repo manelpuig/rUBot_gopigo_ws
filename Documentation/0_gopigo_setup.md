@@ -51,7 +51,7 @@ A launch file is made to automatically make the bringup hardware:
 ```shell
 roslaunch gopigo3_description gopigo3_bringup_sw.launch
 ```
-> Specify in launch file if you have YDlidar or RPlidar
+> Specify in launch file the final urdf file model
 
 
 ## **2. Getting started with gopigo in real raspberrypi4 based robot**
@@ -75,7 +75,7 @@ To connect your PC to the Robot, we have to:
 
 #### **2.1.1. Using nomachine remote desktop**
 To connect your computer to the robot using Nomachine:
-- Plug the pendrive to USB port
+- Plug the pendrive to USB port of PC in Lab IE
 - Execute "nxplayer.exe" 
 
 Add new robot and edit the connection:
@@ -93,7 +93,6 @@ You will have the rUBot desktop on your windows nomachine screen
 #### **2.1.2. Using VS Code remote connection**
 To connect your computer to the robot using VS Code remote connection:
 - You need the latest version (1.75.1).
-- First time you will need to connect the rock-board to internet with ethernet cable ti install some capabilities.
 
 Install the extensions:
 - Remote development
@@ -141,6 +140,6 @@ Now you can bringup our robot:
 
 A launch file is made to automatically make the bringup hardware:
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_hw.launch
+roslaunch gopigo3_description gopigo3_bringup_hw.launch
 ```
-> Specify in launch file if you have YDlidar or RPlidar
+> Specify in launch file the robot urdf file model you have used
