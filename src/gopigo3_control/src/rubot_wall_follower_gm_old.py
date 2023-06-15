@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# -*- coding: utf-8 -*-
 import rospy
 import numpy as np
 from sensor_msgs.msg import LaserScan
@@ -15,6 +15,7 @@ class WallFollower:
         rospy.init_node("wall_follower_controller", anonymous=False)
 
         # Propiedades ingresadas con parametros
+        self.__LIDAR = rospy.get_param("LIDAR", "")#this param is not for a specifficc node, is global
         self.__kp = rospy.get_param("~kp", 0)
         self.__Dr = rospy.get_param("~distance_reference", 0)
         self.__L = rospy.get_param("~lookahead_distance", 0)
@@ -72,28 +73,47 @@ class WallFollower:
                 len(scan.ranges) / 360)
             self.__isScanRangesLengthCorrectionFactorCalculated = True
         # wrong readings deliver 0 value in range
-        """ newRange = []
+        newRange = []
         for val in scan.ranges:
             if (val == 0):
                 newRange.append(3)
             else:
-                newRange.append(val) """
+                newRange.append(val)
         # Obtenemos las mediciones de A y B y las guardamos en variables locales
-        """zero angle is on th back --> angle-180 """
-        A = scan.ranges[int(round(self.__unWrapAngle(90 + np.rad2deg(self.__theta)))) * self.__scanRangesLengthCorrectionFactor]
-        B = scan.ranges[(self.__unWrapAngle(90)) *
-                        self.__scanRangesLengthCorrectionFactor]
+        if self.__LIDAR == "rp":
+            """zero angle is on th back --> angle-180 """
+            A = scan.ranges[int(round(self.__unWrapAngle(-90 + np.rad2deg(self.__theta))-180)) * self.__scanRangesLengthCorrectionFactor]
+            B = scan.ranges[(self.__unWrapAngle(-90)-180) *
+                            self.__scanRangesLengthCorrectionFactor]
 
-        rospy.loginfo_once('Ángulo derecha:\t%d, Ángulo theta:\t%d',
-            (self.__unWrapAngle(90)) * self.__scanRangesLengthCorrectionFactor,
-            int(round(self.__unWrapAngle(90 + np.rad2deg(self.__theta)))) * self.__scanRangesLengthCorrectionFactor)
-            
-        rospy.loginfo("LIDAR: Delante:\t%.2f, Atrás:\t%.2f, Izquierda:\t%.2f, Derecha:\t%.2f, Theta:\t%.2f",
-            scan.ranges[self.__unWrapAngle(180) * self.__scanRangesLengthCorrectionFactor],
-            scan.ranges[self.__unWrapAngle(0) * self.__scanRangesLengthCorrectionFactor],
-            scan.ranges[self.__unWrapAngle(-90) * self.__scanRangesLengthCorrectionFactor],
-            scan.ranges[self.__unWrapAngle(90) * self.__scanRangesLengthCorrectionFactor],
-            scan.ranges[int(round(self.__unWrapAngle(90 + np.rad2deg(self.__theta))) * self.__scanRangesLengthCorrectionFactor)])
+            rospy.loginfo_once('Ángulo derecha:\t%d, Ángulo theta:\t%d',
+                (self.__unWrapAngle(-90)-180) * self.__scanRangesLengthCorrectionFactor,
+                int(round(self.__unWrapAngle(-90 + np.rad2deg(self.__theta))-180)) * self.__scanRangesLengthCorrectionFactor)
+                
+            rospy.loginfo("LIDAR:\t%s, Delante:\t%.2f, Atrás:\t%.2f, Izquierda:\t%.2f, Derecha:\t%.2f, Theta:\t%.2f",
+                self.__LIDAR,
+                scan.ranges[self.__unWrapAngle(180) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[self.__unWrapAngle(0) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[self.__unWrapAngle(-90) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[self.__unWrapAngle(90) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[int(round(self.__unWrapAngle(-90 + np.rad2deg(self.__theta))-180)) * self.__scanRangesLengthCorrectionFactor])
+
+        else:
+            A = scan.ranges[int(round(self.__unWrapAngle(-90 + np.rad2deg(self.__theta)))) * self.__scanRangesLengthCorrectionFactor]
+            B = scan.ranges[self.__unWrapAngle(-90) *
+                            self.__scanRangesLengthCorrectionFactor]
+
+            rospy.loginfo_once('Ángulo derecha:\t%d, Ángulo theta:\t%d',
+                self.__unWrapAngle(-90) * self.__scanRangesLengthCorrectionFactor,
+                int(round(self.__unWrapAngle(-90 + np.rad2deg(self.__theta)))) * self.__scanRangesLengthCorrectionFactor)
+                
+            rospy.loginfo("LIDAR:\t%s, Delante:\t%.2f, Atrás:\t%.2f, Izquierda:\t%.2f, Derecha:\t%.2f, Theta:\t%.2f",
+                self.__LIDAR,
+                scan.ranges[self.__unWrapAngle(0) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[self.__unWrapAngle(180) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[self.__unWrapAngle(90) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[self.__unWrapAngle(-90) * self.__scanRangesLengthCorrectionFactor],
+                scan.ranges[int(round(self.__unWrapAngle(-90 + np.rad2deg(self.__theta)))) * self.__scanRangesLengthCorrectionFactor])
 
         # Si el valor leido de A no es NaN ni infinito y da entre 0.1 y 16 m (limites del Lidar),
         # actualizamos la propiedad self.__A con el nuevo valor. wrong readings deliver 0 value in range
