@@ -6,12 +6,11 @@ from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 
 
-class GoPiGo3:
+class rUBot:
 
     def __init__(self):
 
         rospy.init_node("rubot_nav", anonymous=False)
-        self._LIDAR = rospy.get_param("LIDAR")
         self._distanceLaser = rospy.get_param("~distance_laser")
         self._speedFactor = rospy.get_param("~speed_factor")
         self._forwardSpeed = rospy.get_param("~forward_speed")
@@ -24,6 +23,17 @@ class GoPiGo3:
         rospy.on_shutdown(self.shutdown)
 
         self._r = rospy.Rate(5)
+        
+        # Propiedades secundarias
+
+        # Tenemos operando dos versiones de Lidar que devuelven 360 0 720 0 1080 puntos.
+        # Para que el codigo sea compatible con cualquiera de los dos, aplicaremos
+        # este factor de correccion en los angulos/indices de scan.ranges.
+        # Se debe de calcular en la primera ejecucion de __callbackLaser(). Esta
+        # variable sirve para asegurar que solo se ejecuta este calculo del
+        # factor de correccion una sola vez.
+        self.__isScanRangesLengthCorrectionFactorCalculated = False
+        self.__scanRangesLengthCorrectionFactor = 1
 
     def start(self):
 
@@ -32,19 +42,30 @@ class GoPiGo3:
             self._r.sleep()
 
     def callbackLaser(self, scan):
+        """Funcion ejecutada cada vez que se recibe un mensaje en /scan."""
+        # En la primera ejecucion, calculamos el factor de correcion
+        if not self.__isScanRangesLengthCorrectionFactorCalculated:
+            self.__scanRangesLengthCorrectionFactor = int(len(scan.ranges) / 360)
+            self.__isScanRangesLengthCorrectionFactorCalculated = True
+            rospy.loginfo("Scan Ranges correction %5.2f we have,%5.2f points.", self.__scanRangesLengthCorrectionFactor, len(scan.ranges))
+        
+        
+        closestDistance, elementIndex = min((val, idx) for (idx, val) in enumerate(scan.ranges) if scan.range_min < val < scan.range_max)
+        angleClosestDistance = (elementIndex / self.__scanRangesLengthCorrectionFactor)  
+        rospy.loginfo("Degree div factor %5.2f ",(elementIndex / self.__scanRangesLengthCorrectionFactor))
 
-        closestDistance, elementIndex = min(
-            (val, idx) for (idx, val) in enumerate(scan.ranges) if scan.range_min < val < scan.range_max
-        )
-        if self._LIDAR == "rp":
-            angleClosestDistance = self.__wrapAngle(elementIndex / 2)-180 # RPLidar zero angle in backside
+        angleClosestDistance= self.__wrapAngle(angleClosestDistance)
+        rospy.loginfo("Degree wraped %5.2f ",(angleClosestDistance))
+        
+        if angleClosestDistance > 0:
+            angleClosestDistance=(angleClosestDistance-180)
         else:
-            angleClosestDistance = self.__wrapAngle(elementIndex / 2) # YDLidar zero angle in frontside
+            angleClosestDistance=(angleClosestDistance+180)
+			
+        rospy.loginfo("Closest distance of %5.2f m at %5.1f degrees.",closestDistance, angleClosestDistance)
+                      
 
-        rospy.loginfo("Closest distance of %5.2f m at %5.1f degrees.",
-                      closestDistance, angleClosestDistance)
-
-        if closestDistance < self._distanceLaser and -90 < angleClosestDistance < 90:
+        if closestDistance < self._distanceLaser and -80 < angleClosestDistance < 80:
             self._msg.linear.x = self._backwardSpeed * self._speedFactor
             self._msg.angular.z = -self.__sign(angleClosestDistance) * self._rotationSpeed * self._speedFactor
             rospy.logwarn("Within laser distance threshold. Rotating the robot (z=%4.1f)...", self._msg.angular.z)
@@ -68,12 +89,15 @@ class GoPiGo3:
 
     def shutdown(self):
         self._msg.linear.x = 0
+        self._msg.linear.y = 0
         self._msg.angular.z = 0
         self._cmdVel.publish(self._msg)
+        rospy.loginfo("Stop RVIZ")
 
 if __name__ == '__main__':
     try:
-        gpg = GoPiGo3()
-        gpg.start()
+        rUBot1 = rUBot()
+        rUBot1.start()
         rospy.spin()
-    except rospy.ROSInterruptException: pass
+        rUBot1.shutdown()
+    except rospy.ROSInterruptException: rUBot1.shutdown()#pass
