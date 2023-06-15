@@ -21,24 +21,12 @@ This package is already created and you will use it to:
 
 ### **1. Generate the map**
 
-To generate the map we need first to launch:
-- gopigo3_node
-- ydlidar or rplidar
-- raspicam
-
-Open diferent terminals to launch the diferent nodes:
-```shell
-roslaunch gopigo3_node gopigo3.launch
-roslaunch ydlidar lidar.launch (or roslaunch rplidar_ros rplidar.launch)
-roslaunch raspicam_node camerav2_1280x960_10fps.launch enable_raw:=true camera_frame_id:="base_scan"
-```
-You can also launch a bringup launch file to launch gopigo3 and LIDAR (do not launch the raspicam to speed up the gmapping process).
+You need to bringup the gopigo3
 
 Type:
 ```shell
-roslaunch gopigo_control gopigo3yd_bringup.launch
+roslaunch gopigo_description gopigo3_bringup_hw.launch
 ```
-> Select the corresponding launch file for the rp lidar version
 
 we can see now the nodes that are running in our ROS workspace:
 <img src="./Images/2_nodes_cam.png">
@@ -57,18 +45,18 @@ we obtain a more accurate movement and map
 
 Open another terminal and type:
 ```shell
-roslaunch gopigo_control rubotYD_wall_follower_gm.launch
-roslaunch gopigo_slam gopigo3yd_slam.launch
+roslaunch gopigo_slam gopigo_slam_hw.launch
 ```
 We need to move the gopigo3 around the map either with keyboard or with wall_follower python program
 ```shell
 rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 or
-roslaunch wall_follower wall_follower.launch
+roslaunch gopigo3_control node_wall_follower_gm.launch
 ```
 Once you have finish the map, you need to launch the map_saver program from map_server package:
 ```shell
-rosrun map_server map_saver -f hospital1map
+cd rUBot_gopigo_ws/src/gopigo3_slam/maps/
+rosrun map_server map_saver -f test1map
 ```
 You will get two files in the specified folder of your workspace: maze.pgm and maze.yaml.
 
@@ -76,22 +64,12 @@ Provided with the map, we are ready to perform robot navigation with the GoPiGo3
 
 ### **2. navigate to speciffic target points within the map**
 
-To navigate within the map we need first to launch:
-- gopigo3_node
-- ydlidar or rplidar
-- raspicam
+To navigate within the map we need first to bringup the robot, read the map and open Navigation:
 
-Open diferent terminals to launch the diferent nodes:
+Open a terminal and type:
 ```shell
-roslaunch gopigo3_node gopigo3.launch
-roslaunch ydlidar lidar.launch (or roslaunch rplidar_ros rplidar.launch)
-roslaunch raspicam_node camerav2_1280x960_10fps.launch enable_raw:=true camera_frame_id:="base_scan"
-```
-Open Navigation launch file including the map location:
-```shell
-roslaunch gopigo_slam gopigo3_navigation_maze.launch
-or
-roslaunch gopigo_slam gopigo3rp_navigation_maze.launch
+roslaunch gopigo_description gopigo3_bringup_hw.launch
+roslaunch gopigo_slam gopigo3_navigation_hw.launch
 ```
 You need first to locate the robot in the initial position and choose the target destination.
 
