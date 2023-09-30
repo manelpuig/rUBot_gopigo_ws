@@ -15,3 +15,5 @@ This workspace is organized in:
 | Gopigo projects | Projects in **simulation** |
 | rbpi Projects | Projects in **rbpi4**
 
+GoPiGo on ROS2:
+https://github.com/slowrunner/rosbot-on-gopigo3/tree/main
