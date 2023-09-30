@@ -78,7 +78,9 @@ To connect your PC to the Robot, we have to:
 >   - Open "Network connections"
 >   - Select your Device (wlan0(xxxx))
 >   - Save and shutdown
->
+
+<img src="./Images/0_Hotspot_settings.png" />
+
 > Next time you power your raspberrypi4, the Hotspot service will start!
 
 #### **2.1.1. Using nomachine remote desktop**
