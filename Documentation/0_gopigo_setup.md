@@ -73,6 +73,14 @@ To connect your PC to the Robot, we have to:
     - SSID name: rubot_XX 
     - password "CorrePiCorre"
 
+>If there is no Hotspot:
+>   - Connect a screen and keyboard
+>   - Open "Network connections"
+>   - Select your Device (wlan0(xxxx))
+>   - Save and shutdown
+>
+> Next time you power your raspberrypi4, the Hotspot service will start!
+
 #### **2.1.1. Using nomachine remote desktop**
 To connect your computer to the robot using Nomachine:
 - Plug the pendrive to USB port of PC in Lab IE
