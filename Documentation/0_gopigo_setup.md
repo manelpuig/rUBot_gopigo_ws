@@ -6,41 +6,36 @@ Gopigo3 robot prototype is based on:
 - RaspiCAM RGB camera
 - LIDAR sensor
 
+<img src="./Images/1_gopigo3_UB.png" />
+
 The main objectives of this chapter are:
 - Getting started with gopigo in simulation environment
 - Getting started with gopigo in real raspberrypi4 based robot
 
 ## **1. Getting started with gopigo in simulation environment**
 
-The simulation environment is properly installed in "ROS1_Noetic_osrf" docker container.
+To setup the repository in your ROS environment, you need to:
 
+- Fork my repository (https://github.com/manelpuig/rUBot_gopigo_ws) in your github account
+- Open your ROS Noetic environment: https://app.theconstructsim.com/
+- Clone your forked directory in your home directory
 
-### **1.1. Connection to Docker container**
-
-Follow the instructions:
-- Run the "ROS1_Noetic_osrf" docker container
-- Connect the Visual Studio Code to the docker container
-- Run the XLaunch program with the speciffic settings
-
-You are ready to work with ROS Noetic
-
-### **1.2. Clone a repository**
-
-The first time you have to clone the "rUBot_gopigo_ws" repository to the home folder.
 ```shell
-cd /home
-git clone https://github.com/manelpuig/rUBot_gopigo_ws
+cd /home/user
+git clone https://github.com/your_username/rUBot_gopigo_ws
 cd rUBot_gopigo_ws
 catkin_make
 ```
+- Open .bashrc file with VS Code (open file...)
+- Ensure that you have the last 2 lines (review the exact name of your repository):
 
-Review the ~/.bashrc: Verify the last lines:
 ```shell
 source /opt/ros/noetic/setup.bash
-source /home/rUBot_gopigo_ws/devel/setup.bash
+source /home/user/rUBot_gopigo_ws/devel/setup.bash
 ```
+You are ready to work with your repository!
 
-### **1.3. gopigo bringup**
+### **gopigo bringup**
 
 Now you can bringup our robot:
 - launch the gopigo3 node: able to control de 2 motors and measure the odometry
@@ -66,24 +61,14 @@ When connected to power, it is configured to:
 - LIDAR activated 
 - raspicam activated 
 
-### **2.1. Robot connection from PC**
+### **Robot connection from PC**
 
 To connect your PC to the Robot, we have to:
 - select the rubot hotspot:
     - SSID name: rubot_XX 
     - password "CorrePiCorre"
 
->If there is no Hotspot:
->   - Connect a screen and keyboard
->   - Open "Network connections"
->   - Select your Device (wlan0(xxxx))
->   - Save and shutdown
-
-<img src="./Images/0_Hotspot_settings.png" />
-
-> Next time you power your raspberrypi4, the Hotspot service will start!
-
-#### **2.1.1. Using nomachine remote desktop**
+### **Using nomachine remote desktop**
 To connect your computer to the robot using Nomachine:
 - Plug the pendrive to USB port of PC in Lab IE
 - Execute "nxplayer.exe" 
@@ -100,36 +85,12 @@ Connect
 
 You will have the rUBot desktop on your windows nomachine screen
 
-#### **2.1.2. Using VS Code remote connection**
-To connect your computer to the robot using VS Code remote connection:
-- You need the latest version (1.75.1).
-
-Install the extensions:
-- Remote development
-- Git Extension Pack (in your remote 10.42.0.1 board)
-
-The **first time** you connect the VS Code to the Remote machine:
-
-- You will need to sign autorization to VS code to access github (will be in left-side bar menu, accounts symbol)
-- When sync the changes, you will have to type your email and user name (following the git output information)
-- You can work without internet connection, but When you want to sync your repository you will need the ethernet cable connected.
-
-For **succesive connections**, follow the instructions:
-
-- In windows open VS Code as administrator
-- Select the rUBot_XX wifi network
-- From "remote Explorer" (left-side bar menu) select "Remote" and type the IP
-- Select linux system for remote connection
-- type the password
-
-You will have the VS Code attached to remote machine!
-
-### **2.2. Clone a repository**
+### **Clone a repository**
 
 The first time you have to clone the "rUBot_gopigo_ws" repository to the home folder.
 ```shell
 cd /home
-git clone https://github.com/manelpuig/rUBot_gopigo_ws
+git clone https://github.com/your_username/rUBot_gopigo_ws
 cd rUBot_gopigo_ws
 catkin_make
 ```
@@ -141,7 +102,7 @@ source /opt/ros/noetic/setup.bash
 source /home/rUBot_gopigo_ws/devel/setup.bash
 ```
 
-### **2.3. gopigo bringup**
+### **Real HW gopigo3 bringup**
 
 Now you can bringup our robot:
 - launch the gopigo3 node: able to control de 2 motors and measure the odometry
