@@ -6,7 +6,7 @@ Gopigo3 robot prototype is based on:
 - RaspiCAM RGB camera
 - LIDAR sensor
 
-<img src="./Images/1_gopigo3_UB.png" />
+<img src="./Images/01_SW_Model_Control/01_gopigo3_UB.png" />
 
 The main objectives of this chapter are:
 - Getting started with gopigo in simulation environment

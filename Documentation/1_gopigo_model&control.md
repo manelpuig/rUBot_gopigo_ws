@@ -17,7 +17,7 @@ Interesting complementary information could be found:
 - https://github.com/ros-gopigo3/gopigo3
 
 
-<img src="./Images/1_gopigo3_UB.png" />
+<img src="./Images/01_SW_Model_Control/01_gopigo3_UB.png" />
 
 ## **1. rUBot gopigo3 model generation**
 
@@ -44,12 +44,12 @@ The main parts of URDF model are:
 - joints: connection between 2 links 
 - sensors & actuators plugins (2D camera, LIDAR and DC motors)
 
-The link definition contains:
+The **link definition** contains:
 - visual properties: the origin, geometry and material
 - collision properties: the origin and geomnetry
 - inertial properties: the origin, mass and inertia matrix
 
-The joint definition contains:
+The **joint definition** contains:
 - joint Type (fixed, continuous)
 - parent and child frames
 - origin frame
@@ -87,15 +87,17 @@ In the case or wright wheel:
     <axis xyz="0 1 0" />
   </joint>
 ```
-The gopigo3 model includes different sensors and actuators:
+The gopigo3 model includes different **sensors and actuators**:
 
-Sensors:
+**Sensors**:
 - a two-dimensional camera: correspondas to RBPi camera
-- a 360º LIDAR sensor: 
-  - RPLidar A1M8 (https://www.robotshop.com/es/es/rplidar-a1m8-kit-desarrollo-escaner-laser-360-grados.html)
+- a 360º LIDAR sensor RPLidar A1M8 (https://www.robotshop.com/es/es/rplidar-a1m8-kit-desarrollo-escaner-laser-360-grados.html)
 
-Actuator:
+**Actuator**:
 - Differential drive actuator: based on 2 DC motors with encoders to obtain the Odometry information
+
+
+**Gazebo plugins**:
 
 The full model contains also information about the sensor and actuator controllers using specific **Gazebo plugins** (http://gazebosim.org/tutorials?tut=ros_gzplugins#Tutorial:UsingGazebopluginswithROS). 
 
@@ -103,6 +105,13 @@ Gazebo plugins give your URDF models greater functionality and compatiblility wi
 
 These plugins can be referenced through a URDF file, and to insert them in the URDF file, you have to follow the sintax:
 - **Plugin for Differential drive actuator**:
+
+The Differential Drive actuator contains:
+- 2 wheels with radious R and separation B
+- To obtain the driving tangencial velocity (v) and angular velocity (w) defined in the published Twist message on /cmd_vel topic, the plugin calculates the needed wheel velocities
+
+<img src="./Images/01_SW_Model_Control/02_DifDrive.png" />
+
 ```xml
  <!-- Differential Drive Controller -->
   <gazebo>
@@ -130,6 +139,9 @@ These plugins can be referenced through a URDF file, and to insert them in the U
   ```
 
 - **Plugin for Raspicam sensor**:
+
+This plugin reads the image from the camera and publishes the corresponding Image ros message to the /camera1/image_raw topic
+
 ```xml
   <!-- 2D Camera controller -->
   <gazebo reference="camera_rgb_frame">
@@ -166,6 +178,13 @@ These plugins can be referenced through a URDF file, and to insert them in the U
   </gazebo>
   ```
 - **Plugin for LIDAR sensor**:
+
+This sensor is integrated as a link and fixed joint for visual purposes. Review the joint and link definition in URDF model.
+
+Note that rpLIDAR is mounted at 180º and you need to define a Yaw=180º in the link and joint definition in the URDF model.
+
+<img src="./Images/01_SW_Model_Control/03_lidar.png" />
+
 ```xml
   <!-- Laser Distance Sensor YDLIDAR X4 controller-->
   <gazebo reference="base_scan">
@@ -205,63 +224,121 @@ These plugins can be referenced through a URDF file, and to insert them in the U
     </sensor>
   </gazebo>
   ```
-#### **Generated models in URDF**
-The diferent model files we have created in urdf folder are:
-- gopigo3rp.urdf: with RPlidar
-- gopigo3yd.urdf: with YDlidar
+  It is important to note that:
 
-  > - Robots with RPlidar have been assembled with the motor in front position and then have the zero angle in its back
-  > - Robots with YDlidar have been assembled with the motor in back position and then have the zero angle in its front
->
-We use a specific "display.launch" launch file where we specify the robot model we want to open in rviz with a configuration specified in "urdf.rviz":
-```xml
-<?xml version="1.0"?>
-<launch>
-  <!-- set these parameters on Parameter Server -->
-  <param name="robot_description" textfile="$(find gopigo3_description)/urdf/gopigo3rp.urdf" />
-  <!-- send fake joint values -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <param name="use_gui" value="False"/>
-  </node>
-  <!-- Combine joint values -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-  <!-- Show in Rviz   -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gopigo3_description)/rviz/urdf.rviz"/>
-</launch>
-```
+- the number of points of real RPLidar depends on Lidar model (you will need tot test it first)
+- the number of points of simulated Lidar is selected to 720
+
+#### **Generated models in URDF**
+Different model files have been created in:
+- XACRO format: more compact format for complex models
+- URDF format
+
+These models are located in "urdf" folder:
+- gopigo3rp.urdf.xacro
+- gopigo3rp.urdf
+
+> Robots have been assembled with the rpLIDAR considering that the zero angle in its front
+
+**Robot model visualization tools**
+
+We will visualize and simulate the generated robot models in :
+- RVIZ
+- GAZEBO
+
+**RVIZ**: is a 3D visualization tool integral to robotics, enabling users to:
+- visualize sensor data (such as laser scans, point clouds, and camera feeds), 
+- display robot models, plan paths
+- interactively analyze robot behavior in real-time
+- It aids in debugging, verifying robot perception, and understanding its interaction with the environment by presenting a comprehensive visual representation of sensors data and trajectories
+
+**GAZEBO**: is a powerful robot physical simulation software that provides:
+- a virtual environment for testing, developing, and simulating robots 
+- It allows users to create detailed simulations of robots, sensors, and environments, enabling experimentation without physical hardware
+- facilitates testing algorithms, control strategies, and sensor placements, aiding in the validation and debugging of robotic applications
+- Its realistic physics engine and customizable features make it a valuable tool for researchers, engineers, and roboticists to simulate and analyze robotic scenarios
+
+
+To view the generated model we will use RVIZ with specific files:
+- "gopigo_rviz.launch" for any urdf model
+- "gopigo_rviz_xacro.launch" for any xacro model
+
 Launch the ROS visualization tool to check that the model is properly built. 
 RViz only represents the robot visual features. You have available all the options to check every aspect of the appearance of the model
 ```shell
-roslaunch gopigo3_description display.launch
+roslaunch gopigo3_description gopigo_rviz.launch
 ```
 
-![](./Images/1_gopigo_stl.png)
+![](./Images/01_SW_Model_Control/04_gopigo3_rviz.png)
 
-
-In robotics research, always before working with a real robot, we simulate the robot behaviour in a virtual environment close to the real one. 
-
-Gazebo is an open source 3D robotics simulator and includes an ODE physics engine and OpenGL rendering, and supports code integration for closed-loop control in robot drives. This is sensor simulation and actuator control.
-
-We will create a new spawn.launch file to spawn the robot in an empty world:
-```shell
-roslaunch gopigo3_description spawn.launch
-```
+>Colors in rviz:
+>
+>- are defined at the beginning of urdf file
+>- Ensure the "visual" link properties have <material name="color">
 ```xml
-<launch>
- <!-- We resume the logic in gazebo_ros package empty_world.launch, -->
-  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
- <!-- Spawn gopigo3 robot into Gazebo -->
-    <!-- Robot URDF definition -->
-    <arg name="model" default="gopigo3rp.urdf" />
-    <param name="robot_description" textfile="$(find gopigo3_description)/urdf/$(arg model)"/>
-  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" output="screen"
-      args="-urdf -model gopigo3 -param robot_description"/>
-</launch>
+<robot name="gopigo3">
+  <material name="yellow">
+    <color rgba="0.8 0.8 0.0 1.0"/>
+  </material>
+  ...
+    <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://gopigo3_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
 ```
-You can create a very simple world "gopigo3.world" using gazebo:
-- Type: sudo gazebo
+
+In robotics research, always before working with a real robot, we simulate the robot behaviour in a virtual environment close to the real one. For this purpose, we need to use **GAZEBO**.
+
+We have created a "spawn.launch" file to spawn the robot in an empty world:
+```shell
+roslaunch gopigo3_description gopigo_gazebo.launch
+```
+>Colors in gazebo:
+>
+>- are defined at the end of urdf file:
+```xml
+<!-- Gazebo colors have to be specified here with predefined Gazebo colors -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+```
+
+You can create a very simple world within gazebo:
+- Maintain the Gazebo and RVIZ screens opened
 - add some objects in the empty world
-- save the final world to "worlds" folder
+
+Now in RVIZ you will see the objects with the USB camera and Lidar
+
+![](./Images/01_SW_Model_Control/05_gopigo3_spawn_rviz.png)
+
+You can see the nodes and topics generated using rqt_graph
+
+![](./Images/01_SW_Model_Control/06_gopigo3_spawn_rqt.png)
+
+>To close the Gazebo is better to type in a new terminal:
+```shell
+pkill gzserver && pkill gzclient
+```
+**Activity: gopigo3 custom model**
+
+Design a proper model corresponding to the real gopigo3 robot you will work with:
+
+- Customized model colors (rviz and gazebo)
+- Ensure the zero-angle lidar is located in the backside (publish TF in rviz)
+- Add a number part on top with a fixed joint
+
+To verify the final frame orientations (modify the launch files accordingly):
+```shell
+roslaunch gopigo_description gopigo_gazebo.launch
+roslaunch gopigo_description gopigo_rviz.launch
+```
+Print the screen and upload the file to the corresponding task in Campus Virtual.
+
+## **2. Design the project world**
 
 The robot could be spawn in a predefined position inside this new created world using this new spawn_world.launch file:
 ```xml
