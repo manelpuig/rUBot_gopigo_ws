@@ -340,50 +340,12 @@ Print the screen and upload the file to the corresponding task in Campus Virtual
 
 ![](./Images/01_SW_Model_Control/Task_GopigoModel.png)
 
-## **2. Design the project world**
-
-The robot could be spawn in a predefined position inside this new created world using this new spawn_world.launch file:
-```xml
-<launch>
-    <!-- Define the needed parameters -->
-    <arg name="world" default="gopigo3.world"/> 
-    <arg name="model" default="gopigo3rp.urdf" />
-    <arg name="x_pos" default="0.5"/>
-    <arg name="y_pos" default="0.5"/>
-    <arg name="z_pos" default="0.0"/>
-  
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find gopigo3_description)/worlds/$(arg world)"/>
-    </include>
-    <!-- Spawn gopigo3 robot into Gazebo -->
-       <!-- Robot URDF definition -->
-       <param name="robot_description" textfile="$(find gopigo3_description)/urdf/$(arg model)"/>
-    <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" output="screen"
-        args="-urdf -model gopigo3 -param robot_description -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos)"/>
-   </launch>
-   ```
-Type the following to spawn the robot inside the world and test the sensor values using rviz:
-```shell
-roslaunch gopigo3_description spawn_world.launch
-roslaunch gopigo3_description display.launch
-```
-![Getting Started](./Images/1_gopigo3_spawn_rviz.png)
-
-You can see the nodes and topics generated using rqt_graph
-
-![](./Images/01_rubot_spawn_rqt.png)
-
-
-### **Exercise**
-Modify the robot model to change the color (in RVIZ and Gazebo) of LIDAR sensor in function of the model:
-- Brawn for RP Lidar
-- BLUE for YD lidar
 
 ## **2. Design the Project world**
 
 Here we have first to design the project world, for exemple a maze from where our rUBot gopigo3 has to navigate autonomously.
 
-There is a very useful and simple tool to design a proper world: "Building editor" in gazebo.
+There is a very useful and simple tool to design a proper world: "**Building editor**" in gazebo.
 
 - Open gazebo as superuser:
 ```shell
@@ -391,11 +353,13 @@ sudo gazebo
 ```
 - build your world using "Building Editor" in Edit menu
 
-![](./Images/1_BuildingWorld1_1.png)
+![](./Images/01_SW_Model_Control/07_BuildingWorld.png)
 
 - save the generated model in a model folder (without extension)
-
-- Close the Builder Editor, modify the model position and add other elements if needed. 
+- Close the Builder Editor and modify the model position if needed
+- open again Building editor to create new models
+- to properly create a world using the generated models, add model folder to "insert" gazebo tab, pressing on "Add Path" and select the model folder
+- create the world inserting models and placing them conveniently
 - save the generated world (with extension .world) in the world folder.
 
 Once you finish is better to close the terminal you have worked as superuser
@@ -403,53 +367,48 @@ Once you finish is better to close the terminal you have worked as superuser
 #### ***Modify a created world***
 To modify a previously created world:
 - Open a terminal where you have the world you want to modify
-- type: sudo gazebo ./maze1.world
+- type: gazebo square.world
 - make modifications
-- save your world in the desired directory
+- save your world in the world folder
 - close gazebo and the terminal
 
 #### **Create world with model parts**
-You can create model parts like walls of 1m or 0,5m with a geometry and color, using building editor. These parts can be saved in "home/ubuntu/building_editor_models/" and you will have acces in gazebo insert section. Then you can construct your world adding these model parts.
+You can create model parts like walls of 120cm, 90cm and 60cm with a geometry and color, using building editor. These parts can be saved in models folder. Then you can construct your world adding these model parts.
 
 This is an exemple:
-![](./Images/1_BuildingEditor.png)
+![](./Images/01_SW_Model_Control/08_world_exemple.png)
 
-### **Exercise:**
-Generate a proper world corresponding to the real world we want to spawn our gopigo3 robot in. For exemple a maze.
 
-Use model parts in size 90cmx30cmx1cm and 60cmx30cmx1cm
-
-Save this world as maze.world
-
-## **3. Bringup the gopigo3 robot in project world**
+**Bringup the gopigo3 robot in project world**
 
 Now, you can bringup the gopigo3 robot in our generated world. 
-You have to create a "bringup.launch" file:
+We have created a "gopigo_bringup_sw.launch" file:
 
 ``` shell
-roslaunch gopigo3_description bringup.launch
+roslaunch gopigo3_description gopigo_bringup_sw.launch
 ```
-![](./Images/1_maze1.png)
-> To properly kill a gazebo process, type
->killall gzserver && killall gzclient
->or
->pkill gzserver && pkill gzclient
-### **Exercise:**
+![](./Images/01_SW_Model_Control/10_gopigo_bringup_square.png)
+
+**Activity: gopigo3 custom world**
+
+Design your proper world and spawn your gopigo3 model in speciffic pose.
+
+Use model parts in size 120cmx30cmx1cm, 90cmx30cmx1cm and 60cmx30cmx1cm
+
 Generate a proper bringup launch file to:
-- Spawn your gopigo model in the generated world
-- Take into account the Lidar model
-- Open RVIZ
+- Spawn your gopigo3 model in the generated world
 - Specify the desired POSE
+- Open RVIZ and visualize the main topics
 
-## **4. gopigo3 control**
+![](./Images/01_SW_Model_Control/09_gopigo3_maze.png)
 
-### **4.1 gopigo3 navigation**
+## **3. gopigo3 navigation in virtual environment**
 
-Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the autonomous navigation.
+Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the navigation control.
 
 This package is already created, but we will remind you how it is created:
 ```shell
-cd ~/Desktop/rUBot_gopigo_ws/src
+cd /home/user/rUBot_gopigo_ws/src
 catkin_create_pkg gopigo3_control rospy std_msgs sensor_msgs geometry_msgs nav_msgs
 cd ..
 catkin_make
