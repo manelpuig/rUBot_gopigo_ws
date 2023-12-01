@@ -338,6 +338,8 @@ roslaunch gopigo_description gopigo_rviz.launch
 ```
 Print the screen and upload the file to the corresponding task in Campus Virtual.
 
+![](./Images/01_SW_Model_Control/Task_GopigoModel.png)
+
 ## **2. Design the project world**
 
 The robot could be spawn in a predefined position inside this new created world using this new spawn_world.launch file:
