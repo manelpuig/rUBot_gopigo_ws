@@ -389,6 +389,10 @@ roslaunch gopigo3_description gopigo_bringup_sw.launch
 ```
 ![](./Images/01_SW_Model_Control/10_gopigo_bringup_square.png)
 
+Gazebo, as a physical simulator creates a node that publishes messages to /odom, /scan and /gopigo/camera1/image_raw topics:
+
+![](./Images/01_SW_Model_Control/11_gopigo_bringup_sw.png)
+
 **Activity: gopigo3 custom world**
 
 Design your proper world and spawn your gopigo3 model in speciffic pose.
@@ -413,40 +417,68 @@ catkin_create_pkg gopigo3_control rospy std_msgs sensor_msgs geometry_msgs nav_m
 cd ..
 catkin_make
 ```
+### **3.1. gopigo3 kinematics model**
 
-### **3.1. gopigo3 bringup**
+The first concept we are going to see is kinematic models.
 
-Usually we first bring up the robot in a virtual environment.
+Wheeled mobile robots may be classified in two major categories, holonomic (omnidirectional) and nonholonomic.
 
-A speciffic "gopigo3_bringup_sw.launch" file is created considering if you have rp or yd lidar installed.
+- Nonholonomic mobile robots, such as conventional cars, employ conventional wheels, which prevents cars from moving directly sideways.
+- Holonomic mobile robots, such as mecanum cars, employ omni or mecanum wheels, which allow lateral and diagonal movements
+
+The Kinematic model for our gopigo robot is a Differential Drive model that could be Holonomic and nonHolonomic because it is able to turn around itself. The Gazebo plugin contains the kinematic expressions that are sumarized:
+
+![](./Images/01_SW_Model_Control/12_gopigo_kinematics.png)
+
+### **3.2. gopigo3 control in a virtual world environment**
+
+We can control the movement of our robot using:
+
+- the keyboard or a joypad
+- programatically in python creating a "/rubot_nav" node
+
+We are now ready to launch control actions
+
+#### **3.2.1. Keyboard control**
+
+To control the robot with the Keyboard you have to install the "teleop-twist-keyboard" package:
+
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
-```
-The closed loop control structure is depicted below:
-
-![](./Images/1_rubot_control.png)
-
-### **3.2. gopigo3 control with keyboard**
-
-To control the robot with the Keyboard you have to install the "teleop-tools" package:
-
-```shell
-sudo apt-get install ros-noetic-teleop-tools
 sudo apt-get install ros-noetic-teleop-twist-keyboard
 ```
 Then you will be able to control the robot with the Keyboard typing:
 ```shell
 roslaunch gopigo3_control gopigo3_bringup_sw.launch
-rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
-### **3.3. gopigo3 control with custom node**
+### **3.2.2. Python programming control**
+
+Diferent navigation programs are created:
+
+- Navigation control: to define a desired robot velocity
+- Lidar test: to verify the LIDAR readings and angles
+- Autonomous navigation: to perform a simple algorithm for navigation with obstacle avoidance using the LIDAR
+- Wall follower: at a fixed distance to perform a good map
+- Go to POSE: attend a specific position and orientation
+
+The nodes and topics structure corresponds to the following picture:
+
+![](./Images/01_SW_Model_Control/11_gopigo_bringup_sw.png)
+
+**a) Navigation Control**
+
+We will create now a first navigation python files in "src" folder:
+
+- rubot_nav.py: to define a rubot movement with linear and angular speed during a time td
+
+Specific launch file have been created to launch the node and python file created above:
 
 To control the robot with a custom designed node, We will create a navigation python file in "src" folder:
 - gopigo3_nav.py: to specify a twist message and a maximum distance
 
 Specific launch file has been created to launch the node and python file created above:
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_control gopigo_bringup_sw.launch
 roslaunch gopigo3_control node_nav.launch
 ```
 ![Getting Started](./Images/1_rubot_move3.png)
