@@ -68,9 +68,9 @@ def move_rubot(lin_velx,ang_vel,time_duration):
 if __name__ == '__main__':
     try:
         rospy.init_node('rubot_nav', anonymous=False)
-        vx= rospy.get_param("~vx")
+        v= rospy.get_param("~v")
         w= rospy.get_param("~w")
         td= rospy.get_param("~td")
-        move_rubot(vx,w,td)
+        move_rubot(v,w,td)
     except rospy.ROSInterruptException:
         pass

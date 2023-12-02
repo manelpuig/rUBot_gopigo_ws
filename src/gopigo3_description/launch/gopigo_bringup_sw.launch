@@ -1,6 +1,6 @@
 <launch>
   <arg name="world" default="square.world"/> 
-  <arg name="model" default="gopigo.urdf" />
+  <arg name="model" default="gopigo3mpuig.urdf" />
   <arg name="x_pos" default="1.0"/>
   <arg name="y_pos" default="0.0"/>
   <arg name="yaw" default="1.0"/>

@@ -1,10 +1,10 @@
 <launch>
   <arg name="v" default="0.1"/>
   <arg name="w" default="0"/>
-  <arg name="d" default="0.3"/>
+  <arg name="td" default="3"/>
   <node pkg="gopigo3_control" type="rubot_nav.py" name="rubot_nav" output="screen" >
     <param name="v" value="$(arg v)"/>
     <param name="w" value="$(arg w)"/>
-    <param name="d" value="$(arg d)"/>
+    <param name="td" value="$(arg td)"/>
   </node>
 </launch>

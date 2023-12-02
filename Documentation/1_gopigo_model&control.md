@@ -448,7 +448,7 @@ sudo apt-get install ros-noetic-teleop-twist-keyboard
 ```
 Then you will be able to control the robot with the Keyboard typing:
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_description gopigo_bringup_sw.launch
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 ### **3.2.2. Python programming control**
@@ -478,49 +478,74 @@ To control the robot with a custom designed node, We will create a navigation py
 
 Specific launch file has been created to launch the node and python file created above:
 ```shell
-roslaunch gopigo3_control gopigo_bringup_sw.launch
-roslaunch gopigo3_control node_nav.launch
+roslaunch gopigo3_description gopigo_bringup_sw.launch
+roslaunch gopigo3_control rubot_nav.launch
 ```
-![Getting Started](./Images/1_rubot_move3.png)
+![](./Images/01_SW_Model_Control/13_rubot_nav.png)
 
-## **3.4. gopigo3 autonomous navigation and obstacle avoidance**
-In order to navigate autonomously and avoid obstacles, we have created diferent python files in "src" folder:
-- rubot_lidar_test.py: to test the LIDAR distance readings and angles
-- rubot_self_nav.py: to perform a simple algorithm for navigation with obstacle avoidance
-- rubot_wall_follow.py: to follow a wall preciselly for mapping purposes
-- rubot_go2pose.py: to reach speciffic position and orientation
+**b) LIDAR test**
 
-we will create also a "launch" folder including the corresponding launch files
-
-#### **1. LIDAR test**
-We have created a world to test the rubot model. This world is based on a square to verify that the LIDAR see the obstacle in the correct angle. We have to launch the "rubot_lidar_test.launch" file in the "gopigo3_control" package.
-
-To launch this node type:
+In order to navigate autonomously and avoid obstacles, we will use a specific rpLIDAR sensor. To verify the LIDAR readings and angles we have generated the "rubot_lidar_test.py" python file:
+```python
+#! /usr/bin/env python3
+import rospy
+from sensor_msgs.msg import LaserScan
+def callback(msg):
+    print ("Number of scan points: "+ str(len(msg.ranges)))
+    # values at 0 degrees
+    print ("Distance at 0deg: " + str(msg.ranges[0]))
+    # values at 90 degrees
+    print ("Distance at 90deg: " + str(msg.ranges[180]))
+    # values at 180 degrees
+    print ("Distance at 180deg: " + str(msg.ranges[360]))
+    # values at 270 degrees
+    print ("Distance at 270deg: " + str(msg.ranges[540]))
+    # values at 360 degrees
+    print ("Distance at 360deg: " + str(msg.ranges[719]))
+rospy.init_node('scan_values')
+sub = rospy.Subscriber('/scan', LaserScan, callback)
+rospy.spin()
+```
+To test the LIDAR we have generated a launch file:
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_description gopigo_bringup_sw.launch
 roslaunch gopigo3_control rubot_lidar_test.launch
-rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
-![](./Images/1_lidar_test.png)
+![](./Images/01_SW_Model_Control/14_lidar_test.png)
 
-#### **2. Autonomous navigation with obstacle avoidance**
-We will use now the created world to test the autonomous navigation with obstacle avoidance performance. 
+Verify:
+- Where is the lidar zero-index?
 
-We have to launch the "rubot_self_nav.launch" file in the "rubot_control" package.
+  We can see that the zero angle corresponds to the back side of the robot!
+
+You have to:
+- Modify the gopigo model to take into account the real gopigo3 prototype
+- Place the reference frame for rpLidar on /odom TF
+- All python programs have to take into account this 
+
+**c) Autonomous navigation with obstacle avoidance**
+
+We will use now the created world to test the autonomous navigation with obstacle avoidance performance.
+
+We have to launch the "rubot_self_nav.launch" file in the "gopigo3_control" package.
+
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_description gopigo_bringup_sw.launch
 roslaunch gopigo3_control rubot_self_nav.launch
 ```
 >Be careful:
 >- Verify in rviz if you have to change the fixed frame to "odom" frame
 
-![](./Images/1_rubot_self_nav.png)
+![](./Images/01_SW_Model_Control/15_rubot_self_nav.png)
+
 The algorithm description functionality is:
 - "rubot_self_nav.py": The Python script makes the robot go forward. 
     - LIDAR is allways searching the closest distance and the angle
     - when this distance is lower than a threshold, the robot goes backward with angular speed in the oposite direction of the minimum distance angle.
 
-#### **3. Wall Follower**
+**d) Wall Follower**
+
 Follow the wall accuratelly is an interesting challenge to make a map with precision to apply SLAM techniques for navigation purposes.
 
 There are 2 main tasks:
@@ -531,37 +556,44 @@ We have developed 2 different methods for wall follower:
 - Geometrical method
 - Lidar ranges method
 
-##### **a) Geometrical method**
+##### **Geometrical method**
 
 Follow the instructions to perform the rubot_wall_follower_gm.py python program are in the notebook: 
 https://github.com/Albert-Alvarez/ros-gopigo3/blob/lab-sessions/develop/ROS%20con%20GoPiGo3%20-%20S4.md
-![](./Images/2_wall_follower1.png)
+
+![](./Images/01_SW_Model_Control/16_wall_follower1.png)
+
 A rubot_wall_follower_gm.launch is generated to test the node within a specified world
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_description gopigo_bringup_sw.launch
 roslaunch gopigo3_control rubot_wall_follower_gm.launch
 ```
-![](./Images/1_wall_follower_gm.png)
+![](./Images/01_SW_Model_Control/17_wall_follower_gm.png)
 
 You can see a video for the Maze wall follower process in: 
 [![IMAGE_ALT](https://img.youtube.com/vi/z5sAyiFs-RU/maxresdefault.jpg)](https://youtu.be/z5sAyiFs-RU)
 
 
-##### **b) Lidar ranges method**
+##### **Lidar ranges method**
 
-We have created another rubot_wall_follower_rg.py file based on the reading distances from LIDAR in the ranges: front, front-right, front-left, right, left, back-right and back-left, and perform a specific actuation in function of the minimum distance readings.
+We have created another rubot_wall_follower_rg.py file based on the reading distances from LIDAR in the ranges: front, front-right, right and back-right, and perform a specific actuation in function of the minimum distance readings.
 
 Follow the instructions to create the rubot_wall_follower_rg.py python file: https://www.theconstructsim.com/wall-follower-algorithm/
 
-![](./Images/1_wall_follower.png)
 The algorith is based on laser ranges test and depends on the LIDAR type:
-![](./Images/1_wall_follower2.png)
+
+![](./Images/01_SW_Model_Control/18_wall_follower_rg1.png)
+
+The algorith is based on laser ranges defined on the LIDAR:
+
+![](./Images/01_SW_Model_Control/19_wall_follower_rg2.png)
 
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_description gopigo_bringup_sw.launch
 roslaunch gopigo3_control rubot_wall_follower_rg.launch
 ```
-![](./Images/1_wall_ranges.png)
+
+![](./Images/01_SW_Model_Control/20_wall_follower_rg3.png)
 
 #### **4. Go to POSE**
 Define a specific Position and Orientation as a target point to gopigo3 robot
@@ -574,7 +606,8 @@ Modify the python script developed in turlesim control package according to the 
 
 For validation type:
 ```shell
-roslaunch gopigo3_control gopigo3_bringup_sw.launch
+roslaunch gopigo3_description gopigo3_bringup_sw.launch
 roslaunch gopigo3_control rubot_go2pose.launch
 ```
-![](./Images/1_rubot_go2point.png)
+
+![](./Images/01_SW_Model_Control/21_rubot_go2point.png)
