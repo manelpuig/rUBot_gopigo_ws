@@ -406,7 +406,7 @@ Generate a proper bringup launch file to:
 
 ![](./Images/01_SW_Model_Control/09_gopigo3_maze.png)
 
-## **3. gopigo3 navigation in virtual environment**
+## **3. gopigo3 Bringup and navigation in virtual environment**
 
 Once the world has been generated we will create a ROS Package "gopigo3_control" to perform the navigation control.
 
@@ -417,9 +417,98 @@ catkin_create_pkg gopigo3_control rospy std_msgs sensor_msgs geometry_msgs nav_m
 cd ..
 catkin_make
 ```
-### **3.1. gopigo3 kinematics model**
 
-The first concept we are going to see is kinematic models.
+Now we are ready to perform different laboratory sessions to analyse the Navigation performances of our gopigo3 robot. The different designed sessions will be:
+- Robot bringup and Lidar test
+- Robot navigarion performances
+- Robot navigation with obstacle avoidance
+- Robot wall follower project
+
+These sessions have to be prepared previously with the performance verification in virtual environment (Gazebo). Students have to create and verify at home the needed code to reach the objectives of each laboratory session. The first part of each session are described the objectives and the home-work to verify the performances in virtual environment.
+
+### **3.1. Robot bringup and Lidar test**
+The Bringup consists of launching the different nodes responsible for the control of sensors and actuators in our real rUBot platform.
+
+The rUBot platform has the following sensors and actuators:
+-	4 Mecanum wheels controlled by DC servomotors
+-	LIDAR sensor
+-	USB Camera sensor
+
+**In Virtual environment**
+
+The model created in urdf format contains all the information about the robot structure and the sensors and actuators drivers as plugins in gazebo virtual environment.
+
+The first action to do is to wake-up the robot and spawn-it inside the world. The robot model and the world have to be as close as possible to the real robot and real world. Then the generated code will work properly in the real world. 
+
+This proces is the "bringup in virtual environment" and can be executed in a first terminal:
+```shell
+roslaunch gopigo3_description gopigo_bringup_sw.launch
+```
+The nodes and topics structure corresponds to the following picture:
+
+![](./Images/01_SW_Model_Control/11_gopigo_bringup_sw.png)
+
+This session is dedicated to analyse the rpLIDAR sensor. The simulated model considers that the Lidar sends 720 laser beams to sense the obstacles around the robot. To verify the LIDAR readings and angles we have generated the "rubot_lidar_test.py" python file.
+
+To test the LIDAR we have generated a launch file:
+```shell
+roslaunch gopigo3_control rubot_lidar_test.launch
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+```
+![](./Images/01_SW_Model_Control/14_lidar_test.png)
+
+Verify that your code is working before the laboratory session.
+
+**In REAL environment**
+
+In real environment, the bringup process depends on the real robot. You will have to launch the different nodes that wakes-up the robot. 
+
+We have created a "gopigo_bringup_hw.launch" file that contains:
+- launch the gopigo node that controls the robot kinematics
+- launch the LIDAR node
+- launch the camera node
+
+Tho bringup the gopigo3 robot, execute in a first terminal:
+```shell
+roslaunch gopigo3_description gopigo_bringup_hw.launch
+```
+Graphically, the final node structure will be:
+![](./Images/01_SW_Model_Control/14_gopigo_bringup_hw.png)
+
+Verify in rviz:
+- The camera is sending images
+- The lidar shows the distance to obstacles
+
+Open a new terminal and verfy:
+- the nodes 
+- the topics
+- the message types
+
+Regarding the Lidar, you will see that each lidar device sends a different number of laser beams. To take into account this, you will have to modify the python program to:
+- obtain the number of laser beams
+- obtain a lidar factor corresponding to the laser-beams per degree
+- obtain the distance reading on 0º, 90º, 180º, 270º and 360º
+
+To test the LIDAR you have to generate a new launch file:
+```shell
+roslaunch gopigo3_control rubot_lidar_test2.launch
+```
+Could you answer these questions:
+- Where is the lidar zero-index?
+- How I have to modify the gopigo model to take into account the real lidar characteristics? Modifications have to be done in urdf model and "rplidar.launch"
+
+**Delivery:**
+
+Upload the:
+- gopigo3_final.urdf model
+- rplidar_final.launch
+
+
+### **3.2. Robot Navigation performances**
+
+The gopigo3 robot is based on 2 wheels and has a differential-drive kinematics model. We have first to analyse its kinematics model to properly control it.
+
+**kinematics model**
 
 Wheeled mobile robots may be classified in two major categories, holonomic (omnidirectional) and nonholonomic.
 
@@ -429,17 +518,28 @@ Wheeled mobile robots may be classified in two major categories, holonomic (omni
 The Kinematic model for our gopigo robot is a Differential Drive model that could be Holonomic and nonHolonomic because it is able to turn around itself. The Gazebo plugin contains the kinematic expressions that are sumarized:
 
 ![](./Images/01_SW_Model_Control/12_gopigo_kinematics.png)
+And to compute the **Odometry**:
 
-### **3.2. gopigo3 control in a virtual world environment**
+![](./Images/01_SW_Model_Control/12_gopigo_kinematics2.png)
+
+**Navigation control in VIRTUAL environment**
 
 We can control the movement of our robot using:
 
 - the keyboard or a joypad
 - programatically in python creating a "/rubot_nav" node
 
-We are now ready to launch control actions
+We first bringup our robot:
+```shell
+roslaunch gopigo3_description gopigo_bringup_sw.launch
+```
+The nodes and topics structure corresponds to the following picture:
 
-#### **3.2.1. Keyboard control**
+![](./Images/01_SW_Model_Control/11_gopigo_bringup_sw.png)
+
+And now we launch the node to publish the desired twist message to the /cmd_vel topic
+
+**a) Keyboard control**
 
 To control the robot with the Keyboard you have to install the "teleop-twist-keyboard" package:
 
@@ -448,24 +548,11 @@ sudo apt-get install ros-noetic-teleop-twist-keyboard
 ```
 Then you will be able to control the robot with the Keyboard typing:
 ```shell
-roslaunch gopigo3_description gopigo_bringup_sw.launch
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
-### **3.2.2. Python programming control**
+**b) Python programming control**
 
-Diferent navigation programs are created:
-
-- Navigation control: to define a desired robot velocity
-- Lidar test: to verify the LIDAR readings and angles
-- Autonomous navigation: to perform a simple algorithm for navigation with obstacle avoidance using the LIDAR
-- Wall follower: at a fixed distance to perform a good map
-- Go to POSE: attend a specific position and orientation
-
-The nodes and topics structure corresponds to the following picture:
-
-![](./Images/01_SW_Model_Control/11_gopigo_bringup_sw.png)
-
-**a) Navigation Control**
+A first simple navigation program is created to move the robot according to a speciffic Twist message.
 
 We will create now a first navigation python files in "src" folder:
 
@@ -473,58 +560,18 @@ We will create now a first navigation python files in "src" folder:
 
 Specific launch file have been created to launch the node and python file created above:
 
-To control the robot with a custom designed node, We will create a navigation python file in "src" folder:
-- gopigo3_nav.py: to specify a twist message and a maximum distance
-
-Specific launch file has been created to launch the node and python file created above:
 ```shell
-roslaunch gopigo3_description gopigo_bringup_sw.launch
 roslaunch gopigo3_control rubot_nav.launch
 ```
 ![](./Images/01_SW_Model_Control/13_rubot_nav.png)
 
-**b) LIDAR test**
+Verify first that the code is working in the simulated environment.
 
-In order to navigate autonomously and avoid obstacles, we will use a specific rpLIDAR sensor. To verify the LIDAR readings and angles we have generated the "rubot_lidar_test.py" python file:
-```python
-#! /usr/bin/env python3
-import rospy
-from sensor_msgs.msg import LaserScan
-def callback(msg):
-    print ("Number of scan points: "+ str(len(msg.ranges)))
-    # values at 0 degrees
-    print ("Distance at 0deg: " + str(msg.ranges[0]))
-    # values at 90 degrees
-    print ("Distance at 90deg: " + str(msg.ranges[180]))
-    # values at 180 degrees
-    print ("Distance at 180deg: " + str(msg.ranges[360]))
-    # values at 270 degrees
-    print ("Distance at 270deg: " + str(msg.ranges[540]))
-    # values at 360 degrees
-    print ("Distance at 360deg: " + str(msg.ranges[719]))
-rospy.init_node('scan_values')
-sub = rospy.Subscriber('/scan', LaserScan, callback)
-rospy.spin()
-```
-To test the LIDAR we have generated a launch file:
-```shell
-roslaunch gopigo3_description gopigo_bringup_sw.launch
-roslaunch gopigo3_control rubot_lidar_test.launch
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
-```
-![](./Images/01_SW_Model_Control/14_lidar_test.png)
+**Navigation control in REAL environment**
 
-Verify:
-- Where is the lidar zero-index?
 
-  We can see that the zero angle corresponds to the back side of the robot!
 
-You have to:
-- Modify the gopigo model to take into account the real gopigo3 prototype
-- Place the reference frame for rpLidar on /odom TF
-- All python programs have to take into account this 
-
-**c) Autonomous navigation with obstacle avoidance**
+### **3.3. Autonomous navigation with obstacle avoidance**
 
 We will use now the created world to test the autonomous navigation with obstacle avoidance performance.
 
@@ -544,7 +591,7 @@ The algorithm description functionality is:
     - LIDAR is allways searching the closest distance and the angle
     - when this distance is lower than a threshold, the robot goes backward with angular speed in the oposite direction of the minimum distance angle.
 
-**d) Wall Follower**
+### **3.4. Robot Wall follower project**
 
 Follow the wall accuratelly is an interesting challenge to make a map with precision to apply SLAM techniques for navigation purposes.
 
@@ -595,7 +642,8 @@ roslaunch gopigo3_control rubot_wall_follower_rg.launch
 
 ![](./Images/01_SW_Model_Control/20_wall_follower_rg3.png)
 
-#### **4. Go to POSE**
+### **3.5. Robot go to pose**
+
 Define a specific Position and Orientation as a target point to gopigo3 robot
 
 x target point
