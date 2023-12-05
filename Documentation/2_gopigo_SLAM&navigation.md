@@ -8,15 +8,15 @@ For optimal and easy-to-understand coverage of the topic of SLAM, we will implem
 ## **Install ROS navigation & SLAM packages**
 First, let's prepare your machine with the required ROS packages needed for the navigation stack (http://wiki.ros.org/navigation):
 ```shell
-sudo apt install ros-melodic-navigation
+sudo apt install ros-noetic-navigation
 ```
 And finally the slam_gmapping package, that is already available in its binary version (https://wiki.ros.org/slam_gmapping)
 ```shell
-sudo apt install ros-melodic-slam-gmapping
+sudo apt install ros-noetic-slam-gmapping
 ```
 Open the .bashrc file and verify to source to the proper workspace:
 ```shell
-source /media/sf_github_manelpuig/rUBot_gopigo_ws_/devel/setup.bash
+source /home/user/rUBot_gopigo_ws_/devel/setup.bash
 ```
 > change the path correcponding to your ws
 ## **What do you need to perform robot navigation with ROS?**
@@ -44,7 +44,7 @@ Now you can follow the next steps:
 ### **1. Spawn the robot in our custom made maze**
 We open a new terminal and type:
 ```shell
-roslaunch gopigo3_slam gopigo3_world.launch
+roslaunch gopigo3_description gopigo3_world.launch
 ```
 ### **2. Generate the MAP**
 We will start the slam_gmapping node. This node is highly configurable and has lots of parameters you can change in order to improve the mapping performance. (http://wiki.ros.org/gmapping)
@@ -62,7 +62,7 @@ roslaunch gopigo3_slam gopigo3_slam.launch
 ```
 Teleoperate the robot to make it cover as much as possible of the surface of the current Gazebo world. 
 
-To obtain a softer movement with gopigo3 robot model be sure in gopigo3.urdf model file, the differentialdrive pluggin has parameters are:
+To obtain a softer movement with gopigo3 robot model be sure in gopigo3_custom.urdf model file, the differentialdrive pluggin has parameters are:
 - Acceleration: 0.5
 - Torque: 1
 
@@ -72,7 +72,7 @@ rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 ```
 Or use the navigation program you have designed to follow the walls for exemple to properly generate the map.
 ```shell
-roslaunch gopigo3_control node_wall_follower_gm.launch
+roslaunch gopigo3_control node_wall_follower_rg.launch
 ```
 > Take care to launch only the wall_follower node
 
@@ -140,7 +140,7 @@ So, basically, we have to do the following:
 
 - Open the gopigo3 robot in Hospital3 world (if you have closed it before)
 ```shell
-roslaunch gopigo3_slam gopigo3_world.launch
+roslaunch gopigo3_description gopigo3_world.launch
 ```
 
 - Open Navigation launch file including the map location:
@@ -149,17 +149,17 @@ roslaunch gopigo3_slam gopigo3_navigation.launch
 ```
 > Take care in launch file to read the correct map file in "maps" folder
 
-![Getting Started](./Images/3_nav1_gopigo.png)
+![](./Images/02_SW_Nav_Slam/01_nav1_gopigo.png)
 - set up an initial pose by using the 2D Pose Estimate tool (which published that pose to the /initialpose topic).
 
-![Getting Started](./Images/3_nav2_gopigo.png)
+![](./Images/02_SW_Nav_Slam/02_nav2_gopigo.png)
 
 - To obtain a proper localisation of your robot, move it right and left using the key_teleop.
 ```shell
 rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
 ```
 
-![Getting Started](./Images/3_nav3_gopigo.png)
+![](./Images/02_SW_Nav_Slam/03_nav3_gopigo.png)
 
 - Select the target goal to navigate with the tool "2D-Nav-Goal"
 
