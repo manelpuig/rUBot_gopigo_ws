@@ -701,6 +701,30 @@ roslaunch gopigo3_control rubot_wall_follower_rg.launch
 
 **Wall follower in REAL environment**
 
+To bringup the gopigo3 robot, execute in a first terminal:
+```shell
+roslaunch gopigo3_description gopigo_bringup_hw.launch
+```
+Then verify the obstacle avoidance behaviour for different parameter values.
+
+**Geometric method**
+
+```shell
+roslaunch gopigo3_control rubot_wall_follower_gm.launch
+```
+
+**Ranges method**
+
+```shell
+roslaunch gopigo3_control rubot_wall_follower_rg.launch
+```
+
+**Delivery:**
+
+Upload the:
+- rubot_wall_follower_rg.launch and rubot_wall_follower_rg.py files
+- rubot_wall_follower_gm.launch and rubot_wall_follower_gm.py files
+-	Video of the execution in REAL environment
 
 ### **3.5. Robot go to pose**
 
@@ -710,7 +734,9 @@ x target point
 y target point
 f yaw orientation angle in deg
 
-Modify the python script developed in turlesim control package according to the odom message type
+**Go to POSE in VIRTUAL environment**
+
+A node is created in "rubot_go2pose.py" file to reach the POSE destination with a tolerance. We have modified the python script developed in turlesim control package according to the odom message type
 
 For validation type:
 ```shell
@@ -719,3 +745,21 @@ roslaunch gopigo3_control rubot_go2pose.launch
 ```
 
 ![](./Images/01_SW_Model_Control/21_rubot_go2point.png)
+
+Test different POSE targets before to test it with REAL robot.
+
+**Go to POSE in REAL environment**
+
+To bringup the gopigo3 robot, execute in a first terminal:
+```shell
+roslaunch gopigo3_description gopigo_bringup_hw.launch
+```
+Then verify the same node with the real gopigo robot:
+```shell
+roslaunch gopigo3_control rubot_go2pose.launch
+```
+**Delivery:**
+
+Upload the:
+- rubot_go2pose.launch and rubot_go2pose.py files
+-	Video of the execution in REAL environment 
