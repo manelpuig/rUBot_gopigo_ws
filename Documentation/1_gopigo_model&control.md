@@ -110,7 +110,7 @@ The Differential Drive actuator contains:
 - 2 wheels with radious R and separation B
 - To obtain the driving tangencial velocity (v) and angular velocity (w) defined in the published Twist message on /cmd_vel topic, the plugin calculates the needed wheel velocities
 
-<img src="./Images/01_SW_Model_Control/02_DifDrive.png" />
+<img src="./Images/01_SW_Model_Control/02_DiffDrive1.png" />
 
 ```xml
  <!-- Differential Drive Controller -->
@@ -468,7 +468,7 @@ We have created a "gopigo_bringup_hw.launch" file that contains:
 - launch the LIDAR node
 - launch the camera node
 
-Tho bringup the gopigo3 robot, execute in a first terminal:
+To bringup the gopigo3 robot, execute in a first terminal:
 ```shell
 roslaunch gopigo3_description gopigo_bringup_hw.launch
 ```
@@ -518,9 +518,7 @@ Wheeled mobile robots may be classified in two major categories, holonomic (omni
 The Kinematic model for our gopigo robot is a Differential Drive model that could be Holonomic and nonHolonomic because it is able to turn around itself. The Gazebo plugin contains the kinematic expressions that are sumarized:
 
 ![](./Images/01_SW_Model_Control/12_gopigo_kinematics.png)
-And to compute the **Odometry**:
 
-![](./Images/01_SW_Model_Control/12_gopigo_kinematics2.png)
 
 **Navigation control in VIRTUAL environment**
 
@@ -569,13 +567,55 @@ Verify first that the code is working in the simulated environment.
 
 **Navigation control in REAL environment**
 
+In real environment, the bringup process depends on the real robot. 
+
+To bringup the gopigo3 robot, execute in a first terminal:
+```shell
+roslaunch gopigo3_description gopigo_bringup_hw.launch
+```
+Graphically, the final node structure will be:
+![](./Images/01_SW_Model_Control/14_gopigo_bringup_hw.png)
+
+Verify the previous node created to publish a Twist message to the /cmd_vel topic:
+```shell
+roslaunch gopigo3_control rubot_nav.launch
+```
+If the robot moves in the correct direction, you can follow with the next objective: Create a new node for **path trajectory** definition:
+- Write a new rubot_path_nav.py python file that:
+  - creates a rubot_nav node
+  - includes parameters: v, w, and trajectory time
+  - verify the functions: square_path() and triangular_path() 
+  - define your proper function (star(), rombe(), etc.
+  - Write the corresponding rubot_path_nav.launch file
+
+Verify and demonstrate the execution:
+```shell
+roslaunch gopigo3_control rubot_nav.launch
+```
+
+**Delivery:**
+
+Upload the:
+- rubot_path_nav.launch and rubot_path_nav.py files
+-	Video of the execution in REAL environment 
 
 
 ### **3.3. Autonomous navigation with obstacle avoidance**
 
 We will use now the created world to test the autonomous navigation with obstacle avoidance performance.
 
-We have to launch the "rubot_self_nav.launch" file in the "gopigo3_control" package.
+The algorithm description functionality, created in "rubot_self_nav.py" file, is:
+- The created node makes the robot go forward. 
+    - LIDAR is allways searching the closest distance and the angle
+    - when this distance is lower than a threshold, the robot goes backward with angular speed in the oposite direction of the minimum distance angle.
+
+Let's verify first this behaviour in virtual environment 
+
+**Self-navigation control in VIRTUAL environment**
+
+We have to launch:
+- the bringup sw file
+- the "rubot_self_nav.launch"
 
 ```shell
 roslaunch gopigo3_description gopigo_bringup_sw.launch
@@ -586,10 +626,24 @@ roslaunch gopigo3_control rubot_self_nav.launch
 
 ![](./Images/01_SW_Model_Control/15_rubot_self_nav.png)
 
-The algorithm description functionality is:
-- "rubot_self_nav.py": The Python script makes the robot go forward. 
-    - LIDAR is allways searching the closest distance and the angle
-    - when this distance is lower than a threshold, the robot goes backward with angular speed in the oposite direction of the minimum distance angle.
+You can test the behaviour when tunning the parameters defined
+
+**Self-navigation control in REAL environment**
+
+To bringup the gopigo3 robot, execute in a first terminal:
+```shell
+roslaunch gopigo3_description gopigo_bringup_hw.launch
+```
+Then verify the obstacle avoidance behaviour for different parameter values.
+```shell
+roslaunch gopigo3_control rubot_self_nav.launch
+```
+**Delivery:**
+
+Upload the:
+- rubot_self_nav.launch and rubot_self_nav.py files
+-	Video of the execution in REAL environment 
+
 
 ### **3.4. Robot Wall follower project**
 
@@ -598,6 +652,8 @@ Follow the wall accuratelly is an interesting challenge to make a map with preci
 There are 2 main tasks:
 - Create a python file "rubot_wall_follower.py" to perform the wall follower in the maze of our gopigo3 robot
 - Create a launch file to initialyse all the needed nodes in our system for this control task
+
+**Wall follower in VIRTUAL environment**
 
 We have developed 2 different methods for wall follower:
 - Geometrical method
@@ -641,6 +697,10 @@ roslaunch gopigo3_control rubot_wall_follower_rg.launch
 ```
 
 ![](./Images/01_SW_Model_Control/20_wall_follower_rg3.png)
+
+
+**Wall follower in REAL environment**
+
 
 ### **3.5. Robot go to pose**
 
