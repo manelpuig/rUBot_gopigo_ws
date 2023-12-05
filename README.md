@@ -8,12 +8,10 @@ This workspace is organized in:
 | Document | Contents   |
 |------|------|
 |   Gopigo Setup  | Getting started in **simulation** and on **real raspberrypi4 based robot**|
-|   Gopigo Model&Control  | Model and control in **simulation**|
-|   rbpi Model&Control  | Control actions in **rbpi4**|
-|   Gopigo Slam&Navigation  | Navigation in **simulation**|
-| rbpi Slam&Navigation | Navigation in **rbpi4** |
-| Gopigo projects | Projects in **simulation** |
-| rbpi Projects | Projects in **rbpi4**
+|   Gopigo Model&Control  | Model and control|
+|   Gopigo Slam&Navigation  | SLAM techniques for Mapping and Navigation|
+| Gopigo projects | Projects using OpenCV and Object recognition |
+
 
 GoPiGo on ROS2:
 https://github.com/slowrunner/rosbot-on-gopigo3/tree/main
