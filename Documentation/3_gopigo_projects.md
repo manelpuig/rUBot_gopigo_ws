@@ -27,7 +27,7 @@ This package is already created and ready to use it!. You have not to create it.
 
 We will perform some specific projects related to gopigo3 vision capabilities in a navigation process.
 
-## 1. Gopigo3 takes photo
+## 1. Gopigo3 takes photos
 The objective is to program a python code to take a photo using raspicam in gopigo3 robot prototype.
 
 Important information is taken from: https://learn.turtlebot.com/2015/02/04/3/
@@ -35,7 +35,7 @@ Important information is taken from: https://learn.turtlebot.com/2015/02/04/3/
 Follow the procedure:
 - Identify the topic name where raspicam publishes the photo as a mesage of type sensor_msgs:
 ```shell
-roslaunch gopigo3_slam gopigo3_world.launch 
+roslaunch gopigo3_description gopigo_world.launch 
 rostopic list
 ```
 - Then modify the "take_photo.py" python file with:
@@ -47,7 +47,7 @@ rosrun gopigo3_projects take_photo.py
 ```
 - Open the "photos" folder and you will see the photo1.jpg created
 
-![](./Images/5_photo1.png)
+![](./Images/03_SW_Projects/01_photo1.png)
 
 ## **2. Go to specific point in the map**
 
@@ -61,20 +61,20 @@ For this purpose we need to use the **move_base node**. This node:
 - subscribes to move_base_simple/goal (geometry_msgs/PoseStamped)
 - publishes to cmd_vel (geometry_msgs/Twist)
 
-![](./Images/5_move_base.png)
+![](./Images/03_SW_Projects/02_move_base.png)
 
 Follow the procedure:
 - Launch Gazebo:
     ```shell
-    roslaunch gopigo3_slam gopigo3_world.launch
+    roslaunch gopigo3_description gopigo_world.launch
     ```
 
 - Launch the navigation:
     ```shell
-    roslaunch gopigo3_slam gopigo3_navigation.launch
+    roslaunch gopigo3_slam gopigo_navigation.launch
     ```
 - Choose a target point in RVIZ using "Publish point" and select the target coordinates (i.e. x=2.0 y=-0.7)
-![Getting Started](./Images/5_go2point.png)
+![Getting Started](./Images/03_SW_Projects/03_go2point.png)
 
 - open "go_to_specific_point_on_map.py" and specify the target point
     - in line 78 specify the target point, customize the following values so they are appropriate for your location

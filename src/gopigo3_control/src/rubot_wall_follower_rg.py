@@ -62,7 +62,6 @@ def take_action(regions):
         state_description = 'case 3 - fright'
         linear_x = 0
         angular_z = wz
-        print("R: "+str(regions['right']))
     elif regions['front'] > d and regions['right'] < d:
         state_description = 'case 4 - right'
         linear_x = vx
@@ -74,7 +73,7 @@ def take_action(regions):
     else:
         state_description = 'case 6 - Far'
         linear_x = vx/4
-        angular_z = -2*wz
+        angular_z = -wz
 
     rospy.loginfo(state_description)
     msg.linear.x = linear_x
@@ -103,7 +102,7 @@ def main():
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
     sub = rospy.Subscriber('/scan', LaserScan, clbk_laser)
     rospy.on_shutdown(shutdown)
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(20)
 
     d= rospy.get_param("~distance_laser")
     vx= rospy.get_param("~forward_speed")

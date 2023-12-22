@@ -44,7 +44,7 @@ Now you can follow the next steps:
 ### **1. Spawn the robot in our custom made maze**
 We open a new terminal and type:
 ```shell
-roslaunch gopigo3_description gopigo3_world.launch
+roslaunch gopigo3_description gopigo_world.launch
 ```
 ### **2. Generate the MAP**
 We will start the slam_gmapping node. This node is highly configurable and has lots of parameters you can change in order to improve the mapping performance. (http://wiki.ros.org/gmapping)
@@ -58,7 +58,7 @@ Let's now check some of the most important ones that usually have to be changed:
 
 Open the "gmapping.launch" file and change properly the parameters you consider. Then launch the gopigo_slam file:
 ```shell
-roslaunch gopigo3_slam gopigo3_slam.launch
+roslaunch gopigo3_slam gopigo_slam.launch
 ```
 Teleoperate the robot to make it cover as much as possible of the surface of the current Gazebo world. 
 
@@ -68,11 +68,11 @@ To obtain a softer movement with gopigo3 robot model be sure in gopigo3_custom.u
 
 Let's do this as usual with the teleoperation package:
 ```shell
-rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 Or use the navigation program you have designed to follow the walls for exemple to properly generate the map.
 ```shell
-roslaunch gopigo3_control node_wall_follower_rg.launch
+roslaunch gopigo3_control rubot_wall_follower_rg.launch
 ```
 > Take care to launch only the wall_follower node
 
@@ -82,16 +82,18 @@ roslaunch gopigo3_control node_wall_follower_rg.launch
 ### **3. Open the MAP saver and save the map**
 We can open now the map_saver file in map_server package to save the map in the local directory:
 ```shell
-rosrun map_server map_saver -f Hospital3_map
+rosrun map_server map_saver -f square2_map
 ```
 The map is generated with two files:
-- Hospital3_map.pgm (2D B&W map picture)
-- Hospital3_map.yaml (map parameters)
+- square2_map.pgm (2D B&W map picture)
+- square2_map.yaml (map parameters)
 
 
 Provided with the map, we are ready to perform robot navigation with the GoPiGo3.
 
-### **3. Robot Navigation**
+You can close now the "gopigo_slam.launch" file.
+
+### **4. Robot Navigation**
 When the robot moves around a map, it needs to know which is its POSE within the map.
 
 The AMCL (Adaptive Monte Carlo Localization) package provides the amcl node, which uses the MCL system in order to track the localization of a robot moving in a 2D space. This node subscribes to the data of the laser, the laser-based map, and the transformations of the robot, and publishes its estimated position in the map. 
@@ -138,16 +140,17 @@ https://emanual.robotis.com/docs/en/platform/turtlebot3/navigation/#tuning-guide
 
 So, basically, we have to do the following:
 
-- Open the gopigo3 robot in Hospital3 world (if you have closed it before)
+- Open the gopigo3 robot in a desired world (if you have closed it before)
 ```shell
-roslaunch gopigo3_description gopigo3_world.launch
+roslaunch gopigo3_description gopigo_world.launch
 ```
+>Ensure you have the correct robot model name
 
 - Open Navigation launch file including the map location:
 ```shell
-roslaunch gopigo3_slam gopigo3_navigation.launch
+roslaunch gopigo3_slam gopigo_navigation.launch
 ```
-> Take care in launch file to read the correct map file in "maps" folder
+> Take care in launch file to read the correct robot model name and the correct map file in "maps" folder
 
 ![](./Images/02_SW_Nav_Slam/01_nav1_gopigo.png)
 - set up an initial pose by using the 2D Pose Estimate tool (which published that pose to the /initialpose topic).
@@ -156,7 +159,7 @@ roslaunch gopigo3_slam gopigo3_navigation.launch
 
 - To obtain a proper localisation of your robot, move it right and left using the key_teleop.
 ```shell
-rosrun key_teleop key_teleop.py /key_vel:=/cmd_vel
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 
 ![](./Images/02_SW_Nav_Slam/03_nav3_gopigo.png)
