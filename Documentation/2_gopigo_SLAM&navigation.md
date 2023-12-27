@@ -253,4 +253,9 @@ rosrun gopigo3_slam first_goal.py
 
 #### **5.3. Send a sequence of goals to navigation stack**
 
-The mov
+When different goals have to be defined, We will use a a csv file to define the waypoints and a launch file define the needed parameters.
+
+Open an excell file and create the x,y,w waypoints data. Save this file in "CSV (comma delimited) (*.csv)" format
+
+An exemple is shown in csv_test.py file
+
