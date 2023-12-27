@@ -9,6 +9,7 @@ def create_initpose(position_x, position_y, orientation_z):
     q_x, q_y, q_z, q_w = quaternion_from_euler(0.0, 0.0, orientation_z)
     pose_msg = PoseWithCovarianceStamped()
     pose_msg.header.frame_id = 'map'
+    pose_msg.header.stamp = rospy.Time.now()
     pose_msg.pose.pose.position.x = position_x
     pose_msg.pose.pose.position.y = position_y
     pose_msg.pose.pose.position.z = 0.0
