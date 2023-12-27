@@ -20,6 +20,11 @@ And finally the slam_gmapping package, that is already available in its binary v
 sudo apt install ros-noetic-slam-gmapping
 ```
 
+Also for some transformations you will need to install transforms3d
+```shell
+sudo pip3 install transforms3d
+```
+
 Open the .bashrc file and verify to source to the proper workspace:
 
 ```shell
@@ -206,3 +211,46 @@ You can see some videos of Navigation process inside Hospital plant:
 [![IMAGE_ALT](https://img.youtube.com/vi/my33X_qWsjY/maxresdefault.jpg)](https://youtu.be/my33X_qWsjY)
 
 [![IMAGE_ALT](https://img.youtube.com/vi/r92mEQ9JAL8/maxresdefault.jpg)](https://youtu.be/r92mEQ9JAL8)
+
+### **5. Programatic control of Robot Navigation**
+
+When we want to perform a complex task, the robot navigation has to be made programatically. We will be able to perform:
+- Init Pose selection
+- Send a goal to navigation stack
+- Send a sequence of goals to navigation stack
+
+#### **5.1. Init Pose selection**
+
+The init pose is a mesage that has to be published th a /initpose topic.
+
+The message type is "PoseWithCovarianceStamped"
+
+A simple program has been designed for this purpose in "init_pose.py". You have to select the correct pose in python file
+
+```shell
+rosrun gopigo3_slam init_pose.py
+```
+
+#### **5.2. Send a goal to navigation stack**
+
+The move_base ROS Node, allows to configure, run and interact with the robot navigation. The move_base node implements a SimpleActionServer with a single navigation goal.
+
+The goal pose is of geometry_msgs/PoseStamped message type. 
+
+To communicate with this node, the SimpleActionClient interface is used. The move_base node tries to achieve a desired pose by combining a global and a local motion planners to accomplish a navigation task which includes obstacle avoidance.
+
+![](./Images/02_SW_Nav_Slam/04_nav_goal.png)
+
+We can create a node to:
+- Define a Init Pose
+- Define a first navigation goal
+
+The code is created in "first_goal.py" code
+
+```shell
+rosrun gopigo3_slam first_goal.py
+```
+
+#### **5.3. Send a sequence of goals to navigation stack**
+
+The mov
