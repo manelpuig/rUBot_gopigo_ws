@@ -228,6 +228,8 @@ The message type is "PoseWithCovarianceStamped"
 A simple program has been designed for this purpose in "init_pose.py". You have to select the correct pose in python file
 
 ```shell
+roslaunch gopigo3_description gopigo_world.launch
+roslaunch gopigo3_slam gopigo_navigation.launch
 rosrun gopigo3_slam init_pose.py
 ```
 
@@ -248,14 +250,38 @@ We can create a node to:
 The code is created in "first_goal.py" code
 
 ```shell
+roslaunch gopigo3_description gopigo_world.launch
+roslaunch gopigo3_slam gopigo_navigation.launch
 rosrun gopigo3_slam first_goal.py
 ```
 
 #### **5.3. Send a sequence of goals to navigation stack**
 
-When different goals have to be defined, We will use a a csv file to define the waypoints and a launch file define the needed parameters.
+When different goals have to be defined, We will use a yaml file to define the waypoints and a launch file define the needed parameters.
 
-Open an excell file and create the x,y,w waypoints data. Save this file in "CSV (comma delimited) (*.csv)" format
+We have to specify the waypoints as pose in (x,y,w) values and create a new create_pose_stamped(position_x, position_y, rotation_z) function
 
-An exemple is shown in csv_test.py file
+```shell
+roslaunch gopigo3_description gopigo_world.launch
+roslaunch gopigo3_slam gopigo_navigation.launch
+rosrun gopigo3_slam waypoints_goal.py
+```
+If you want to work with ROS parameters, you can define the waypoints in a "waypoints.yaml" file on config folder:
+```python
+goal1: {"x": -0.5, "y": 0.8, "w": 90}
+goal2: {"x": -0.5, "y": -0.5, "w": 180}
+```
+and load the yaml file in a "waypoints_goal.launch" file:
+```xml
+<launch>
+  <node pkg="gopigo3_slam" type="waypoints_goal_params.py" name="movebase_client_waypoints" output="screen" >
+    <rosparam file="$(find gopigo3_slam)/config/waypoints.yaml" command="load" />
+  </node>
+</launch>
+```
 
+```shell
+roslaunch gopigo3_description gopigo_world.launch
+roslaunch gopigo3_slam gopigo_navigation.launch
+roslaunch gopigo3_slam waypoints_goal.launch
+```
