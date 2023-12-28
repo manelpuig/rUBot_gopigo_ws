@@ -3,7 +3,7 @@ import rospy
 from geometry_msgs.msg import PoseWithCovarianceStamped, PoseStamped
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 from math import degrees, radians
-import numpy as np
+import yaml
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
@@ -47,15 +47,18 @@ def movebase_client():
     client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
  
     client.wait_for_server()
+    
+    goal1 = rospy.get_param("~goal1")
+    goal2 = rospy.get_param("~goal2")
 
-    goal_pose1 = create_pose_stamped(-0.5, 0.8, radians(90))
-    goal_pose2 = create_pose_stamped(-0.5, -0.5, radians(180))
+    goal_pose1 = create_pose_stamped(goal1['x'], goal1['y'], radians(goal1['w']))
+    goal_pose2 = create_pose_stamped(goal2['x'], goal2['y'], radians(goal2['w']))
 
     # --- Follow Waypoints ---
     waypoints = [goal_pose1, goal_pose2]
     for i in range(2):
         client.send_goal(waypoints[i])
-        wait = client.wait_for_result()
+        wait = client.wait_for_result(rospy.Duration(20))
         if not wait:
             rospy.logerr("Action server not available!")
             rospy.signal_shutdown("Action server not available!")
@@ -65,13 +68,8 @@ def movebase_client():
 if __name__ == '__main__':
     try:
         rospy.init_node('movebase_client_waypoints')
-        goals_file= rospy.get_param("~goals")
-        print(goals_file)
-        goals = np.loadtxt(goals_file, delimiter=';', skiprows=1, usecols=[1,2,3], dtype=float)
-        # Printing data stored
-        print(goals)
         #init_pose()
-        #movebase_client()
+        movebase_client()
 
     except rospy.ROSInterruptException:
         rospy.loginfo("Navigation test finished.")
