@@ -3,9 +3,9 @@ import rospy
 from geometry_msgs.msg import PoseWithCovarianceStamped, PoseStamped
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 from math import degrees, radians
+import numpy as np
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
-import csv
 
 def create_initpose(position_x, position_y, orientation_z):
     q_x, q_y, q_z, q_w = quaternion_from_euler(0.0, 0.0, orientation_z)
@@ -65,8 +65,13 @@ def movebase_client():
 if __name__ == '__main__':
     try:
         rospy.init_node('movebase_client_waypoints')
+        goals_file= rospy.get_param("~goals")
+        print(goals_file)
+        goals = np.loadtxt(goals_file, delimiter=';', skiprows=1, usecols=[1,2,3], dtype=float)
+        # Printing data stored
+        print(goals)
         #init_pose()
-        movebase_client()
+        #movebase_client()
 
     except rospy.ROSInterruptException:
         rospy.loginfo("Navigation test finished.")

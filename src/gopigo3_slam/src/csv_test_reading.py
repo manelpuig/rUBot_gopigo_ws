@@ -1,9 +1,10 @@
-import csv
-fichero = 'waypoints3.csv'
-results = []
-with open(fichero) as csvfile:
-    reader = csv.reader(csvfile, delimiter=";") 
-    for lista in reader: # Cada fila es una lista
-        results.append(lista)
-print(results [1][1])
-print(results [1])
+#!/usr/bin/env python3
+import numpy as np
+
+file = "waypoints.csv"
+
+goals = np.loadtxt(file, delimiter=';', skiprows=1, usecols=[1,2,3], dtype=float)
+# Printing data stored
+print(goals)
+x1 = goals[2,1]
+print(x1*2)

@@ -1,0 +1,6 @@
+<launch>
+  <arg name="goals" default="rUBot_gopigo_ws/src/gopigo3_slam/src/waypoints.csv"/>
+  <node pkg="gopigo3_slam" type="waypoints_goal_params.py" name="movebase_client_waypoints" output="screen" >
+    <param name="goals" value="$(arg goals)"/>
+  </node>
+</launch>
