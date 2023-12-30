@@ -66,7 +66,7 @@ When connected to power, it is configured to:
 To connect your PC to the Robot, we have to:
 - select the rubot hotspot:
     - SSID name: rubot_XX 
-    - password "CorrePiCorre"
+    - password "rUBot_Mec"
 
 ### **Using nomachine remote desktop**
 To connect your computer to the robot using Nomachine:
@@ -81,7 +81,7 @@ Add new robot and edit the connection:
 
 Connect
 - user: pi
-- password: ubuntu0ubuntu1
+- password: ubuntu1234
 
 For a proper Display resolution in Nomachina select: Display --> Change the size of remote screen
 
