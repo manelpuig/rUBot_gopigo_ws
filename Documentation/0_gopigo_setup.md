@@ -83,6 +83,8 @@ Connect
 - user: pi
 - password: ubuntu0ubuntu1
 
+For a proper Display resolution in Nomachina select: Display --> Change the size of remote screen
+
 You will have the rUBot desktop on your windows nomachine screen
 
 ### **Clone a repository**
