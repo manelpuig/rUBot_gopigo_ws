@@ -468,32 +468,6 @@ We have created a "gopigo_bringup_hw.launch" file that contains:
 - launch the LIDAR node
 - launch the camera node
 
-We have first to install some HW packages:
-- **gopigo3_node**
-```shell
-cd src
-git clone https://github.com/ros-gopigo/gopigo3_node
-```
-- **rpLidar**
-```shell
-sudo apt install ros-noetic-rplidar-ros
-```
-- **Raspicam**
-
-You can install package following instructions in:https://github.com/UbiquityRobotics/raspicam_node
-
-```shell
-cd src
-git clone https://github.com/UbiquityRobotics/raspicam_node
-```
-To bringup the gopigo3 robot, execute in a first terminal:
-```shell
-roslaunch gopigo3_description gopigo_bringup_hw.launch
-```
-- **OpenCV**
-```shell
-sudo apt install ros-noetic-vision-opencv
-```
 Graphically, the final node structure will be:
 ![](./Images/01_SW_Model_Control/14_gopigo_bringup_hw.png)
 

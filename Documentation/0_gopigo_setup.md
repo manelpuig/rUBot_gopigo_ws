@@ -104,6 +104,55 @@ source /home/rUBot_gopigo_ws/devel/setup.bash
 
 ### **Real HW gopigo3 bringup**
 
+In real environment, the bringup process depends on the real robot. You will have to launch the different nodes that wakes-up the robot. 
+
+We have created a "gopigo_bringup_hw.launch" file that contains:
+- launch the gopigo node that controls the robot kinematics
+- launch the LIDAR node
+- launch the camera node
+
+We have to uodate the ubuntu with the "software updater" application.
+
+Open a terminal and type:
+```shell
+sudo apt update
+sudo apt update
+sudo apt install python3-pip
+```
+
+We have first to install some HW packages:
+- **gopigo3_node**
+To proper install the gopigo3 in Ubuntu20.04 within ROS Noetic, you can follow th instructions in: https://github.com/slowrunner/Focal_Noetic_Hands_On_ROS/tree/main
+
+You have to adapt the path in the installation bash file ("home/ubuntu" instead of "home/pi"):
+https://github.com/slowrunner/Focal_Noetic_Hands_On_ROS/blob/main/setup/install_gopigo3_on_ubuntu.sh
+
+```shell
+cd src
+git clone https://github.com/ros-gopigo/gopigo3_node
+pip install gopigo3
+```
+
+- **rpLidar**
+```shell
+sudo apt install ros-noetic-rplidar-ros
+```
+- **Raspicam**
+
+You can install package following instructions in:https://github.com/UbiquityRobotics/raspicam_node
+
+```shell
+cd src
+git clone https://github.com/UbiquityRobotics/raspicam_node
+```
+To bringup the gopigo3 robot, execute in a first terminal:
+```shell
+roslaunch gopigo3_description gopigo_bringup_hw.launch
+```
+- **OpenCV**
+```shell
+sudo apt install ros-noetic-vision-opencv
+```
 Now you can bringup our robot:
 - launch the gopigo3 node: able to control de 2 motors and measure the odometry
 - launch the raspicam node
